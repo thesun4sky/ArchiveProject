@@ -5,6 +5,7 @@ package com.coawesome.controller;
  */
 
 import com.coawesome.domain.BoardVO;
+import com.coawesome.domain.User;
 import com.coawesome.domain.Result;
 import com.coawesome.persistence.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,21 @@ public class ApiController {
   }
 
 
+  //회원가입
+  @RequestMapping(method = RequestMethod.POST, value = "/user/join.do")
+  public Result addUser(@RequestBody User user) {
+    System.out.println("user: " + user);
+
+    boardMapper.addUser(user);
+
+    return new Result(0, "success");
+  }
+
+
+
+
+
+
   //게시판 글 목록 보기
     @RequestMapping(method = RequestMethod.GET, value = "/api/board")
     public List<BoardVO> getBoardList() {
@@ -50,6 +66,10 @@ public class ApiController {
       board2.setBoard_id(2);
       board2.setTitle("제목2");
       board2.setContent("내용입니다.2");
+      BoardVO board3 = new BoardVO();
+      board3.setBoard_id(3);
+      board3.setTitle("제목3");
+      board3.setContent("내용입니다.3");
 
         ArrayList<BoardVO> boardList = new ArrayList<BoardVO>();
       boardList.add(board);

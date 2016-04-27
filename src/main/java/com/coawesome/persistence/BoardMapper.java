@@ -1,5 +1,6 @@
 package com.coawesome.persistence;
 import com.coawesome.domain.BoardVO;
+import com.coawesome.domain.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -10,7 +11,12 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface BoardMapper {
-    @Insert("INSERT INTO board(user_id, title, content) VALUES(#{user_id}, #{title}, #{content})")
+
+
+  @Insert("INSERT INTO user(login_id, password, name) VALUES(#{login_id}, #{password}, #{name})")
+  void addUser(User user);
+
+  @Insert("INSERT INTO board(user_id, title, content) VALUES(#{user_id}, #{title}, #{content})")
     void insertBoard(BoardVO board);
 
 
