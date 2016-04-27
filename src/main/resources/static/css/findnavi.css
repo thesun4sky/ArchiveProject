@@ -1,0 +1,87 @@
+#findnavi, #findnavi ul ,#findnavi ul li, #findnavi ul li a{
+     margin: 0;
+     padding: 0;
+     line-height: 1;
+ }
+#findnavi{
+    background: #111;
+}
+
+#findnavi ul{
+    list-style: none;
+    display: block;
+}
+#findnavi ul:after {
+    content: '';
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+#findnavi ul li{
+    display: block;
+    padding: 0;
+    float: left;
+    width: 33.3333%;
+}
+#findnavi ul li a{
+    display: block;
+    position: relative;
+    color:#fff;
+    text-decoration: none;
+    padding:25px 0px;
+    font-family: '돋움',sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color .25s;
+    -webkit-transition: color .25s;
+    -moz-transition: color .25s;
+    -o-transition: color .25s;
+}
+#findnavi ul li a:hover {
+    color: #f00505;
+}
+#findnavi ul li a:hover:before {
+    width:100%;
+}
+#findnavi ul li a:before{
+    content:'';
+    display: block;
+    position:absolute;
+    left:0;
+    bottom: 0;
+    height: 3px;
+    width: 0;
+    background: #f00505;
+    transition:width .25s;
+    -webkit-transition:width .25s;
+    -moz-transition:width .25s;
+    -o-transition:width .25s;
+}
+#findnavi ul li.active a{
+    color:#f00505;
+}
+#findnavi ul li.active a:before{
+    width: 100%;
+}
+@media screen and (max-width: 768px){
+    #findnavi ul li{
+        float:none;
+        width: 100%;
+    }
+   #findnavi ul li a {
+        width: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    #findnavi ul li a:after{
+        display: none;
+    }
+   #findnavi ul li a:before{
+        height: 1px;
+        background: #fff;
+        width: 100%;
+        opacity: .3;
+    }
+}

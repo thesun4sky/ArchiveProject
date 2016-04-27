@@ -1,0 +1,94 @@
+<script src="js/searchform.js"></script>
+<script>
+    $("#homebtn").click(function() {
+        $("#foldernav1").removeClass("active");
+        $("#catagorynav1").removeClass("active");
+        $("#homenav1").addClass("active");
+        $("#foldernav2").removeClass("active");
+        $("#catagorynav2").removeClass("active");
+        $("#homenav2").addClass("active");
+    });
+</script>
+<!--최상단 네비게이션바-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<nav class="navbar navbar-default navbar-static-top"  >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" style="background-color:#771107;border-color: #771107;"  data-toggle="collapse" data-target="#mynavbar" >
+            <span class="glyphicon glyphicon-user" style="color:white;"></span>
+        </button>
+            <button type="button" class="navbar-toggle" style="background-color:#771107;border-color: #771107;" data-toggle="collapse" data-target="#mynavbar3" >
+                <span class="glyphicon glyphicon-search" style="color: white;"></span>
+            </button>
+            <button type="button" id="rot1" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#mynavbar2" style="margin-right: -15px; border:none;   background-color: rgba( 255, 255, 255, 0 );">
+                <span class="caret" style="background-color: #771107;color: white" ></span>
+            </button>
+            <img src="img/logoarchive.png" class="pull-left">
+            <a id='homebtn' class= "navbar-brand navbar-brand-centered" href="../../../../../test1/src/index.html">
+                Archive</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="nav navbar-nav navbar-right text-right" style="margin-top: 11px">
+                <li><a  href="main.html" ><span class="glyphicon glyphicon-user"></span>  Log out</a></li>
+            </ul>
+
+            <form class="navbar-form navbar-right hidden-xs" role="search" style="margin-top: 17px;" >
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for..." style="border-color :#771107;">
+						<span class="input-group-btn">
+							<button type="reset" class="btn btn-default" style="border-color :#771107;">
+								<span class="glyphicon glyphicon-remove" style="color:#771107;">
+									<span class="sr-only">Close</span>
+								</span>
+                            </button>
+							<button type="submit" id="srch1" class="btn btn-default search-default" style="background-color: #771107" >
+								<span id ="span1" class="glyphicon glyphicon-search" style="color: white;border-color: #771107;">
+									<span class="sr-only">Search</span>
+								</span>
+                            </button>
+						</span>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 hidden-lg hidden-md hidden-sm">
+                <div class="collapse navbar-collapse" id="mynavbar3">
+                    <form class="navbar-form navbar-right" role="search" style="margin-top:-2px; border-top: none">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for..." style="border-color :#771107;">
+                                <span class="input-group-btn">
+                                    <button type="reset" class="btn btn-default" style="border-color :#771107;">
+                                        <span class="glyphicon glyphicon-remove" style="color: #771107">
+                                            <span class="sr-only">Close</span>
+                                        </span>
+                                    </button>
+                                    <button type="submit" class="btn btn-default search-default" >
+                                        <span class="glyphicon glyphicon-search" style="color: #771107;">
+                                            <span class="sr-only">Search</span>
+                                        </span>
+                                    </button>
+                                </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--
+        <div class="row">
+             <div class="col-xs-12 hidden-lg hidden-sm hidden-md">
+                 <div class="collapse navbar-collapse" id="mynavbar2">
+                     <ul class="nav navbar-nav navbar-left">
+                         <li><a data-toggle="pill" href="#home" ><span class="glyphicon glyphicon-home "></span>Home</a></li>
+                         <li><a data-toggle="pill" href="#menu1"><span class="glyphicon glyphicon-book "></span>Menu 1</a></li>
+                         <li><a data-toggle="pill" href="#menu2"><span class="glyphicon glyphicon-camera"></span>Menu 2</a></li>
+                         <li><a data-toggle="pill" href="#menu3"><span class="glyphicon glyphicon-calendar"></span>Menu 3</a></li>
+                     </ul>
+                 </div>
+             </div>
+        </div>
+        -->
+    </div>
+</nav>
