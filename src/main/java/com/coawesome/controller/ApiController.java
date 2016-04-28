@@ -5,8 +5,8 @@ package com.coawesome.controller;
  */
 
 import com.coawesome.domain.BoardVO;
-import com.coawesome.domain.User;
 import com.coawesome.domain.Result;
+import com.coawesome.domain.User;
 import com.coawesome.persistence.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,32 +50,31 @@ public class ApiController {
   }
 
 
+  //로그인
+  @RequestMapping(method = RequestMethod.POST, value = "/user/login")
+  public Result Login(@RequestBody User user) {
+    System.out.println("try to login user: " + user);
+
+    String password = boardMapper.Login(user);
+    String input_password = user.getPassword();
+    System.out.println(password + " : " +  user.getPassword());
+    if(!password.equals(input_password)) {
+      return new Result(0, "fales");
+    }
+    return new Result(0, "success");
+  }
 
 
 
 
   //게시판 글 목록 보기
-    @RequestMapping(method = RequestMethod.GET, value = "/api/board")
-    public List<BoardVO> getBoardList() {
-//        BoardVO board = new BoardVO();
-//        board.setBoard_id(1);
-//        board.setTitle("제목");
-//        board.setContent("내용입니다.");
-//      BoardVO board2 = new BoardVO();
-//      board2.setBoard_id(2);
-//      board2.setTitle("제목2");
-//      board2.setContent("내용입니다.2");
-//      BoardVO board3 = new BoardVO();
-//      board3.setBoard_id(3);
-//      board3.setTitle("제목3");
-//      board3.setContent("내용입니다.3");
-
-        ArrayList<BoardVO> boardList = new ArrayList<BoardVO>();
-//      boardList.add(board);
-//      boardList.add(board2);
-
-        return boardList;
-    }
+  @RequestMapping(method = RequestMethod.POST, value = "/api/boardlist")
+  public List<BoardVO> getBoardList(@RequestBody User user) {
+    System.out.println(user);
+    int user_id = user.getUser_id();
+    ArrayList<BoardVO> boardList = (ArrayList<BoardVO>) boardMapper.boardfindById(user_id);
+    return boardList;
+  }
 
     //게시판 글 상세 보기
     @RequestMapping(method = RequestMethod.GET, value = "/api/board/{board_id}")
