@@ -18,6 +18,8 @@ public interface BoardMapper {
 
   @Insert("INSERT INTO board(user_id, title, content) VALUES(#{user_id}, #{title}, #{content})")
     void insertBoard(BoardVO board);
+  
+  //안녕하세요~!!!
 
 
 
