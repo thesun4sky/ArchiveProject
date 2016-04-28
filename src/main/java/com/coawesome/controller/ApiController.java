@@ -5,8 +5,8 @@ package com.coawesome.controller;
  */
 
 import com.coawesome.domain.BoardVO;
-import com.coawesome.domain.User;
 import com.coawesome.domain.Result;
+import com.coawesome.domain.User;
 import com.coawesome.persistence.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +51,19 @@ public class ApiController {
   }
 
 
+  //로그인
+  @RequestMapping(method = RequestMethod.POST, value = "/user/login")
+  public Result Login(@RequestBody User user) {
+    System.out.println("try to login user: " + user);
+
+    String password = boardMapper.Login(user);
+    String input_password = user.getPassword();
+    System.out.println(password + " : " +  user.getPassword());
+    if(!password.equals(input_password)) {
+      return new Result(0, "fales");
+    }
+    return new Result(0, "success");
+  }
 
 
 
