@@ -13,13 +13,11 @@ import org.apache.ibatis.annotations.Select;
 public interface BoardMapper {
 
 
-  @Insert("INSERT INTO user(login_id, password, name) VALUES(#{login_id}, #{password}, #{name})")
+  @Insert("INSERT INTO user(login_id, password, name, sex, born, address, email) VALUES(#{login_id}, #{password}, #{name}, #{sex}, #{born}, #{address}, #{email})")
   void addUser(User user);
 
-  @Insert("INSERT INTO board(user_id, title, content) VALUES(#{user_id}, #{title}, #{content})")
+  @Insert("INSERT INTO board(user_id, public_level, tag1, tag2, tag3, line1, line1_x, line1_y, line2, line2_x, line2_y) VALUES(#{user_id}, #{public_level}, #{tag1}, #{tag2}, #{tag3}, #{line1}, #{line1_x}, #{line1_y}, #{line2}, #{line2_x}, #{line2_y})")
     void insertBoard(BoardVO board);
-  
-  //안녕하세요~!!!
 
 
 
