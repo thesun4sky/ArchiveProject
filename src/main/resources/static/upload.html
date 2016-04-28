@@ -8,23 +8,24 @@
 
 </style>
 <div class="jumbotron text-center" style="margin-top: 20px">
-    <div flow-init="{target: '/upload'}"
-         flow-files-submitted="$flow.upload()"
-         flow-file-success="$file.msg = $message">
-
-        <input type="file" flow-btn/>
-        <span class="btn" flow-btn>Upload File</span>
-        <table>
-            <tr ng-repeat="file in $flow.files">
-                <td>{{$index+1}}</td>
-                <td>{{file.name}}</td>
-                <td>{{file.msg}}</td>
-            </tr>
-        </table>
-    </div>
     <h3 style="margin-bottom: 60px;">사진을 선택하시고 두줄 평을 입력하세요 <small>게시물당 사진은 <mark>1장만</mark> 업로드 가능합니다.</small></h3>
     <div class="row">
         <div class="col-lg-6">
+            <div flow-init="{singleFile:true}"
+                 flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]">
+                <div>
+                    <span class="btn btn-primary " ng-show="!$flow.files.length" flow-btn>Select image</span>
+                    <span class="btn btn-info" ng-show="$flow.files.length" flow-btn>Change</span>
+                    <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel()">Remove</span>
+                </div>
+                <div class="thumbnail" ng-show="!$flow.files.length">
+                    <img src="img/paris.jpg" style="width:100%; max-height:420px;" />
+                </div>
+                <div class="thumbnail" ng-show="$flow.files.length">
+                    <img flow-img="$flow.files[0]" style="width:100%; max-height:420px;" />
+                </div>
+
+            </div>
             <div class="thumbnail">
                 <div class="carousel-caption pull-left">
                     <div ng-repeat="position in positions">
@@ -34,12 +35,12 @@
                         <p  class="example"  ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{left: position.divleft, top: position.divtop}" xpos="position.divleft" ypos="position.divtop" style="background-color : rgba(255,255,255,0.55);border: none; color :black;font-weight: bolder;font-size:18px">&nbsp&nbsp{{secondLine}}&nbsp&nbsp</p>
                     </div>
                 </div>
-                <img flow-img="$flow.files[0]" width="100%" height="100%">
-                <span class="gl glyphicon-camera"></span>
             </div>
         </div>
+
+
         <div class="col-lg-6">
-            <div class="container-fluid">
+            <div class="container-fluid" style="margin-top: 15%">
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-success active">전체공개
                         <input type="radio" name="options" id="option2" autocomplete="off" >
@@ -59,31 +60,30 @@
                 </div>
             </div>
 
-                 <div class="container">
-                    <div class="form-group" style="margin-top:8%">
-                        <input type="text" class="form-control" ng-model="firstLine" style="margin:20px 0" placeholder="첫번째 줄 입력...">
-                        <button type="button" class="btn btn-info" ng-click="leftClass()"><span class="fa fa-align-left"></span></button>
-                        <button type="button" class="btn btn-primary" ng-click="centerClass()"><span class="fa fa-align-center"></span></button>
-                        <button type="button" class="btn btn-danger" ng-click="rightClass()"><span class="fa fa-align-right"></span></button>
-                        <br>{{multi_message}}
+            <div class="container">
+                <div class="form-group" style="margin-top:8%">
+                    <input type="text" class="form-control" ng-model="firstLine" style="margin:20px 0" placeholder="첫번째 줄 입력...">
+                    <button type="button" class="btn btn-info" ng-click="leftClass()"><span class="fa fa-align-left"></span></button>
+                    <button type="button" class="btn btn-primary" ng-click="centerClass()"><span class="fa fa-align-center"></span></button>
+                    <button type="button" class="btn btn-danger" ng-click="rightClass()"><span class="fa fa-align-right"></span></button>
+                    <br>{{multi_message}}
 
-                        <input type="text" class="form-control" ng-model="secondLine" style="margin:20px 0" placeholder="두번째 줄 입력...">
-                        <button type="button" class="btn btn-info" ng-click="leftClass2()"><span class="fa fa-align-left"></span></button>
-                        <button type="button" class="btn btn-primary" ng-click="centerClass2()"><span class="fa fa-align-center"></span></button>
-                        <button type="button" class="btn btn-danger" ng-click="rightClass2()"><span class="fa fa-align-right"></span></button>
-                        <br>{{multi_message2}}
-                    </div>
-                     <div ng-repeat="position in positions">
-                         <input type="number" ng-model="position.divleft"/>
-                         <input type="number" ng-model="position.divtop"/>
-                     </div>
-                     <div ng-repeat="position in positions2">
-                         <input type="number" ng-model="position.divleft"/>
-                         <input type="number" ng-model="position.divtop"/>
-                     </div>
+                    <input type="text" class="form-control" ng-model="secondLine" style="margin:20px 0" placeholder="두번째 줄 입력...">
+                    <button type="button" class="btn btn-info" ng-click="leftClass2()"><span class="fa fa-align-left"></span></button>
+                    <button type="button" class="btn btn-primary" ng-click="centerClass2()"><span class="fa fa-align-center"></span></button>
+                    <button type="button" class="btn btn-danger" ng-click="rightClass2()"><span class="fa fa-align-right"></span></button>
+                    <br>{{multi_message2}}
+                </div>
+                <div ng-repeat="position in positions">
+                    <input type="number" ng-model="position.divleft"/>
+                    <input type="number" ng-model="position.divtop"/>
+                </div>
+                <div ng-repeat="position in positions2">
+                    <input type="number" ng-model="position.divleft"/>
+                    <input type="number" ng-model="position.divtop"/>
+                </div>
+            </div>
 
-
-                 </div>
         </div>
     </div>
 </div>
