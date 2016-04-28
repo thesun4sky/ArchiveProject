@@ -98,9 +98,8 @@
         ];
         $scope.uploadData=[
             {
-                'user_id': "이문성",
+                'user_id': 1,
                 'public_level': 1,
-                'likes_num': 0,
                 'tag1': "김",
                 'tag2': "박",
                 'tag3': "최",
@@ -116,7 +115,6 @@
             $scope.uploadData.push({
                 'user_id': $scope.user_id,
                 'public_level': $scope.public_level,
-                'likes_num': $scope.likes_num,
                 'tag1': $scope.tag1,
                 'tag2': $scope.tag2,
                 'tag3': $scope.tag3,
@@ -127,7 +125,7 @@
                 'line2_x': $scope.line2_x,
                 'line2_y': $scope.line2_y
             });
-            var res = $http.post("/api/board", uploadData);
+            var res = $http.post("/api/board", $scope.uploadData);
             res.success(function(data, status, headers, config) {
                 $scope.message = data;
             });
