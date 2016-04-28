@@ -14,4 +14,5 @@ public class User {
     private String login_id;
     private String password;
     private String name;
+    private String sex;
 }
