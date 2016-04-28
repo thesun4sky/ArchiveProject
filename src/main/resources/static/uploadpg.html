@@ -92,44 +92,90 @@
 <script src="ng-flow/dist/ng-flow.min.js"></script>
 <script>
     var app3 = angular.module("myUpload",['flow']);
-    app3.controller("uploadCtrl",function($scope){
-        $scope.leftClass = function() {
-            $scope.class_name = "left";
-            $scope.multi_message ="좌측 정렬 되었습니다.";
-        };
-        $scope.centerClass = function() {
-            $scope.class_name ="center";
-            $scope.multi_message ="가운데 정렬 되었습니다.";
-        };
-        $scope.rightClass = function() {
-            $scope.class_name = "right";
-            $scope.multi_message ="우측 정렬 되었습니다.";
-
-        };
-        $scope.leftClass2 = function() {
-            $scope.class_name2 = "left2";
-            $scope.multi_message2 ="좌측 정렬 되었습니다.";
-        };
-        $scope.centerClass2 = function() {
-            $scope.class_name2 ="center2";
-            $scope.multi_message2 ="가운데 정렬 되었습니다.";
-        };
-        $scope.rightClass2 = function() {
-            $scope.class_name2 = "right2";
-            $scope.multi_message2 ="우측 정렬 되었습니다.";
-        };
-        $scope.positions = [
-            {"divtop": -100,
-                "divleft": 0
-            },
+    app3.controller("uploadCtrl",['$scope', '$http', function($scope, $http) {
+        $scope.openAccess=[
+            "전체공개","Toline","나만보기"
         ];
-        $scope.positions2 = [
-            {"divtop": -50,
-                "divleft": 0
+        $scope.uploadData=[
+            {
+                'user_id': "이문성",
+                'public_level': 1,
+                'likes_num': 0,
+                'tag1': "김",
+                'tag2': "박",
+                'tag3': "최",
+                'line1': "가나다라마바사아",
+                'line1_x': 0,
+                'line1_y': 0,
+                'line2': "자차카타파하",
+                'line2_x': 0,
+                'line2_y': 0
             }
         ];
+        $scope.addRowAsyncAsJSON = function() {
+            $scope.uploadData.push({
+                'user_id': $scope.user_id,
+                'public_level': $scope.public_level,
+                'likes_num': $scope.likes_num,
+                'tag1': $scope.tag1,
+                'tag2': $scope.tag2,
+                'tag3': $scope.tag3,
+                'line1': $scope.line1,
+                'line1_x': $scope.line1_x,
+                'line1_y': $scope.line1_y,
+                'line2': $scope.line2,
+                'line2_x': $scope.line2_x,
+                'line2_y': $scope.line2_y
+            });
+            var res = $http.post("/api/board", uploadData);
+            res.success(function(data, status, headers, config) {
+                $scope.message = data;
+            });
+            res.error(function(data, status, headers, config) {
+                alert( "failure message: " + JSON.stringify({data: data}));
+            });
+        };
+            $scope.catagory = [
+                "영화", "연극", "콘서트", "드라마", "전시회", "음식", "여행", "음악"
+            ];
+            $scope.leftClass = function () {
+                $scope.class_name = "left";
+                $scope.multi_message = "좌측 정렬 되었습니다.";
+            };
+            $scope.centerClass = function () {
+                $scope.class_name = "center";
+                $scope.multi_message = "가운데 정렬 되었습니다.";
+            };
+            $scope.rightClass = function () {
+                $scope.class_name = "right";
+                $scope.multi_message = "우측 정렬 되었습니다.";
 
-    });
+            };
+            $scope.leftClass2 = function () {
+                $scope.class_name2 = "left2";
+                $scope.multi_message2 = "좌측 정렬 되었습니다.";
+            };
+            $scope.centerClass2 = function () {
+                $scope.class_name2 = "center2";
+                $scope.multi_message2 = "가운데 정렬 되었습니다.";
+            };
+            $scope.rightClass2 = function () {
+                $scope.class_name2 = "right2";
+                $scope.multi_message2 = "우측 정렬 되었습니다.";
+            };
+            $scope.positions = [
+                {
+                    "divtop": -100,
+                    "divleft": 0
+                },
+            ];
+            $scope.positions2 = [
+                {
+                    "divtop": -50,
+                    "divleft": 0
+                }
+            ];
+    }]);
     app3.directive('draggable', function () {
         return {
             restrict: 'A',
