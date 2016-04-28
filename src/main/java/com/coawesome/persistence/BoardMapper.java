@@ -16,8 +16,6 @@ public interface BoardMapper {
   @Insert("INSERT INTO user(login_id, password, name) VALUES(#{login_id}, #{password}, #{name})")
    void addUser(User user);
 
-  @Select("select  from user where user_id = #{login_id}")
-   User (@Param("login_id") String )
 
   @Insert("INSERT INTO board(user_id, title, content) VALUES(#{user_id}, #{title}, #{content})")
     void insertBoard(BoardVO board);
