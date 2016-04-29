@@ -92,49 +92,86 @@
 <script src="ng-flow/dist/ng-flow.min.js"></script>
 <script>
     var app3 = angular.module("myUpload",['flow']);
-    app3.controller("uploadCtrl",function($scope){
-        $scope.openAccess=[
-            "전체공개","Toline","나만보기"
+    app3.controller("uploadCtrl", function($scope, $http) {
+        $scope.openAccess = [
+            "전체공개", "Toline", "나만보기"
         ];
-        $scope.catagory=[
-            "영화","연극","콘서트","드라마","전시회","음식","여행","음악"
+        $scope.catagory = [
+            "영화", "연극", "콘서트", "드라마", "전시회", "음식", "여행", "음악"
         ];
-        $scope.leftClass = function() {
+        $scope.leftClass = function () {
             $scope.class_name = "left";
-            $scope.multi_message ="좌측 정렬 되었습니다.";
+            $scope.multi_message = "좌측 정렬 되었습니다.";
         };
-        $scope.centerClass = function() {
-            $scope.class_name ="center";
-            $scope.multi_message ="가운데 정렬 되었습니다.";
+        $scope.centerClass = function () {
+            $scope.class_name = "center";
+            $scope.multi_message = "가운데 정렬 되었습니다.";
         };
-        $scope.rightClass = function() {
+        $scope.rightClass = function () {
             $scope.class_name = "right";
-            $scope.multi_message ="우측 정렬 되었습니다.";
+            $scope.multi_message = "우측 정렬 되었습니다.";
 
         };
-        $scope.leftClass2 = function() {
+        $scope.leftClass2 = function () {
             $scope.class_name2 = "left2";
-            $scope.multi_message2 ="좌측 정렬 되었습니다.";
+            $scope.multi_message2 = "좌측 정렬 되었습니다.";
         };
-        $scope.centerClass2 = function() {
-            $scope.class_name2 ="center2";
-            $scope.multi_message2 ="가운데 정렬 되었습니다.";
+        $scope.centerClass2 = function () {
+            $scope.class_name2 = "center2";
+            $scope.multi_message2 = "가운데 정렬 되었습니다.";
         };
-        $scope.rightClass2 = function() {
+        $scope.rightClass2 = function () {
             $scope.class_name2 = "right2";
-            $scope.multi_message2 ="우측 정렬 되었습니다.";
+            $scope.multi_message2 = "우측 정렬 되었습니다.";
         };
         $scope.positions = [
-            {"divtop": -100,
+            {
+                "divtop": -100,
                 "divleft": 0
             },
         ];
         $scope.positions2 = [
-            {"divtop": -50,
+            {
+                "divtop": -50,
                 "divleft": 0
             }
         ];
 
+        var dataObject =
+        {
+            user_id: "이문성",
+            public_level: 1,
+            likes_num: 0,
+            tag1: "김",
+            tag2: "이",
+            tag3: "박",
+            line1: "가나마라마바사",
+            line1_x: 0,
+            line1_y: 0,
+            line2: "아자차카타파하",
+            line2_x: 0,
+            line_y: 0
+        };
+        $scope.sendPost = function (){
+        $http({
+            method: 'POST', //방식
+            url: "/api/board", /* 통신할 URL */
+            data: dataObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+                .success(function (data, status, headers, config) {
+                    if (data) {
+                        /* 성공적으로 결과 데이터가 넘어 왔을 때 처리 */
+                    }
+                    else {
+                        /* 통신한 URL에서 데이터가 넘어오지 않았을 때 처리 */
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+    }
     });
     app3.directive('draggable', function () {
         return {
