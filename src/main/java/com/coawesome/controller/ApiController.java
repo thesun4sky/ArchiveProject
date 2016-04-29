@@ -23,7 +23,6 @@ public class ApiController {
     @Autowired
     private BoardMapper boardMapper;
 
-
     @RequestMapping("/hello")
     public String Hello() {
         return "Hello test";
