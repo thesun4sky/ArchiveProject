@@ -137,22 +137,23 @@
             }
         ];
 
-        var dataObject =
-        {
-            user_id: "이문성",
+
+        $scope.sendPost = function (){
+          var dataObject =
+          {
+            user_id: 1,
             public_level: 1,
             likes_num: 0,
-            tag1: "김",
-            tag2: "이",
-            tag3: "박",
-            line1: "가나마라마바사",
+            tag1: "the",
+            tag2: "li",
+            tag3: "park",
+            line1: "ganada",
             line1_x: 0,
             line1_y: 0,
-            line2: "아자차카타파하",
+            line2: "oaoaoao",
             line2_x: 0,
             line_y: 0
-        };
-        $scope.sendPost = function (){
+          };
         $http({
             method: 'POST', //방식
             url: "/api/board", /* 통신할 URL */
