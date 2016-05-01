@@ -9,7 +9,8 @@ import lombok.Data;
 /**
  * Created by eastflag on 2016-04-25.
  */
-@Data @AllArgsConstructor
+@Data
+@AllArgsConstructor
 public class Result {
     private int result;
     private String msg;

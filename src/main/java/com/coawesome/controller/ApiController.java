@@ -50,6 +50,35 @@ public class ApiController {
   }
 
 
+  //아이디 찾기
+  @RequestMapping(method = RequestMethod.POST, value = "/user/findID")
+  public Result findID(@RequestBody User user) {
+    System.out.println("try to find id: " + user);
+
+    String found_id = boardMapper.findID(user);
+    if(found_id == null){
+      System.out.println("해당하는 ID없음");
+      return new Result(0, "fales");
+    }
+    System.out.println(found_id);
+    return new Result(0, found_id);
+  }
+
+
+  //비밀번호 찾기
+  @RequestMapping(method = RequestMethod.POST, value = "/user/findPASS")
+  public Result findPASS(@RequestBody User user) {
+    System.out.println("try to find pass: " + user);
+
+    String found_pass = boardMapper.findPASS(user);
+    if(found_pass == null){
+      System.out.println("해당하는 password 없음");
+      return new Result(0, "fales");
+    }
+    System.out.println(found_pass);
+    return new Result(0, found_pass);
+  }
+
   //로그인
   @RequestMapping(method = RequestMethod.POST, value = "/user/login")
   public Result Login(@RequestBody User user) {
