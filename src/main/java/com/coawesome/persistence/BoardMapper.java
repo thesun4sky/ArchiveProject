@@ -23,7 +23,7 @@ public interface BoardMapper {
   @Select("select login_id from user where name = #{name} and born = #{born}")
   String findID(User user);
 
-  //비밀전호 찾기
+  //비밀전호 찾기  TODO 비밀번호를 이메일로 보내기
   @Select("select password from user where login_id = #{login_id} and email = #{email}")
   String findPASS(User user);
 
@@ -42,4 +42,6 @@ public interface BoardMapper {
     //게시글 보기 TODO 디테일 작업전
     @Select("select * from board where board_id = #{board_id}")
     BoardVO findById(@Param("board_id") int board_id);
+
+  //TODO
 }
