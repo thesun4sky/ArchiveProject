@@ -46,6 +46,10 @@ public interface BoardMapper {
   @Select("select password from user where login_id = #{login_id}")
   String Login(User user);
 
+  //친구목록 조회
+  @Select("select friend.friend_id as user_id, user.name, user.email, user.sex, user.login_id, user.born from friend left outer join user on friend.friend_id = user.user_id where friend.user_id = #{user_id}")
+  ArrayList<User> showFriendsById(@Param("user_id") int user_id);
+
   //게시글 등록
   @Insert("INSERT INTO board(user_id, public_level, tag1, tag2, tag3, line1, line1_x, line1_y, line2, line2_x, line2_y) VALUES(#{user_id}, #{public_level}, #{tag1}, #{tag2}, #{tag3}, #{line1}, #{line1_x}, #{line1_y}, #{line2}, #{line2_x}, #{line2_y})")
     void insertBoard(BoardVO board);

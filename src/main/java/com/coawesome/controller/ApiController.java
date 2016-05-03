@@ -95,6 +95,14 @@ public class ApiController {
     return new Result(0, "success");
   }
 
+  //친구리스트 보기 API
+  @RequestMapping(method = RequestMethod.POST, value = "/user/showfriends")
+  public ArrayList<User> ShowFriends(@RequestBody User user){
+    int user_id = user.getUser_id();
+    ArrayList<User> friends = boardMapper.showFriendsById(user_id);
+    return friends;
+  }
+
 
   //댓글 쓰기 API
   @RequestMapping(method = RequestMethod.POST, value = "/api/reply")
