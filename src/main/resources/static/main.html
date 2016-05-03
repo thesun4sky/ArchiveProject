@@ -199,23 +199,21 @@
                 </div>
                 </div>
                 <div id="men3" class="tab-pane fade">
-                    <form class="form-signin">
+                  <div ng-controller="findPASSCtrl">
+                    <form  class="form-signin"  ng-submit="findPASSPost()">
                         <h4 class="form-signin-heading" style="margin-bottom: 30px">비밀번호를 찾기 위한 정보를 입력하세요 </h4>
                         <div class="form-group">
                             <label for="id-for-findpw">아이디 입력 :</label>
-                            <input type="id" id="id-for-findpw" class="form-control" placeholder="ID" required autofocus>
+                            <input type="id" ng-model="findPASS.login_id" id="id-for-findpw" class="form-control" placeholder="ID" required autofocus>
                         </div>
                         <div class="form-group">
-                            <label for="name-for-findpw">이름 입력 :</label>
-                            <input type="name" id="name-for-findpw" class="form-control" placeholder="Name" required autofocus>
+                            <label for="name-for-findpw">이메일 입력 :</label>
+                            <input type="name" ng-model="findPASS.email" id="name-for-findpw" class="form-control" placeholder="Email" required autofocus>
                         </div>
-                        <div class="form-group">
-                            <label for="birth-for-findpw">법적생년월일 입력 :</label>
-                            <input type="birth" id="birth-for-findpw" class="form-control" placeholder="Birth" required autofocus>
-                        </div>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">비밀번호 찾기</button>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">이메일로 비밀번호 받기</button>
                     </form>
                 </div>
+                  </div>
             </div>
         </div>
         <div id="mainhome" class="tab-pane fade in active">
@@ -427,6 +425,39 @@
             alert('해당하는 아이디가 없습니다.')
           }else{
             alert('아이디는 '+ data.msg + '입니다.');
+            window.location.href = 'main.html';
+          }
+        })
+        .error(function (data, status, headers, config) {
+          /* 서버와의 연결이 정상적이지 않을 때 처리 */
+          console.log(status);
+        });
+    };
+  });
+
+
+  app0.controller("findPASSCtrl",function($scope, $http){
+
+    $scope.findPASS=[{
+      login_id :"", email :""
+    }];
+
+    $scope.findPASSPost = function(){
+      var findPASSObject = {
+        login_id : $scope.findPASS.login_id,
+        email : $scope.findPASS.email
+      };
+      $http({
+        method: 'POST', //방식
+        url: "/user/findPASS", /* 통신할 URL */
+        data: findPASSObject, /* 파라메터로 보낼 데이터 */
+        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+      })
+        .success(function (data, status, headers, config) {
+          if(data.msg == 'false') {
+            alert('해당하는 비밀번호가 없습니다.')
+          }else{
+            alert('비밀번호는 '+ data.msg + '입니다.');
             window.location.href = 'main.html';
           }
         })
