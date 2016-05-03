@@ -5,6 +5,7 @@ package com.coawesome.controller;
  */
 
 import com.coawesome.domain.BoardVO;
+import com.coawesome.domain.Reply;
 import com.coawesome.domain.Result;
 import com.coawesome.domain.User;
 import com.coawesome.persistence.BoardMapper;
@@ -92,6 +93,22 @@ public class ApiController {
       return new Result(0, "fales");
     }
     return new Result(0, "success");
+  }
+
+
+  //댓글 쓰기 API
+  @RequestMapping(method = RequestMethod.POST, value = "/api/reply")
+  public Result InsertReply(@RequestBody Reply reply){
+    boardMapper.addReply(reply);
+    return new Result(0, "success");
+  }
+
+  //댓글 보기 API
+  @RequestMapping(method = RequestMethod.POST, value = "/api/showreply")
+  public ArrayList<Reply> ShowReply(@RequestBody BoardVO board){
+    int board_id = board.getBoard_id();
+    ArrayList<Reply> list = boardMapper.showreplybyId(board_id);
+    return list;
   }
 
 

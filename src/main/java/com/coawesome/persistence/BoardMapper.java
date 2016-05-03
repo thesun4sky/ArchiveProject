@@ -1,6 +1,7 @@
 package com.coawesome.persistence;
 
 import com.coawesome.domain.BoardVO;
+import com.coawesome.domain.Reply;
 import com.coawesome.domain.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,6 +29,16 @@ public interface BoardMapper {
   //비밀전호 찾기
   @Select("select password from user where login_id = #{login_id} and email = #{email}")
   String findPASS(User user);
+
+  //댓글 등록
+  @Insert("INSERT INTO reply(user_id, board_id, likes_num, reply, created) VALUES(#{user_id}, #{board_id}, #{likes_num}, #{reply}, #{created})")
+  void addReply(Reply reply);
+
+
+  //댓글 확인 // TODO: 2016-05-04  오류 처리
+  @Insert("select * from reply where board_id = #{board_id}")
+  ArrayList<Reply> showreplybyId(@Param("board_id") int board_id);
+
 
 
 
