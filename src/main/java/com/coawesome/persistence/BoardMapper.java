@@ -36,7 +36,7 @@ public interface BoardMapper {
 
 
   //댓글 확인 // TODO: 2016-05-04  오류 처리
-  @Insert("select * from reply where board_id = #{board_id}")
+  @Select("select * from reply where board_id = #{board_id}")
   ArrayList<Reply> showreplybyId(@Param("board_id") int board_id);
 
 
