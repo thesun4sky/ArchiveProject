@@ -71,7 +71,7 @@
             margin: auto;
         }
     </style>
-<body>
+<body ng-app="myLogin" ng-controller="loginCtrl">
 
     <div id='mainhd2'></div>
 
@@ -205,18 +205,18 @@
                         <img src="img/item1.jpg" data-color="lightblue" alt="First Image">
                         <div class="carousel-caption" style="margin-bottom: 2%">
                             <!--캡션안에 들어가는 로그인 폼-->
-                            <form  id='loginform' class="form-signin form-inline">
+                            <form  name="loginform" id='loginform' class="form-signin form-inline" ng-submit="loginPost()">
                                 <div class="nav">
                                     <div class="form-group">
                                         <label for="loginId">아이디 입력 :</label>
-                                        <input type="id" id="loginId" class="form-control" style="border-radius: 0%" placeholder="ID" required autofocus>
+                                        <input type="id" ng-model="login.login_id" id="loginId" class="form-control" style="border-radius: 0%" placeholder="ID" required autofocus>
                                     </div>
                                     <div class="form-group">
                                         <label for="loginPw">패스워드 입력:</label>
-                                        <input type="password" id="loginPw" class="form-control" style="border-radius: 0%" placeholder="PassWord" required autofocus>
+                                        <input type="password" ng-model="login.password" id="loginPw" class="form-control" style="border-radius: 0%" placeholder="PassWord" required autofocus>
                                     </div>
 
-                                    <a class="btn btn-lg btn-primary btn-block" href="index.html" id="mainbtn" type="submit">Sign in</a>
+                                    <button class="btn btn-lg btn-primary btn-block" id="mainbtn" type="submit">Sign in</button>
 
                                     <div class="checkbox">
                                     </div>
@@ -277,9 +277,54 @@
             </div>
         </div>
 </div>
-
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="js/load2.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.carousel.fullscreen.js"></script>
+
+<script>
+  var app0 = angular.module("myLogin",[]);
+  app0.controller("loginCtrl",function($scope, $http){
+
+      $scope.login=[{
+        login_id :"" ,password :""
+      }];
+
+      $scope.loginPost = function(){
+        var loginObject = {
+          login_id : $scope.login.login_id,
+          password : $scope.login.password
+        };
+      $http({
+        method: 'POST', //방식
+        url: "/user/login", /* 통신할 URL */
+        data: loginObject, /* 파라메터로 보낼 데이터 */
+        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+      })
+        .success(function (data, status, headers, config) {
+          if(data){
+            if (data.msg == 'success') {
+              window.location.href ='index.html';
+              /* 맞음 */
+            }
+            else {
+              console.log('login_fail');
+              /* 틀림 */
+            }
+          }
+          else {
+            console.log('에러에러에러');
+
+          }
+        })
+        .error(function (data, status, headers, config) {
+          /* 서버와의 연결이 정상적이지 않을 때 처리 */
+          console.log(status);
+        });
+    };
+  });
+
+</script>
 </body>
 </html>
+

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -95,13 +96,13 @@ public class ApiController {
 
 
 
-
   //게시판 글 목록 보기
   @RequestMapping(method = RequestMethod.POST, value = "/api/boardlist")
-  public List<BoardVO> getBoardList(@RequestBody User user) {
+  public List<HashMap> getBoardList(@RequestBody User user) {
     System.out.println(user);
     int user_id = user.getUser_id();
-    ArrayList<BoardVO> boardList = (ArrayList<BoardVO>) boardMapper.boardfindById(user_id);
+    ArrayList<HashMap> boardList = (ArrayList<HashMap>) boardMapper.getBoardById(user_id);
+//    boardList =
     return boardList;
   }
 

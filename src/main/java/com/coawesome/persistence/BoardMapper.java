@@ -37,18 +37,23 @@ public interface BoardMapper {
 
   //게시글 등록
   @Insert("INSERT INTO board(user_id, public_level, tag1, tag2, tag3, line1, line1_x, line1_y, line2, line2_x, line2_y) VALUES(#{user_id}, #{public_level}, #{tag1}, #{tag2}, #{tag3}, #{line1}, #{line1_x}, #{line1_y}, #{line2}, #{line2_x}, #{line2_y})")
-    void insertBoard(Map board);
+    void insertBoard(BoardVO board);
 //  @Insert("INSERT INTO board(board_id, original_file_name, stored_file_name, file_size) VALUES()")
 //  void insertBoardImage(HashMap board);
   @Insert("INSERT INTO board(board_id, original_file_name, stored_file_name, file_size) VALUES(#{board_id}, #{original_file_name}, #{stored_file_name}, #{file_size})")
   void insertFile(Map board);
 
 
+  //게시판 글 목록 조회 TODO 디테일 작업전
+  @Select("select * from board left join board_image on board.board_id = board_image.board_id")
+  ArrayList<HashMap> getBoardById(@Param("user_id") int user_id);
+/*
 
   //게시판 글 목록 조회 TODO 디테일 작업전
   @Select("select * from board left join board_image on board.board_id = board_image.board_id")
   ArrayList<HashMap> getBoardById(@Param("user_id") int user_id);
 
+*/
 
 
 
