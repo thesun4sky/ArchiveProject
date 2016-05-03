@@ -60,7 +60,7 @@ public class ApiController {
     String found_id = boardMapper.findID(user);
     if(found_id == null){
       System.out.println("해당하는 ID없음");
-      return new Result(0, "fales");
+      return new Result(0, "false");
     }
     System.out.println(found_id);
     return new Result(0, found_id);

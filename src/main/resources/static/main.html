@@ -71,7 +71,7 @@
             margin: auto;
         }
     </style>
-<body ng-app="myLogin" ng-controller="loginCtrl">
+<body ng-app="myMain" >
 
     <div id='mainhd2'></div>
 
@@ -90,15 +90,16 @@
             <div class="tab-content">
                 <div id="men1" class="tab-pane fade">
                                 <!--실제로 회원가입 폼이 들어가는 바디부분-->
-                                    <form id='signupform' class="form-signin form-inline">
+                  <div ng-controller="joinCtrl">
+                                    <form id='signupform' name="joinform" class="form-signin form-inline" ng-submit="joinPost()">
                                             <h4 class="form-signin-heading" style="margin-bottom: 30px">회원 가입을 위한 정보를 입력하세요</h4>
                                             <div class="form-group">
                                                 <label for="inputID">아이디 입력 :</label>
-                                                <input type="id" id="inputID" class="form-control" placeholder="ID" required autofocus>
+                                                <input type="id" ng-model="join.login_id" id="inputID" class="form-control" placeholder="ID" required autofocus>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputPassword">패스워드 입력:</label>
-                                                <input type="password" id="inputPassword" class="form-control" placeholder="PassWord" required autofocus>
+                                                <input type="password" ng-model="join.password" id="inputPassword" class="form-control" placeholder="PassWord" required autofocus>
                                             </div>
 
                                             <div class="form-group">
@@ -107,12 +108,18 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputName">이름 입력 :</label>
-                                                <input type="name" id="inputName" class="form-control" placeholder="Name" required>
+                                                <input type="name" ng-model="join.name" id="inputName" class="form-control" placeholder="Name" required>
 
                                             </div>
+                                      <div class="form-group">
+                                        <input type="radio"  ng-model="join.sex" name="sex" value="man" checked> Male<br>
+                                        <input type="radio"  ng-model="join.sex" name="sex" value="woman"> Female<br>
+                                        <input type="radio" ng-model="join.sex"  name="sex" value="other"> Other
+
+                                      </div>
                                             <div class="form-group">
                                                 <label for="inputYear" >생년월일 : </label>
-                                                <select type="date" class="input-sm" id="inputYear" style="margin:0 10px 10px 3px">
+                                                <select type="date" ng-model="join.born1"  class="input-sm" id="inputYear" style="margin:0 10px 10px 3px">
                                                     <option>년</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option>
                                                     <option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option>
                                                     <option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option>
@@ -124,12 +131,12 @@
                                                     <option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option>
                                                     <option>1972</option><option>1971</option><option>1970
                                                 </select>
-                                                <select type="date" class="input-sm" id="inputMonth" style="margin:0 10px 10px 3px">
+                                                <select type="date" ng-model="join.born2"  class="input-sm" id="inputMonth" style="margin:0 10px 10px 3px">
                                                     <option>월</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
                                                     <option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
                                                 </select>
 
-                                                <select type="date" class="input-sm" id="inputDay" style="margin:0 10px 10px 3px">
+                                                <select type="date" ng-model="join.born3"  class="input-sm" id="inputDay" style="margin:0 10px 10px 3px">
                                                     <option>일</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
                                                     <option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
                                                     <option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option>
@@ -138,33 +145,58 @@
                                                 </select>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="inputAddress">주소 입력 :</label>
-                                                <input type="address" id="inputAddress" class="form-control" placeholder="Address" required>
-                                            </div>
+
                                             <div class="form-group">
                                                 <label for="inputEmail">이메일 입력 :</label>
-                                                <input type="email" id="inputEmail" class="form-control" placeholder="leemsmail@naver.com" required>
+                                                <input type="email" ng-model="join.email"  id="inputEmail" class="form-control" placeholder="leemsmail@naver.com" required>
                                             </div>
 
                                         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                                     </form>
 
                 </div>
+                  </div>
 
                 <div id="men2" class="tab-pane fade">
-                    <form class="form-signin">
+
+                  <div ng-controller="findIDCtrl">
+                    <form class="form-signin"  ng-submit="findIDPost()">
                         <h4 class="form-signin-heading" style="margin-bottom: 30px">아이디를 찾기 위한 정보를 입력하세요 </h4>
                         <div class="form-group">
                             <label for="name-for-find">이름 입력 :</label>
-                            <input type="name" id="name-for-find" class="form-control" placeholder="Name" required autofocus>
+                            <input type="name" ng-model="findID.name" id="name-for-find" class="form-control" placeholder="Name" required autofocus>
                         </div>
-                        <div class="form-group">
-                            <label for="birth-for-find">법적생년월일 입력 :</label>
-                            <input type="birth" id="birth-for-find" class="form-control" placeholder="Birth" required autofocus>
-                        </div>
+
+                      <div class="form-group">
+                        <label for="inputYear" >생년월일 : </label>
+                        <select type="date" ng-model="findID.born1"  class="input-sm" id="findYear" style="margin:0 10px 10px 3px">
+                          <option>년</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option>
+                          <option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option>
+                          <option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option>
+                          <option>2001</option><option>2000</option><option>1999</option><option>1998</option><option>1997</option>
+                          <option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option>
+                          <option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option>
+                          <option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option>
+                          <option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1978</option>
+                          <option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option>
+                          <option>1972</option><option>1971</option><option>1970
+                        </select>
+                        <select type="date" ng-model="findID.born2"  class="input-sm" id="findMonth" style="margin:0 10px 10px 3px">
+                          <option>월</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+                          <option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+                        </select>
+
+                        <select type="date" ng-model="findID.born3"  class="input-sm" id="findDay" style="margin:0 10px 10px 3px">
+                          <option>일</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+                          <option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+                          <option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option>
+                          <option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option>
+                          <option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option>
+                        </select>
+                      </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">아이디 찾기</button>
                     </form>
+                </div>
                 </div>
                 <div id="men3" class="tab-pane fade">
                     <form class="form-signin">
@@ -205,6 +237,7 @@
                         <img src="img/item1.jpg" data-color="lightblue" alt="First Image">
                         <div class="carousel-caption" style="margin-bottom: 2%">
                             <!--캡션안에 들어가는 로그인 폼-->
+                          <div ng-controller="loginCtrl">
                             <form  name="loginform" id='loginform' class="form-signin form-inline" ng-submit="loginPost()">
                                 <div class="nav">
                                     <div class="form-group">
@@ -232,6 +265,7 @@
                                     <button id="btn3" data-toggle="tab" class="btn btn-info" data-target="#FindId" data-dismiss="modal" >비밀번호찾기</button>
                                 </div>
                             </form>
+                        </div>
                         </div>
                     </div>
                     <!--두번째 아이템-->
@@ -283,7 +317,7 @@
     <script src="js/jquery.carousel.fullscreen.js"></script>
 
 <script>
-  var app0 = angular.module("myLogin",[]);
+  var app0 = angular.module("myMain",[]);
   app0.controller("loginCtrl",function($scope, $http){
 
       $scope.login=[{
@@ -315,6 +349,85 @@
           else {
             console.log('에러에러에러');
 
+          }
+        })
+        .error(function (data, status, headers, config) {
+          /* 서버와의 연결이 정상적이지 않을 때 처리 */
+          console.log(status);
+        });
+    };
+  });
+
+
+  app0.controller("joinCtrl",function($scope, $http){
+
+    $scope.join=[{
+      login_id :"" ,password :"", name :"", sex :"", born1 :"", born2 :"", born3 :"", email:""
+    }];
+
+    $scope.joinPost = function(){
+      var joinObject = {
+        login_id : $scope.join.login_id,
+        password : $scope.join.password,
+        name : $scope.join.name,
+        sex : $scope.join.sex,
+        born : $scope.join.born1 + $scope.join.born2  + $scope.join.born3 ,
+        email : $scope.join.email
+      };
+      $http({
+        method: 'POST', //방식
+        url: "/user/join", /* 통신할 URL */
+        data: joinObject, /* 파라메터로 보낼 데이터 */
+        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+      })
+        .success(function (data, status, headers, config) {
+          if(data){
+            if (data.msg == 'success') {
+              window.location.href ='main.html';
+              /* 맞음 */
+            }
+            else {
+              console.log('join_fail');
+              /* 틀림 */
+            }
+          }
+          else {
+            console.log('에러에러에러');
+
+          }
+        })
+        .error(function (data, status, headers, config) {
+          /* 서버와의 연결이 정상적이지 않을 때 처리 */
+          console.log(status);
+        });
+    };
+  });
+
+
+
+  app0.controller("findIDCtrl",function($scope, $http){
+
+    $scope.findID=[{
+      name :"", born1 :"", born2 :"", born3 :""
+    }];
+
+    $scope.findIDPost = function(){
+      var findIDObject = {
+        name : $scope.findID.name,
+        born : $scope.findID.born1 + $scope.findID.born2  + $scope.findID.born3
+      };
+      $http({
+        method: 'POST', //방식
+        url: "/user/findID", /* 통신할 URL */
+        data: findIDObject, /* 파라메터로 보낼 데이터 */
+        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+      })
+        .success(function (data, status, headers, config) {
+          if(data.msg == 'false') {
+            alert('해당하는 아이디가 없습니다.')
+          }else{
+            alert('아이디는 '+ data.msg + '입니다.');
+            window.location.href = 'main.html';
           }
         })
         .error(function (data, status, headers, config) {

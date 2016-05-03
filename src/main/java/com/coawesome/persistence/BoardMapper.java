@@ -19,7 +19,7 @@ import java.util.Map;
 public interface BoardMapper {
 
   //회원가입
-  @Insert("INSERT INTO user(login_id, password, name, sex, born, address, email) VALUES(#{login_id}, #{password}, #{name}, #{sex}, #{born}, #{address}, #{email})")
+  @Insert("INSERT INTO user(login_id, password, name, sex, born, email) VALUES(#{login_id}, #{password}, #{name}, #{sex}, #{born}, #{email})")
   void addUser(User user);
 
   //아이디 찾기
