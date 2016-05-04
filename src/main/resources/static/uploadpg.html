@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myUpload" ng-controller="uploadCtrl">
+<html lang="en" ng-app="myUpload">
 <head>
     <title>Upload</title>
     <link rel="icon" href="img/logoarchive.png" />
@@ -42,7 +42,7 @@
     </style>
 
 </head>
-<body>
+<body ng-controller="uploadCtrl">
 
 <!--메인헤더-->
 <div ng-include="'mainHeader.html'"></div>
@@ -127,19 +127,22 @@
       $scope.lines = [
         {
           "firstLine": "",
-          "secondLine": ""
-        },
+          "secondLine": "",
+            "tag1":"",
+            "tag2":"",
+            "tag3":""
+        }
       ];
         $scope.positions = [
             {
-                "divtop": -220,
-                "divleft": 111
-            },
+                "divtop1": 0,
+                "divleft1": 0
+            }
         ];
         $scope.positions2 = [
             {
-                "divtop": 111,
-                "divleft": 94
+                "divtop2": 0,
+                "divleft2": 0
             }
         ];
 
@@ -150,15 +153,15 @@
             user_id: 1,
             public_level: 1,
             likes_num: 0,
-            tag1: "the",
-            tag2: "li",
-            tag3: "park",
+            tag1: $scope.lines.tag1,
+            tag2: $scope.lines.tag2,
+            tag3: $scope.lines.tag3,
             line1: $scope.lines.firstLine,
-            line1_x: $scope.positions.divtop,
-            line1_y: $scope.positions.divleft,
+            line1_x: $scope.positions.divleft1,
+            line1_y: $scope.positions.divtop1,
             line2: $scope.lines.secondLine,
-            line2_x: $scope.positions2.divtop,
-            line_y: $scope.positions2.divleft
+            line2_x: $scope.positions2.divleft2,
+            line2_y: $scope.positions2.divtop2
           };
         $http({
             method: 'POST', //방식
@@ -167,11 +170,11 @@
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
                 .success(function (data, status, headers, config) {
-                    if (data) {
-                        /* 성공적으로 결과 데이터가 넘어 왔을 때 처리 */
-                    }
-                    else {
-                        /* 통신한 URL에서 데이터가 넘어오지 않았을 때 처리 */
+                    if(data.msg == 'false') {
+                        alert('게시글 업로드 실패')
+                    }else{
+                        alert('게시글 업로드 성공');
+                        window.location.href = 'index.html';
                     }
                 })
                 .error(function (data, status, headers, config) {
