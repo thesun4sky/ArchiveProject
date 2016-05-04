@@ -124,16 +124,22 @@
             $scope.class_name2 = "right2";
             $scope.multi_message2 = "우측 정렬 되었습니다.";
         };
+      $scope.lines = [
+        {
+          "firstLine": "",
+          "secondLine": ""
+        },
+      ];
         $scope.positions = [
             {
-                "divtop": -100,
-                "divleft": 0
+                "divtop": -220,
+                "divleft": 111
             },
         ];
         $scope.positions2 = [
             {
-                "divtop": -50,
-                "divleft": 0
+                "divtop": 111,
+                "divleft": 94
             }
         ];
 
@@ -147,12 +153,12 @@
             tag1: "the",
             tag2: "li",
             tag3: "park",
-            line1: $scope.firstLine,
-            line1_x: 0,
-            line1_y: 0,
-            line2: "oaoaoao",
-            line2_x: 0,
-            line_y: 0
+            line1: $scope.lines.firstLine,
+            line1_x: $scope.positions.divtop,
+            line1_y: $scope.positions.divleft,
+            line2: $scope.lines.secondLine,
+            line2_x: $scope.positions2.divtop,
+            line_y: $scope.positions2.divleft
           };
         $http({
             method: 'POST', //방식

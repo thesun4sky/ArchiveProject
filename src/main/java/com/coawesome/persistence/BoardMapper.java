@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -55,8 +54,8 @@ public interface BoardMapper {
     void insertBoard(BoardVO board);
 //  @Insert("INSERT INTO board(board_id, original_file_name, stored_file_name, file_size) VALUES()")
 //  void insertBoardImage(HashMap board);
-  @Insert("INSERT INTO board(board_id, original_file_name, stored_file_name, file_size) VALUES(#{board_id}, #{original_file_name}, #{stored_file_name}, #{file_size})")
-  void insertFile(Map board);
+//  @Insert("INSERT INTO board(board_id, original_file_name, stored_file_name, file_size) VALUES(#{board_id}, #{original_file_name}, #{stored_file_name}, #{file_size})")
+//  void insertFile(Map board);
 
 
   //게시판 글 목록 조회 TODO 디테일 작업전
