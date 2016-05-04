@@ -1,6 +1,6 @@
 datasource:
   driver-class-name: "com.mysql.jdbc.Driver"
-  url: "jdbc:mysql://52.79.170.80:3306/testdb?useUnicode=true&charaterEncoding=utf-8"
+  url: "jdbc:mysql://52.79.170.80:3306/archivedb?useUnicode=true&charaterEncoding=utf-8"
   user-name: "archives"
   password: "coawesome"
   initial-size: 10
