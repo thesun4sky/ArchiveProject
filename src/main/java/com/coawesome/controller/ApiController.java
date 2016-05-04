@@ -131,13 +131,14 @@ public class ApiController {
     return boardList;
   }
 
-    //게시판 글 상세 보기
+    //게시판 글 상세 보기(댓글리스트 추가)
     @RequestMapping(method = RequestMethod.GET, value = "/api/board/{board_id}")
     public BoardVO getBoard(@PathVariable int board_id) {
         System.out.println("board_id: " + board_id);
 
         BoardVO board = boardMapper.findById(board_id);
-
+        ArrayList<Reply> list = boardMapper.showreplybyId(board_id);
+        board.setList(list);
         return board;
     }
 
