@@ -9,14 +9,11 @@ import com.coawesome.persistence.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -36,15 +33,11 @@ public class ApiController {
     }
   //게시판 생성 API
   @RequestMapping(method = RequestMethod.POST, value = "/api/board" )
-  public Result addBoard(@RequestParam("file") MultipartFile file) throws Exception {
-//TODO 오리지날 파일명 얻어서 저장하기
-  //TODO 디렉토리안에 저장하기
+  public Result addBoard(@RequestParam("file") MultipartFile file, BoardVO board) throws Exception {
     //TODO 중복체크
-
-//    List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
-//    for(int i=0, size=list.size(); i<size; i++){
-//      BoardMapper.insertBoardImage(list.get(i));
-//      System.out.println("list.get("+ i +"): " + list.get(i));
+      ImageVO image = fileUtils.parseInsertFileInfo(file,board);
+      boardMapper.insertBoardImage(image);
+      boardMapper.insertBoard(board);
 //    }
 
     return new Result(0, "success");

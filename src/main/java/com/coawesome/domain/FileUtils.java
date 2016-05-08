@@ -11,51 +11,45 @@ import java.util.*;
 
 @Component("fileUtils")
 public class FileUtils {
-    private static final String filePath = "C:\\Users\\TeasunKim\\Desktop\\CapstonProject\\ArchiveProject\\src\\";
+    private static final String filePath = "C:\\Users\\이호세아\\";
+    //TODO 상단 디렉토리명 바꾸기
 
     public static String getRandomString(){
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-    public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, HttpServletRequest request) throws Exception{
-        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
-        Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+    public ImageVO parseInsertFileInfo(MultipartFile multipartFile,BoardVO board) throws Exception{
 
-        MultipartFile multipartFile = null;
         String originalFileName = null;
         String originalFileExtension = null;
         String storedFileName = null;
 
-        List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-        Map<String, Object> listMap = null;
 
-//        String boardIdx = (String)map.get("IDX");
 
         File file = new File(filePath);
         if(file.exists() == false){
             file.mkdirs();
         }
 
-        while(iterator.hasNext()){
-            multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-            if(multipartFile.isEmpty() == false){
-                originalFileName = multipartFile.getOriginalFilename();
-                originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-                storedFileName = getRandomString() + originalFileExtension;
+        ImageVO image = new ImageVO();
+        if(multipartFile.isEmpty() == false){
+            originalFileName = multipartFile.getOriginalFilename();
+            originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            storedFileName = getRandomString() + originalFileExtension;
 
-                file = new File(filePath + storedFileName);
-                multipartFile.transferTo(file);
+            file = new File(filePath + storedFileName);
+            multipartFile.transferTo(file);
 
-                listMap = new HashMap<String,Object>();
-                listMap.put("board_id", (String)map.get("board_id"));
-                listMap.put("original_file_name", originalFileName);
-                listMap.put("stored_file_name", storedFileName);
-                listMap.put("file_size", multipartFile.getSize());
-                list.add(listMap);
-            }
+
+            image.setOriginal_file_name(originalFileName);
+            image.setStored_file_name(storedFileName);
+            image.setFile_size(multipartFile.getSize());
+            image.setBoard_id(board.getBoard_id());
+            image.setCreator_id(board.getUser_id());
+            System.out.println(image);
         }
-        return list;
-    }
+        return image;
+   }
 
     public List<Map<String, Object>> parseUpdateFileInfo(Map<String, Object> map, HttpServletRequest request) throws Exception{
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
