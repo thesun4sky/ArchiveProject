@@ -4,17 +4,19 @@ package com.coawesome.controller;
  * Created by 이호세아 on 2016-04-26.
  */
 
-import com.coawesome.domain.BoardVO;
-import com.coawesome.domain.Reply;
-import com.coawesome.domain.Result;
-import com.coawesome.domain.User;
+import com.coawesome.domain.*;
 import com.coawesome.persistence.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -25,21 +27,28 @@ public class ApiController {
     @Autowired
     private BoardMapper boardMapper;
 
+  @Resource(name="fileUtils")
+  private FileUtils fileUtils;
+
     @RequestMapping("/hello")
     public String Hello() {
         return "Hello test";
     }
-
   //게시판 생성 API
-  @RequestMapping(method = RequestMethod.POST, value = "/api/board")
-  public Result addBoard(@RequestBody BoardVO board) {
-    System.out.println("board: " + board);
+  @RequestMapping(method = RequestMethod.POST, value = "/api/board" )
+  public Result addBoard(@RequestParam("file") MultipartFile file) throws Exception {
+//TODO 오리지날 파일명 얻어서 저장하기
+  //TODO 디렉토리안에 저장하기
+    //TODO 중복체크
 
-    boardMapper.insertBoard(board);
+//    List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
+//    for(int i=0, size=list.size(); i<size; i++){
+//      BoardMapper.insertBoardImage(list.get(i));
+//      System.out.println("list.get("+ i +"): " + list.get(i));
+//    }
 
     return new Result(0, "success");
   }
-
 
   //회원가입
   @RequestMapping(method = RequestMethod.POST, value = "/user/join")
@@ -47,6 +56,16 @@ public class ApiController {
     System.out.println("user: " + user);
 
     boardMapper.addUser(user);
+
+    return new Result(0, "success");
+  }
+
+  //친구추가
+  @RequestMapping(method = RequestMethod.POST, value = "/user/addfriend")
+  public Result addFriend(@RequestBody Friend friend) {
+    System.out.println(friend);
+
+    boardMapper.addFriend(friend);
 
     return new Result(0, "success");
   }

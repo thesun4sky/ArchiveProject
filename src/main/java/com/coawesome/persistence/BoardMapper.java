@@ -1,6 +1,7 @@
 package com.coawesome.persistence;
 
 import com.coawesome.domain.BoardVO;
+import com.coawesome.domain.Friend;
 import com.coawesome.domain.Reply;
 import com.coawesome.domain.User;
 import org.apache.ibatis.annotations.Insert;
@@ -20,6 +21,10 @@ public interface BoardMapper {
   //회원가입
   @Insert("INSERT INTO user(login_id, password, name, sex, born, email) VALUES(#{login_id}, #{password}, #{name}, #{sex}, #{born}, #{email})")
   void addUser(User user);
+
+  //친구추가
+  @Insert("INSERT INTO friend(user_id, friend_id) VALUES(#{user_id}, #{friend_id})")
+  void addFriend(Friend firend);
 
   //아이디 찾기
   @Select("select login_id from user where name = #{name} and born = #{born}")

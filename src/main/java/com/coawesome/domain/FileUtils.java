@@ -11,7 +11,7 @@ import java.util.*;
 
 @Component("fileUtils")
 public class FileUtils {
-    private static final String filePath = "C:\\dev\\workspace\\first\\src\\main\\webapp\\storedimages\\";
+    private static final String filePath = "C:\\Users\\TeasunKim\\Desktop\\CapstonProject\\ArchiveProject\\src\\";
 
     public static String getRandomString(){
         return UUID.randomUUID().toString().replaceAll("-", "");
