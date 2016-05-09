@@ -11,7 +11,7 @@ import java.util.*;
 
 @Component("fileUtils")
 public class FileUtils {
-    private static final String filePath = "C:\\Users\\이호세아\\";
+    private static final String filePath = "C:\\dev\\ArchiveProject\\src\\main\\resources\\static\\storedimg\\";
     //TODO 상단 디렉토리명 바꾸기
 
     public static String getRandomString(){
