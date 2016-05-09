@@ -96,7 +96,7 @@
 </head>
 <body>
 
-<div ng-app="myApp2">
+<div ng-app="catagoryApp" ng-controller="catagoryCtrl">
 <!--메인헤더-->
 <div ng-include="'mainHeader.html'"></div>
 <!--서브헤더-->
@@ -141,7 +141,20 @@
 <script src="js/bootstrap.js"></script>
 
 <script>
-    var app2 = angular.module("myApp2",[]);
+    var app2 = angular.module("catagoryApp",[]);
+
+    app2.controller('catagoryCtrl', function($scope){
+        $scope.menuList = [
+            {id :"movie", title: "영화", icon1: "glyphicon" , icon2 : "glyphicon-film"},
+            {id :"act", title: "연극", icon1: "fa", icon2 : "fa-street-view"},
+            {id :"concert", title: "콘서트",  icon1: "fa" , icon2 : "fa-microphone"},
+            {id :"drama", title: "드라마", icon1: "fa", icon2 : "fa-tv"},
+            {id :"exhibition", title: "전시회", icon1: "glyphicon" , icon2 : "glyphicon-blackboard"},
+            {id :"food", title: "음식", icon1: "glyphicon" , icon2 : "glyphicon-cutlery"},
+            {id :"travel", title: "여행", icon1: "glyphicon" , icon2 : "glyphicon-plane"},
+            {id :"music", title: "음악", icon1: "glyphicon" , icon2 : "glyphicon-music"}
+        ]
+    });
 
 </script>
 </body>

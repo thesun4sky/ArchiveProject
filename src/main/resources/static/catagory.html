@@ -2,59 +2,18 @@
 <div class="container">
    <hr>
     <ul class="nav nav-pills ">
-        <li>
-            <a href="#movie" data-toggle="tab">
-                <span class="glyphicon glyphicon-film text-center"  style="display: block;font-size: 50px;"></span>
-                <p>영화</p>
+        <li ng-repeat="menu in menuList">
+            <a href="#{{menu.id}}" data-toggle="tab">
+                <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;font-size: 50px;"></span>
+                <p>{{menu.title}}</p>
             </a>
         </li>
-        <li>
-            <a href="#">
-                <span class="fa fa-street-view text-center" style="display: block;font-size: 50px;"></span>
-                <p>연극</p>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <span class="fa fa-microphone text-center" style="display: block;font-size: 50px;"></span>
-                <p>콘서트</p>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <span class="fa fa-tv text-center" style="display: block;font-size: 50px;"></span>
-                <p>드라마</p>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <span class="glyphicon glyphicon-blackboard text-center" style="display: block;font-size: 50px;"></span>
-                <p>전시회</p>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <span class="glyphicon glyphicon-cutlery" style="display: block;font-size: 50px;"></span>
-                <p>음식</p>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <span class="glyphicon glyphicon-plane text-center" style="display: block;font-size: 50px;"></span>
-                <p>여행</p>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <span class="glyphicon glyphicon-music text-center" style="display: block;font-size: 50px;"></span>
-                <p>음악</p>
-            </a>
-        </li>
+
     </ul>
 </div>
 <div class="tab-content">
-    <div id="movie" class="tab-pane fade">
-        <span class="glyphicon glyphicon-film text-center" style="display: block;font-size: 75px; padding:40px 0;"></span>
+    <div id="{{menu.id}}" class="tab-pane fade" ng-repeat="menu in menuList">
+        <span class="{{menu.icon1}} {{menu.icon2}} text-center" style="display: block;font-size: 75px; padding:40px 0;"></span>
         <div class="container-fluid" style="margin-left: -20px;margin-right: -20px">
             <div class="row">
                 <div class="col-lg-6 text-center">

@@ -96,13 +96,12 @@
     </style>
 
 </head>
-<body>
+<body ng-app="homeApp" ng-controller="homeCtrl">
 
     <!--메인헤더-->
-    <div id='mainhd'></div>
+    <div ng-include="'mainHeader.html'"></div>
     <!--서브헤더-->
-    <div id='subhd'></div>
-
+    <div ng-include="'subHeader.html'"></div>
 
 
     <!--화면 분할 시작-->
@@ -134,12 +133,20 @@
 </div>
 
 
-<!--푸터-->
-<div id='mainft'></div>
+    <!--푸터-->
+    <div ng-include="'mainFooter.html'"></div>
 
 
-
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="js/load.js"></script>
     <script src="js/bootstrap.js"></script>
+
+    <script>
+        var app = angular.module("homeApp",[]);
+        app.controller("homeCtrl",function($scope,$http){
+
+        });
+
+    </script>
 </body>
 </html>
