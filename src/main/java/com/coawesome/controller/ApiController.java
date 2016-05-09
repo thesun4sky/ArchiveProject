@@ -49,20 +49,31 @@ public class ApiController {
     System.out.println("user: " + user);
 
     boardMapper.addUser(user);
+    boardMapper.initFriend(user); //친구리스트에 자기자신 추가
 
     return new Result(0, "success");
   }
 
-  //친구추가
-  @RequestMapping(method = RequestMethod.POST, value = "/user/addfriend")
-  public Result addFriend(@RequestBody Friend friend) {
+  //친구요청
+  @RequestMapping(method = RequestMethod.POST, value = "/user/requestFriend")
+  public Result requestFriend(@RequestBody Friend friend) {
     System.out.println(friend);
 
-    boardMapper.addFriend(friend);
+    boardMapper.requestFriend(friend);
 
     return new Result(0, "success");
   }
 
+  //친구승낙
+  @RequestMapping(method = RequestMethod.POST, value = "/user/acceptFriend")
+  public Result acceptFriend(@RequestBody Friend friend) {
+    System.out.println(friend);
+
+    boardMapper.updateFriend(friend);
+    boardMapper.acceptFriend(friend);
+
+    return new Result(0, "success");
+  }
 
   //아이디 찾기
   @RequestMapping(method = RequestMethod.POST, value = "/user/findID")
@@ -107,11 +118,23 @@ public class ApiController {
     return new Result(0, "success");
   }
 
+
+  //친구신청조회
+  @RequestMapping(method = RequestMethod.POST, value = "/user/checkFriendRequest")
+  public ArrayList<UserResult> checkFriendRequest(@RequestBody User user) {
+    System.out.println(user + "친구신청 목록");
+    int user_id = user.getUser_id();
+    ArrayList<UserResult> result = boardMapper.checkFriendRequest(user_id);
+
+    return result;
+  }
+
+
   //친구리스트 보기 API
   @RequestMapping(method = RequestMethod.POST, value = "/user/showfriends")
-  public ArrayList<User> ShowFriends(@RequestBody User user){
+  public ArrayList<UserResult> ShowFriends(@RequestBody User user){
     int user_id = user.getUser_id();
-    ArrayList<User> friends = boardMapper.showFriendsById(user_id);
+    ArrayList<UserResult> friends = boardMapper.showFriendsById(user_id);
     return friends;
   }
 
