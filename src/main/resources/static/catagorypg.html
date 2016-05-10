@@ -16,56 +16,6 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>
-    <script>
-        $(document).ready(function(){
-            $(function () {
-                // Remove Search if user Resets Form or hits Escape!
-                $('body, .navbar-collapse form[role="search"] button[type="reset"]').on('click keyup', function(event) {
-                    console.log(event.currentTarget);
-                    $("#srch1").removeClass("important");
-                    $("#srch1").addClass("search-default");
-                    if (event.which == 27 && $('.navbar-collapse form[role="search"]').hasClass('active') ||
-                        $(event.currentTarget).attr('type') == 'reset') {
-                        closeSearch();
-                    }
-                });
-
-                function closeSearch() {
-                    var $form = $('.navbar-collapse form[role="search"].active')
-                    $form.find('input').val('');
-                    $form.removeClass('active');
-                    $form.addClass('comeback');
-                }
-
-                // Show Search if form is not active // event.preventDefault() is important, this prevents the form from submitting
-                $(document).on('click', '.navbar-collapse form[role="search"]:not(.active) button[type="submit"]', function(event) {
-                    event.preventDefault();
-                    $("#srch1").removeClass("search-default");
-                    $("#srch1").addClass("important");
-                    var $form = $(this).closest('form'),
-                        $input = $form.find('input');
-                    $form.removeClass('comeback');
-                    $form.addClass('active');
-                    $input.focus();
-                });
-
-                // Autofocus for collapsed mode
-                $(document).on('click', '.navbar-header button.navbar-toggle:last-of-type', function(event) {
-                    var $form = $('.navbar-collapse form[role="search"]').find('input').focus();
-                });
-
-                // ONLY FOR DEMO // Please use $('form').submit(function(event)) to track from submission
-                // if your form is ajax remember to call `closeSearch()` to close the search container
-                $(document).on('click', '.navbar-collapse form[role="search"].active button[type="submit"]', function(event) {
-                    event.preventDefault();
-                    var $form = $(this).closest('form'),
-                        $input = $form.find('input');
-                    $('#showSearchTerm').text($input.val());
-                    closeSearch()
-                });
-            });
-        });
-    </script>
 
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
@@ -97,63 +47,81 @@
 <body>
 
 <div ng-app="catagoryApp" ng-controller="catagoryCtrl">
-<!--메인헤더-->
-<div ng-include="'mainHeader.html'"></div>
-<!--서브헤더-->
-<div ng-include="'subHeader.html'"></div>
+    <!--메인헤더-->
+    <div ng-include="'mainHeader.html'"></div>
+    <!--서브헤더-->
+    <div ng-include="'subHeader.html'"></div>
 
 
-<!--화면 분할 시작-->
-<div class="container-fluid" style="margin-bottom: 50px;">
-    <div class="row content">
-        <!--좌측 화면분할-->
-        <div class="col-sm-2 col-xs-2 sidenav hidden-xs" >
-            <div class="container-fluid " >
-                <p>좌측 화면 분할 </p>
+    <!--화면 분할 시작-->
+    <div class="container-fluid" style="margin-bottom: 50px;">
+        <div class="row content">
+            <!--좌측 화면분할-->
+            <div class="col-sm-2 col-xs-2 sidenav hidden-xs" >
+                <div class="container-fluid " >
+                    <p>좌측 화면 분할 </p>
+                </div>
             </div>
-        </div>
-        <!--가운데 콘텐츠 화면분할-->
-        <div class="col-sm-8 col-xs-12">
+            <!--가운데 콘텐츠 화면분할-->
+            <div class="col-sm-8 col-xs-12">
                 <div ng-include="'catagory.html'"></div>
             </div>
 
 
-        <!--우측 화면 분할-->
-        <div class="col-sm-2 hidden-xs sidenav">
-            <div class="well">
-                <p>ADS</p>
-            </div>
+            <!--우측 화면 분할-->
+            <div class="col-sm-2 hidden-xs sidenav">
+                <div class="well">
+                    <p>ADS</p>
+                </div>
 
-            <div class="well">
-                <p>ADS</p>
+                <div class="well">
+                    <p>ADS</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<!--푸터-->
-<div ng-include="'mainFooter.html'"></div>
+    <!--푸터-->
+    <div ng-include="'mainFooter.html'"></div>
 
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="js/searchform.js"></script>
 <script src="js/bootstrap.js"></script>
 
 <script>
     var app2 = angular.module("catagoryApp",[]);
 
-    app2.controller('catagoryCtrl', function($scope){
+    app2.controller('catagoryCtrl', function($scope,$http){
         $scope.menuList = [
-            {id :"movie", title: "영화", icon1: "glyphicon" , icon2 : "glyphicon-film"},
-            {id :"act", title: "연극", icon1: "fa", icon2 : "fa-street-view"},
-            {id :"concert", title: "콘서트",  icon1: "fa" , icon2 : "fa-microphone"},
-            {id :"drama", title: "드라마", icon1: "fa", icon2 : "fa-tv"},
-            {id :"exhibition", title: "전시회", icon1: "glyphicon" , icon2 : "glyphicon-blackboard"},
-            {id :"food", title: "음식", icon1: "glyphicon" , icon2 : "glyphicon-cutlery"},
-            {id :"travel", title: "여행", icon1: "glyphicon" , icon2 : "glyphicon-plane"},
-            {id :"music", title: "음악", icon1: "glyphicon" , icon2 : "glyphicon-music"}
-        ]
+            {catagory :1, link :"movie", title: "영화", icon1: "glyphicon" , icon2 : "glyphicon-film"},
+            {catagory :2, link :"act", title: "연극", icon1: "fa", icon2 : "fa-street-view"},
+            {catagory :3, link :"concert", title: "콘서트",  icon1: "fa" , icon2 : "fa-microphone"},
+            {catagory :4, link :"drama", title: "드라마", icon1: "fa", icon2 : "fa-tv"},
+            {catagory :5, link :"exhibition", title: "전시회", icon1: "glyphicon" , icon2 : "glyphicon-blackboard"},
+            {catagory :6, link :"food", title: "음식", icon1: "glyphicon" , icon2 : "glyphicon-cutlery"},
+            {catagory :7, link :"travel", title: "여행", icon1: "glyphicon" , icon2 : "glyphicon-plane"},
+            {catagory :8, link :"music", title: "음악", icon1: "glyphicon" , icon2 : "glyphicon-music"}
+        ];
+
+        $scope.catagoryPost = function (menu) {
+
+            var catagoryObject =
+
+            {catagory: menu.catagory};
+
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlistByCatagory", /* 통신할 URL */
+                data: catagoryObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                    .then(function (response) {
+                        $scope.boards = response.data;
+                    })
+        };
     });
 
 </script>
