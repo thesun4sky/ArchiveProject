@@ -21,7 +21,6 @@ public class BoardVO {
     private int user_id;
     private int public_level;
     private int likes_num;
-    private int catagory;
     private String tag1;
     private String tag2;
     private String tag3;
@@ -34,4 +33,5 @@ public class BoardVO {
     private int word_table_id;
     private String created;
     private ArrayList<Reply> list;
+    private int catagory;
 }
