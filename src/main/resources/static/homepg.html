@@ -26,10 +26,10 @@
 <!--업로드 되는 프레임 구성 화면-->
 <div class="container-fluid" style="margin-left: -20px;margin-right: -20px">
     <div class="row">
-        <div class="col-lg-6 text-center">
+        <div class="col-lg-6 text-center" ng-repeat="x in boards">
             <div class="thumbnail">
                 <img src="img/paris.jpg" alt="Paris" width="100%" height="400">
-                <p class="text-center">작성자</p>
+                <p class="text-center">{{x.user_id}}{{x.login_id}}</p>
                 <p class="text-center"><strong>New York / 여행</strong></p>
                 <button class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span></a></button>
                 <button class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span></a></button>

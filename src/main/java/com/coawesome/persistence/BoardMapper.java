@@ -67,13 +67,13 @@ public interface BoardMapper {
   //게시판 글 목록 조회 TODO 디테일 작업전
   @Select("select * from board left join board_image on board.board_id = board_image.board_id")
   ArrayList<HashMap> getBoardById(@Param("user_id") int user_id);
-/*
+
 
   //게시판 글 목록 조회 TODO 디테일 작업전
   @Select("select * from board left join board_image on board.board_id = board_image.board_id")
-  ArrayList<HashMap> getBoardById(@Param("user_id") int user_id);
+  ArrayList<HashMap> getBoard();
 
-*/
+
 
 
 

@@ -45,7 +45,7 @@
         </head>
 <body>
 <!--메인헤더-->
-<div ng-app="myApp">
+<div ng-app="frindListApp">
 <div ng-include="'mainHeader.html'"></div>
 <!--서브헤더-->
 <div ng-include="'subHeader.html'"></div>
@@ -73,7 +73,7 @@
 
                 <div class="jumbotron list-content">
 
-                    <ul class="list-group " ng-controller="userCtrl">
+                    <ul class="list-group " ng-controller="friendListCtrl">
                         <form class="navbar-form " role="search" style="text-align: right">
                             <div class="input-group">
                                 <input type="text" ng-model="finduser" class="form-control" placeholder="Search" name="q">
@@ -85,10 +85,10 @@
                         <li href="#" class="list-group-item title">
                             연결고리
                         </li>
-                        <li href="#" ng-repeat="x in users | filter : finduser" class="list-group-item text-left">
-                            <img class="img-thumbnail" src="{{x.url}}">
+                        <li href="#" ng-repeat="x in friends | filter : finduser" class="list-group-item text-left">
+                            <img class="img-thumbnail" src="image">
                             <label class="name">
-                                {{x.board_id}}{{x.content}}<br>
+                                {{x.name}}<br>
                             </label>
                             <label class="pull-right">
                                 <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
@@ -134,13 +134,29 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
 <script>
-    var app = angular.module("myApp" ,[]);
-     app.controller("userCtrl",function($scope, $http){
-         $http.get("/api/board")
-                 .then(function(response) {
-                     $scope.users = response.data;
-                 });
-     });
+    var app0 = angular.module("frindListApp",[]);
+    app0.controller("friendListCtrl",function($scope, $http){
+
+        //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
+
+        var loginObject = {
+            user_id : 1
+        };
+
+        $http({
+            method: 'POST', //방식
+            url: "/user/showfriends", /* 통신할 URL */
+            data: loginObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+                .then(function(response) {
+                    $scope.friends = response.data;
+                });
+
+    });
+
+
+
 </script>
 <script src="js/bootstrap.js"></script>
 

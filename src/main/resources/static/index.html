@@ -17,6 +17,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>
     <script>
         $(document).ready(function(){
@@ -116,7 +117,7 @@
 
 <!--가운데 콘텐츠 화면분할-->
         <div class="col-sm-8 col-xs-12">
-                       <div id='homepage'></div>
+                       <div ng-include="'homepg.html'"></div>
             </div>
 
 
@@ -135,17 +136,39 @@
 
     <!--푸터-->
     <div ng-include="'mainFooter.html'"></div>
-
-
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="js/load.js"></script>
     <script src="js/bootstrap.js"></script>
-
     <script>
-        var app = angular.module("homeApp",[]);
-        app.controller("homeCtrl",function($scope,$http){
+        var app0 = angular.module("homeApp",[]);
+        app0.controller("homeCtrl",function($scope, $http){
 
-        });
+            //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
+
+            var loginObject = {
+                user_id : 1
+            };
+
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlist", /* 통신할 URL */
+                data: loginObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function(response) {
+                    $scope.boards = response.data;
+                });
+
+            });
+
+
+//        GET방식
+//        var app = angular.module("homeApp" ,[]);
+//        app.controller("homeCtrl",function($scope, $http){
+//            $http.get("/api/getboardlist")
+//                    .then(function(response) {
+//                        $scope.boards = response.data;
+//                    });
+//        });
 
     </script>
 </body>

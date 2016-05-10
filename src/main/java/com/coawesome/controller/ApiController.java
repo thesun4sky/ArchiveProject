@@ -133,6 +133,7 @@ public class ApiController {
   //친구리스트 보기 API
   @RequestMapping(method = RequestMethod.POST, value = "/user/showfriends")
   public ArrayList<UserResult> ShowFriends(@RequestBody User user){
+    System.out.println(user.getUser_id());
     int user_id = user.getUser_id();
     ArrayList<UserResult> friends = boardMapper.showFriendsById(user_id);
     return friends;
@@ -162,9 +163,19 @@ public class ApiController {
     System.out.println(user);
     int user_id = user.getUser_id();
     ArrayList<HashMap> boardList = (ArrayList<HashMap>) boardMapper.getBoardById(user_id);
+
+    return boardList;
+  }
+
+
+  //게시판 글 목록 보기
+  @RequestMapping(method = RequestMethod.GET, value = "/api/getboardlist")
+  public List<HashMap> getBoard() {
+    ArrayList<HashMap> boardList = (ArrayList<HashMap>) boardMapper.getBoard();
 //    boardList =
     return boardList;
   }
+
 
     //게시판 글 상세 보기(댓글리스트 추가)
     @RequestMapping(method = RequestMethod.GET, value = "/api/board/{board_id}")
