@@ -6304,7 +6304,7 @@ button.close {
 .carousel-caption-tag {
   position: absolute;
   right: 15%;
-  bottom: 80%;
+  bottom: 90%;
   left: 5%;
   z-index: 10;
   padding-top: 20px;
@@ -6316,6 +6316,33 @@ button.close {
 }
 .carousel-caption .btn {
   text-shadow: none;
+}
+@media (max-width:768px){
+  .carousel-caption-tag {
+    position: absolute;
+    right: 15%;
+    bottom: 94%;
+    left: 6%;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    text-align: left;
+    display: table-cell;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+  }
+  .carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: 3%;
+    left: 6%;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+  }
 }
 @media screen and (min-width: 768px) {
   .carousel-control .glyphicon-chevron-left,
