@@ -33,10 +33,10 @@ public class ApiController {
     }
   //게시판 생성 API
   @RequestMapping(method = RequestMethod.POST, value = "/api/board" )
-  public Result addBoard(@RequestParam("file") MultipartFile file, BoardVO board) throws Exception {
+  public Result addBoard(/*@RequestParam("file") MultipartFile file, */BoardVO board) {
     //TODO 중복체크
-      ImageVO image = fileUtils.parseInsertFileInfo(file,board);
-      boardMapper.insertBoardImage(image);
+      //ImageVO image = fileUtils.parseInsertFileInfo(file,board);
+      //boardMapper.insertBoardImage(image);
       boardMapper.insertBoard(board);
 //    }
 
@@ -162,19 +162,11 @@ public class ApiController {
   public List<HashMap> getBoardList(@RequestBody User user) {
     System.out.println(user);
     int user_id = user.getUser_id();
-    ArrayList<HashMap> boardList = (ArrayList<HashMap>) boardMapper.getBoardById(user_id);
+    ArrayList<HashMap> boardList = boardMapper.getBoardById(user_id);
 
     return boardList;
   }
 
-
-  //게시판 글 목록 보기
-  @RequestMapping(method = RequestMethod.GET, value = "/api/getboardlist")
-  public List<HashMap> getBoard() {
-    ArrayList<HashMap> boardList = (ArrayList<HashMap>) boardMapper.getBoard();
-//    boardList =
-    return boardList;
-  }
 
 
     //게시판 글 상세 보기(댓글리스트 추가)
@@ -213,4 +205,7 @@ public class ApiController {
 
         return new Result(0, "success");
     }
+
+
+
 }

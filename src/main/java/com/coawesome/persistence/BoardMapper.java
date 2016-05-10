@@ -64,14 +64,14 @@ public interface BoardMapper {
   void insertBoardImage(ImageVO image);
 
 
-  //게시판 글 목록 조회 TODO 디테일 작업전
-  @Select("select * from board left join board_image on board.board_id = board_image.board_id")
-  ArrayList<HashMap> getBoardById(@Param("user_id") int user_id);
+  //게시판 글 목록 조회( 친구들의 친구공개 게시글, 모든사람의 전체공개 게시글 목록)
+  @Select("SELECT board.user_id, board.public_level, board.catagory, board.likes_num, board.tag1, board.tag2, board.tag3," +
+          "board.line1_x, board.line1_y, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name from board " +
+          "INNER JOIN friend on board.user_id = friend.friend_id " +
+          "INNER JOIN board_image on board.board_id = board_image.board_id " +
+          "WHERE (friend.user_id = #{user_id} AND friend.status >= 1 AND board.public_level  <= 1) OR board.public_level = 0")
+  ArrayList<HashMap> getBoardById(int user_id);
 
-
-  //게시판 글 목록 조회 TODO 디테일 작업전
-  @Select("select * from board left join board_image on board.board_id = board_image.board_id")
-  ArrayList<HashMap> getBoard();
 
 
 
