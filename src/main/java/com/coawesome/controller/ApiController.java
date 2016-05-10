@@ -173,7 +173,7 @@ public class ApiController {
   public List<HashMap> getBoardListByCatagory(@RequestBody BoardVO board ) {
     int catagory = board.getCatagory();
     System.out.println(catagory);
-    ArrayList<HashMap> boardList = (ArrayList<HashMap>) boardMapper.getBoardByCatagory(catagory);
+    ArrayList<HashMap> boardList = boardMapper.getBoardByCatagory(catagory);
 //    boardList =
     return boardList;
   }
