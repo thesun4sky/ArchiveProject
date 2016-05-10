@@ -65,11 +65,12 @@ public interface BoardMapper {
 
 
   //게시판 글 목록 조회( 친구들의 친구공개 게시글, 모든사람의 전체공개 게시글 목록)
-  @Select("SELECT board.user_id, board.public_level, board.catagory, board.likes_num, board.tag1, board.tag2, board.tag3," +
+  @Select("SELECT DISTINCT user.name, board.public_level, board.catagory, board.likes_num, board.tag1, board.tag2, board.tag3," +
           "board.line1_x, board.line1_y, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name from board " +
           "INNER JOIN friend on board.user_id = friend.friend_id " +
           "INNER JOIN board_image on board.board_id = board_image.board_id " +
-          "WHERE (friend.user_id = #{user_id} AND friend.status >= 1 AND board.public_level  <= 1) OR board.public_level = 0")
+          "INNER JOIN user on board.user_id = user.user_id " +
+          "WHERE board.user_id != #{user_id}  AND ((friend.user_id = #{user_id} AND friend.status >= 1 AND board.public_level <= 1) OR board.public_level = 0)")
   ArrayList<HashMap> getBoardById(int user_id);
 
 
