@@ -168,6 +168,17 @@ public class ApiController {
   }
 
 
+  //카테고리별 목록 보기
+  @RequestMapping(method = RequestMethod.POST, value = "/api/boardlistByCatagory")
+  public List<HashMap> getBoardListByCatagory(@RequestBody BoardVO board ) {
+    int catagory = board.getCatagory();
+    System.out.println(catagory);
+    ArrayList<HashMap> boardList = (ArrayList<HashMap>) boardMapper.getBoardByCatagory(catagory);
+//    boardList =
+    return boardList;
+  }
+
+
 
     //게시판 글 상세 보기(댓글리스트 추가)
     @RequestMapping(method = RequestMethod.GET, value = "/api/board/{board_id}")

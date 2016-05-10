@@ -58,8 +58,8 @@ public interface BoardMapper {
   ArrayList<UserResult> showFriendsById(@Param("user_id") int user_id);
 
   //게시글 등록
-  @Insert("INSERT INTO board(user_id, public_level, tag1, tag2, tag3, line1, line1_x, line1_y, line2, line2_x, line2_y) VALUES(#{user_id}, #{public_level}, #{tag1}, #{tag2}, #{tag3}, #{line1}, #{line1_x}, #{line1_y}, #{line2}, #{line2_x}, #{line2_y})")
-    void insertBoard(BoardVO board);
+  @Insert("INSERT INTO board(user_id, public_level, tag1, tag2, tag3, line1, line1_x, line1_y, line2, line2_x, line2_y, catagory) VALUES(#{user_id}, #{public_level}, #{tag1}, #{tag2}, #{tag3}, #{line1}, #{line1_x}, #{line1_y}, #{line2}, #{line2_x}, #{line2_y}),#{catagory}")
+  void insertBoard(BoardVO board);
   @Insert("INSERT INTO board_image(board_id, original_file_name, stored_file_name, file_size, creator_id) VALUES(#{board_id}, #{original_file_name}, #{stored_file_name}, #{file_size}, #{creator_id})")
   void insertBoardImage(ImageVO image);
 
@@ -73,7 +73,9 @@ public interface BoardMapper {
           "WHERE board.user_id != #{user_id}  AND ((friend.user_id = #{user_id} AND friend.status >= 1 AND board.public_level <= 1) OR board.public_level = 0)")
   ArrayList<HashMap> getBoardById(int user_id);
 
-
+  //카테고리별 목록 조회
+  @Select("select * from board where catagory = #{catagory}")
+  ArrayList<HashMap> getBoardByCatagory(@Param("catagory") int catagory);
 
 
 
