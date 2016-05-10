@@ -91,9 +91,22 @@
                                 {{x.name}}<br>
                             </label>
                             <label class="pull-right">
-                                <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
-                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" href="#" title="Delete"></a>
-                                <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" href="#" title="Send message"></a>
+                                <div ng-switch on="x.status">
+                                    <div ng-switch-when="0">
+                                        Friend request
+                                        <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" ng-click="acceptFriend(x.user_id)" title="Ok"></a>
+                                        <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(x.user_id)" title="Delete"></a>
+                                        <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
+                                    </div>
+                                    <div ng-switch-when="1">
+                                        <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(x.user_id)" title="Delete"></a>
+                                        <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
+                                    </div>
+                                    <div ng-switch-when="2">
+                                        <p class="text-center">Me</p>
+                                    </div>
+                                </div>
+
                             </label>
                             <div class="break"></div>
                         </li>
@@ -153,7 +166,59 @@
                     $scope.friends = response.data;
                 });
 
+        $scope.acceptFriend = function (friend_id){
+            var acceptFriendObject =
+            {
+                user_id: friend_id, //임시로 1번사용자 지정
+                friend_id: 1
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/user/acceptFriend", /* 통신할 URL */
+                data: acceptFriendObject, /* 파라메터로 보낼 데이터 */
+                headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
+            })
+                    .success(function (data, status, headers, config) {
+                        if(data.msg == 'false') {
+                            alert('친구승낙 실패')
+                        }else{
+                            alert('친구승낙 성공');
+                            window.location.href = 'Toline.html';
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                        console.log(status);
+                    });
+        };
+
+        $scope.deleteFriend = function (friend_id){
+            var deleteFriendObject =
+            {
+                user_id: 1, //임시로 1번사용자 지정
+                friend_id: friend_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/user/deleteFriend", /* 통신할 URL */
+                data: deleteFriendObject, /* 파라메터로 보낼 데이터 */
+                headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
+            })
+                    .success(function (data, status, headers, config) {
+                        if(data.msg == 'false') {
+                            alert('친구삭제 실패')
+                        }else{
+                            alert('친구삭제 성공');
+                            window.location.href = 'Toline.html';
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                        console.log(status);
+                    });
+        };
     });
+
 
 
 

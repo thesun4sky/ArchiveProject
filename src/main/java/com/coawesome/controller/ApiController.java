@@ -75,6 +75,23 @@ public class ApiController {
     return new Result(0, "success");
   }
 
+  //친구삭제
+  @RequestMapping(method = RequestMethod.POST, value = "/user/deleteFriend")
+  public Result deleteFriend(@RequestBody Friend friend) {
+    System.out.println(friend);
+
+    boardMapper.deleteFriend(friend);
+
+    int friendID = friend.getFriend_id();
+    int userID = friend.getUser_id();
+    friend.setUser_id(friendID);
+    friend.setFriend_id(userID);
+    boardMapper.deleteFriend(friend);
+
+    return new Result(0, "success");
+  }
+
+
   //아이디 찾기
   @RequestMapping(method = RequestMethod.POST, value = "/user/findID")
   public Result findID(@RequestBody User user) {

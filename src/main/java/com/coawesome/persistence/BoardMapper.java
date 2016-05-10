@@ -18,15 +18,19 @@ public interface BoardMapper {
   @Insert("INSERT INTO friend(user_id, friend_id, status) VALUES(#{user_id}, #{user_id}, 2)")
   void initFriend(User user);
 
-  //친구추가
+  //친구신청
   @Insert("INSERT INTO friend(user_id, friend_id) VALUES(#{user_id}, #{friend_id})")
   void requestFriend(Friend firend);
 
   //친구승낙
-  @Update("UPDATE friend SET status='1' WHERE user_id = #{friend_id} and friend_id = #{user_id}")
+  @Update("UPDATE friend SET status='1' WHERE user_id = #{user_id} and friend_id = #{friend_id}")
   void updateFriend(Friend firend);
-  @Insert("INSERT INTO friend(user_id, friend_id, status) VALUES(#{user_id}, #{friend_id}, '1')")
+  @Insert("INSERT INTO friend(user_id, friend_id, status) VALUES(#{friend_id}, #{user_id}, '1')")
   void acceptFriend(Friend firend);
+
+  //친구 삭제
+  @Delete("DELETE FROM friend WHERE friend.user_id = #{user_id} AND friend.friend_id = #{friend_id}")
+  void deleteFriend(Friend firend);
 
   //친구신청 조희
   @Select("SELECT a.user_id, a.login_id, a.name, a.sex, a.born, a.email FROM user AS a INNER JOIN friend AS b  ON a.user_id = b.user_id WHERE b.friend_id = #{user_id} AND b.status = '0' ")
@@ -54,7 +58,7 @@ public interface BoardMapper {
   String Login(User user);
 
   //친구목록 조회
-  @Select("select friend.friend_id as user_id, user.name, user.email, user.sex, user.login_id, user.born from friend left outer join user on friend.friend_id = user.user_id where friend.user_id = #{user_id}")
+  @Select("select friend.friend_id, friend.user_id, user.name, user.email, user.sex, user.login_id, user.born, friend.status from friend INNER JOIN user on friend.user_id = user.user_id where friend.friend_id= #{user_id}")
   ArrayList<UserResult> showFriendsById(@Param("user_id") int user_id);
 
   //게시글 등록
@@ -76,7 +80,6 @@ public interface BoardMapper {
   //카테고리별 목록 조회
   @Select("select * from board where catagory = #{catagory}")
   ArrayList<HashMap> getBoardByCatagory(@Param("catagory") int catagory);
-
 
 
 

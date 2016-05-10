@@ -21,4 +21,5 @@ public class UserResult {
     private String sex;
     private int born;
     private String email;
+    private int status;
 }
