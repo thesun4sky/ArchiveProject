@@ -21,6 +21,7 @@ public class BoardVO {
     private int user_id;
     private int public_level;
     private int likes_num;
+    private int favorite_num;
     private String tag1;
     private String tag2;
     private String tag3;

@@ -144,6 +144,7 @@
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
+        $scope.name = "김태선";
         var loginObject = {
             user_id : 1
         };
@@ -157,6 +158,56 @@
                 .then(function(response) {
                     $scope.boards = response.data;
                 });
+
+        $scope.favoriteBoard = function (board_id){
+            var favoriteBoardObject =
+            {
+                user_id: 1, //임시로 1번사용자 지정
+                board_id: board_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/favoriteBoard", /* 통신할 URL */
+                data: favoriteBoardObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                    .success(function (data, status, headers, config) {
+                        if(data.msg == 'false') {
+                            alert('페이버릿 실패')
+                        }else{
+                            alert('페이버릿 성공');
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                        console.log(status);
+                    });
+        };
+
+        $scope.UnfavoriteBoard = function (board_id){
+            var UnfavoriteBoardObject =
+            {
+                user_id: 1, //임시로 1번사용자 지정
+                board_id: board_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/UnfavoriteBoard", /* 통신할 URL */
+                data: UnfavoriteBoardObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                    .success(function (data, status, headers, config) {
+                        if(data.msg == 'false') {
+                            alert('페이버릿취소 실패')
+                        }else{
+                            alert('페이버릿취소 성공');
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                        console.log(status);
+                    });
+        };
 
     });
 

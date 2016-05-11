@@ -3260,9 +3260,17 @@ fieldset[disabled] .btn-warning.active {
   color: #f0ad4e;
   background-color: #fff;
 }
+
+
+.btn-danger-onimage {
+  color: #fcb424;
+  background-color: rgba(201,48,44,0.3);
+  border-color: rgba(256,256,256,0.3);
+}
+
 .btn-danger {
   color: #fff;
-  background-color: #d9534f;
+  background-color: #ff8477;
   border-color: #d43f3a;
 }
 .btn-danger:hover,
@@ -3270,9 +3278,11 @@ fieldset[disabled] .btn-warning.active {
 .btn-danger.focus,
 .btn-danger:active,
 .btn-danger.active,
+.btn-danger-onimage.hover,
+.btn-danger-onimage.active,
 .open > .dropdown-toggle.btn-danger {
   color: #fff;
-  background-color: #c9302c;
+  background-color: #fcb424;
   border-color: #ac2925;
 }
 .btn-danger:active,
@@ -6317,10 +6327,24 @@ button.close {
   display: table-cell;
   text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
 }
+
+.carousel-caption-favorite{
+  position: absolute;
+  bottom: 80%;
+  right: 90%;
+  z-index: 10;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #fff;
+  text-align: left;
+  display: table-cell;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+}
+
 .carousel-caption-public_level{
   position: absolute;
   bottom: 80%;
-  left: 88%;
+  left: 85%;
   z-index: 10;
   padding-top: 20px;
   padding-bottom: 20px;

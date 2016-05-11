@@ -181,6 +181,7 @@ public class ApiController {
     int user_id = user.getUser_id();
     ArrayList<HashMap> boardList = boardMapper.getBoardById(user_id);
 
+
     return boardList;
   }
 
@@ -234,6 +235,29 @@ public class ApiController {
         return new Result(0, "success");
     }
 
+
+
+  //페이버릿하기
+  @RequestMapping(method = RequestMethod.POST, value = "/api/favoriteBoard")
+  public Result favoriteBoard(@RequestBody Favorite favorite) {
+    System.out.println(favorite);
+
+    boardMapper.addToFavorite(favorite);
+    boardMapper.addToBoard(favorite.getBoard_id());
+
+    return new Result(0, "success");
+  }
+
+  //페이버릿 취소하기
+  @RequestMapping(method = RequestMethod.POST, value = "/api/UnfavoriteBoard")
+  public Result UnfavoriteBoard(@RequestBody Favorite favorite) {
+    System.out.println(favorite);
+
+    boardMapper.deleteFromFavorite(favorite);
+    boardMapper.cancelToBoard(favorite.getBoard_id());
+
+    return new Result(0, "success");
+  }
 
 
 }
