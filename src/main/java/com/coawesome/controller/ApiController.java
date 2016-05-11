@@ -132,7 +132,7 @@ public class ApiController {
     if(!password.equals(input_password)) {
       return new Result(0, "fales");
     }
-    return new Result(0, "success");
+    return new Result(0, user.getLogin_id());
   }
 
 

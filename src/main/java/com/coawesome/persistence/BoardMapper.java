@@ -78,7 +78,7 @@ public interface BoardMapper {
   ArrayList<HashMap> getBoardById(int user_id);
 
   //카테고리별 목록 조회
-  @Select("select * from board where catagory = #{catagory}")
+  @Select("select * from board INNER JOIN board_image ON board.board_id = board_image.board_id WHERE catagory = #{catagory}")
   ArrayList<HashMap> getBoardByCatagory(@Param("catagory") int catagory);
 
 
