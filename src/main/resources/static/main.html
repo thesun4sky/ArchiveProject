@@ -335,7 +335,7 @@
             })
                     .success(function (data, status, headers, config) {
                         if(data){
-                            if (data.msg == 'success') {
+                            if (data.msg != 'fales') {
                                 window.location.href ='index.html';
                                 /* 맞음 */
                             }
