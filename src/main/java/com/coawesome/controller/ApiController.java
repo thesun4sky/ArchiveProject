@@ -33,10 +33,10 @@ public class ApiController {
     }
   //게시판 생성 API
   @RequestMapping(method = RequestMethod.POST, value = "/api/board" )
-  public Result addBoard(/*@RequestParam("file") MultipartFile file, */BoardVO board) {
+  public Result addBoard(@RequestParam("file") MultipartFile file, BoardVO board) throws Exception {
     //TODO 중복체크
-      //ImageVO image = fileUtils.parseInsertFileInfo(file,board);
-      //boardMapper.insertBoardImage(image);
+      ImageVO image = fileUtils.parseInsertFileInfo(file,board);
+      boardMapper.insertBoardImage(image);
       boardMapper.insertBoard(board);
 //    }
 
