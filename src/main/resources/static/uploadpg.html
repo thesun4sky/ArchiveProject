@@ -54,14 +54,14 @@
 <div class="container-fluid" style="margin-bottom: 50px;">
     <div class="row content">
         <!--좌측 화면분할-->
-        <div class="col-sm-2 col-xs-2 sidenav hidden-xs" >
+        <div class="col-sm-1 col-xs-1 sidenav hidden-xs" >
             <div class="container-fluid " >
-                <p>좌측 화면 분할 </p>
+                <p></p>
             </div>
         </div>
 
         <!--가운데 콘텐츠 화면분할-->
-        <div class="col-sm-8 col-xs-12">
+        <div class="col-sm-9 col-xs-12">
             <!--게시작 작성 버튼을 누르면 이동하는 페이지-->
             <div ng-include="'upload.html'"></div>
         </div>
@@ -150,6 +150,7 @@
         $scope.sendPost = function (){
             var dataObject =
             {
+               // file: $flow.files,
                 user_id: 1,
                 public_level: 1,
                 likes_num: 0,
@@ -167,7 +168,7 @@
                 method: 'POST', //방식
                 url: "/api/board", /* 통신할 URL */
                 data: dataObject, /* 파라메터로 보낼 데이터 */
-                headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
+                headers: {'Content-Type': 'multipart/form-data'} //헤더
             })
                     .success(function (data, status, headers, config) {
                         if(data.msg == 'false') {
