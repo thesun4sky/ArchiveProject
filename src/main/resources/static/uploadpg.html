@@ -124,15 +124,15 @@
             $scope.class_name2 = "right2";
             $scope.multi_message2 = "우측 정렬 되었습니다.";
         };
-      $scope.lines = [
-        {
-          "firstLine": "",
-          "secondLine": "",
-            "tag1":"",
-            "tag2":"",
-            "tag3":""
-        }
-      ];
+        $scope.lines = [
+            {
+                "firstLine": "",
+                "secondLine": "",
+                "tag1":"",
+                "tag2":"",
+                "tag3":""
+            }
+        ];
         $scope.positions = [
             {
                 "divtop1": 0,
@@ -148,40 +148,40 @@
 
 
         $scope.sendPost = function (){
-          var dataObject =
-          {
-            user_id: 1,
-            public_level: 1,
-            likes_num: 0,
-            tag1: $scope.lines.tag1,
-            tag2: $scope.lines.tag2,
-            tag3: $scope.lines.tag3,
-            line1: $scope.lines.firstLine,
-            line1_x: $scope.positions.divleft1,
-            line1_y: $scope.positions.divtop1,
-            line2: $scope.lines.secondLine,
-            line2_x: $scope.positions2.divleft2,
-            line2_y: $scope.positions2.divtop2
-          };
-        $http({
-            method: 'POST', //방식
-            url: "/api/board", /* 통신할 URL */
-            data: dataObject, /* 파라메터로 보낼 데이터 */
-            headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
-        })
-                .success(function (data, status, headers, config) {
-                    if(data.msg == 'false') {
-                        alert('게시글 업로드 실패')
-                    }else{
-                        alert('게시글 업로드 성공');
-                        window.location.href = 'index.html';
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                    console.log(status);
-                });
-    };
+            var dataObject =
+            {
+                user_id: 1,
+                public_level: 1,
+                likes_num: 0,
+                tag1: $scope.lines.tag1,
+                tag2: $scope.lines.tag2,
+                tag3: $scope.lines.tag3,
+                line1: $scope.lines.firstLine,
+                line1_x: $scope.positions.divleft1,
+                line1_y: $scope.positions.divtop1,
+                line2: $scope.lines.secondLine,
+                line2_x: $scope.positions2.divleft2,
+                line2_y: $scope.positions2.divtop2
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/board", /* 통신할 URL */
+                data: dataObject, /* 파라메터로 보낼 데이터 */
+                headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
+            })
+                    .success(function (data, status, headers, config) {
+                        if(data.msg == 'false') {
+                            alert('게시글 업로드 실패')
+                        }else{
+                            alert('게시글 업로드 성공');
+                            window.location.href = 'index.html';
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                        console.log(status);
+                    });
+        };
     });
     app3.directive('draggable', function () {
         return {
