@@ -87,8 +87,21 @@ public class ApiController {
     friend.setUser_id(friendID);
     friend.setFriend_id(userID);
     boardMapper.deleteFriend(friend);
-
     return new Result(0, "success");
+  }
+
+  //사용자 찾기
+  @RequestMapping(method = RequestMethod.GET, value = "/user/findUser/{name}")
+  public ArrayList<UserResult> findUser(@PathVariable("name") String name)  {
+    System.out.println("try to find name: " + name);
+
+    ArrayList<UserResult> find_User = boardMapper.findUser(name);
+    if(find_User == null){
+      System.out.println("해당하는 사용자없음");
+      return new ArrayList<>();
+    }
+    System.out.println(find_User);
+    return find_User;
   }
 
 
@@ -180,7 +193,6 @@ public class ApiController {
     System.out.println(user);
     int user_id = user.getUser_id();
     ArrayList<HashMap> boardList = boardMapper.getBoardById(user_id);
-
 
     return boardList;
   }

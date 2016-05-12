@@ -33,24 +33,29 @@
             <ul class="nav navbar-nav navbar-right text-right" style="margin-top: 11px">
                 <li><a  href="main.html" ><span class="glyphicon glyphicon-user"></span>  Log out</a></li>
             </ul>
-
-            <form class="navbar-form navbar-right hidden-xs" role="search" style="margin-top: 17px;" >
+            <form ng-controller="findCtrl" class="navbar-form navbar-right hidden-xs" role="search" style="margin-top: 17px;position:absolute;right:10%;">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for..." style="border-color :#771107;">
-						<span class="input-group-btn">
-							<button type="reset" class="btn btn-default" style="border-color :#771107;">
+
+                    <input type="text" class="form-control" placeholder="Search for..." style="border-color :#771107;" ng-model="find_user" ng-keypress="keyHit()">
+                    <div class="input-group-btn">
+							<button type="reset" ng-click="remove_find()" class="btn btn-default" style="border-color :#771107;">
 								<span class="glyphicon glyphicon-remove" style="color:#771107;">
 									<span class="sr-only">Close</span>
 								</span>
                             </button>
-							<button type="submit" id="srch1" class="btn btn-default search-default" style="background-color: #771107" >
+							<button type="submit" id="srch1" class="btn btn-default search-default" style="background-color: #771107;">
 								<span id ="span1" class="glyphicon glyphicon-search" style="color: white;border-color: #771107;">
 									<span class="sr-only">Search</span>
 								</span>
                             </button>
-						</span>
+                    </div>
                 </div>
+                <ul class="list-group" ng-show="find_user.length" style="z-index: 1030;background-color: white;width:100%">
+                    <li class="list-group-item" ng-repeat="x in users">{{x.name}}</li>
+                </ul>
             </form>
+
+            </div>
         </div>
 
         <div class="row">

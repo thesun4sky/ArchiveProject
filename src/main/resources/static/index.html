@@ -19,56 +19,6 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>
-    <script>
-        $(document).ready(function(){
-            $(function () {
-                // Remove Search if user Resets Form or hits Escape!
-                $('body, .navbar-collapse form[role="search"] button[type="reset"]').on('click keyup', function(event) {
-                    console.log(event.currentTarget);
-                    $("#srch1").removeClass("important");
-                    $("#srch1").addClass("search-default");
-                    if (event.which == 27 && $('.navbar-collapse form[role="search"]').hasClass('active') ||
-                            $(event.currentTarget).attr('type') == 'reset') {
-                        closeSearch();
-                    }
-                });
-
-                function closeSearch() {
-                    var $form = $('.navbar-collapse form[role="search"].active')
-                    $form.find('input').val('');
-                    $form.removeClass('active');
-                    $form.addClass('comeback');
-                }
-
-                // Show Search if form is not active // event.preventDefault() is important, this prevents the form from submitting
-                $(document).on('click', '.navbar-collapse form[role="search"]:not(.active) button[type="submit"]', function(event) {
-                    event.preventDefault();
-                    $("#srch1").removeClass("search-default");
-                    $("#srch1").addClass("important");
-                    var $form = $(this).closest('form'),
-                            $input = $form.find('input');
-                    $form.removeClass('comeback');
-                    $form.addClass('active');
-                    $input.focus();
-                });
-
-                // Autofocus for collapsed mode
-                $(document).on('click', '.navbar-header button.navbar-toggle:last-of-type', function(event) {
-                    var $form = $('.navbar-collapse form[role="search"]').find('input').focus();
-                });
-
-                // ONLY FOR DEMO // Please use $('form').submit(function(event)) to track from submission
-                // if your form is ajax remember to call `closeSearch()` to close the search container
-                $(document).on('click', '.navbar-collapse form[role="search"].active button[type="submit"]', function(event) {
-                    event.preventDefault();
-                    var $form = $(this).closest('form'),
-                            $input = $form.find('input');
-                    $('#showSearchTerm').text($input.val());
-                    closeSearch()
-                });
-            });
-        });
-    </script>
 
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
@@ -100,7 +50,7 @@
 <body ng-app="homeApp" ng-controller="homeCtrl">
 
 <!--메인헤더-->
-<div ng-include="'mainHeader.html'"></div>
+<div ng-include="'mainHeader.html'" ng-controller="findCtrl"></div>
 <!--서브헤더-->
 <div ng-include="'subHeader.html'"></div>
 
@@ -136,10 +86,37 @@
 
 <!--푸터-->
 <div ng-include="'mainFooter.html'"></div>
-<script src="js/load.js"></script>
+<script src="js/searchform.js"></script>
 <script src="js/bootstrap.js"></script>
 <script>
     var app0 = angular.module("homeApp",[]);
+    app0.filter('unique', function() {
+        return function(collection, keyname) {
+            var output = [],
+                    keys = [];
+
+            angular.forEach(collection, function(item) {
+                var key = item[keyname];
+                if(keys.indexOf(key) === -1) {
+                    keys.push(key);
+                    output.push(item);
+                }
+            });
+
+            return output;
+        };
+    });
+    app0.controller("findCtrl",function($scope,$http){
+        $scope.find_user = "";
+
+        $scope.keyHit = function() {
+
+            $http.get("/user/findUser/"+$scope.find_user)
+                    .then(function (response) {
+                        $scope.users = response.data;
+                    });
+        }
+        });
     app0.controller("homeCtrl",function($scope, $http){
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
