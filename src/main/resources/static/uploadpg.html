@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myUpload">
+<html lang="en" ng-app="ngFileUpload">
 <head>
     <title>Upload</title>
     <link rel="icon" href="img/logoarchive.png" />
@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/navi.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/triangle.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
@@ -90,9 +91,10 @@
 <!-- or include the files separately -->
 <script src="flow.js/dist/flow.min.js"></script>
 <script src="ng-flow/dist/ng-flow.min.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
 <script>
-    var app3 = angular.module("myUpload",['flow']);
-    app3.controller("uploadCtrl", function($scope, $http) {
+    ngFileUpload.controller("uploadCtrl", function($scope, $log, Upload, $timeout) {
         $scope.openAccess = [
             "전체공개", "Toline", "나만보기"
         ];
@@ -110,7 +112,6 @@
         $scope.rightClass = function () {
             $scope.class_name = "right";
             $scope.multi_message = "우측 정렬 되었습니다.";
-
         };
         $scope.leftClass2 = function () {
             $scope.class_name2 = "left2";
@@ -146,45 +147,54 @@
             }
         ];
 
+        var BoardVO = {};
 
-        $scope.sendPost = function (){
-            var dataObject =
-            {
-               // file: $flow.files,
-                user_id: 1,
-                public_level: 1,
-                likes_num: 0,
-                tag1: $scope.lines.tag1,
-                tag2: $scope.lines.tag2,
-                tag3: $scope.lines.tag3,
-                line1: $scope.lines.firstLine,
-                line1_x: $scope.positions.divleft1,
-                line1_y: $scope.positions.divtop1,
-                line2: $scope.lines.secondLine,
-                line2_x: $scope.positions2.divleft2,
-                line2_y: $scope.positions2.divtop2
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/board", /* 통신할 URL */
-                data: dataObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'multipart/form-data'} //헤더
-            })
-                    .success(function (data, status, headers, config) {
-                        if(data.msg == 'false') {
-                            alert('게시글 업로드 실패')
-                        }else{
-                            alert('게시글 업로드 성공');
-                            window.location.href = 'index.html';
-                        }
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
+        $scope.uploadPic = function(file)  {
+
+                file.upload = Upload.upload({
+                    url: '/api/board',
+                    data: {
+                        file:file,
+                        user_id:1,
+                        public_level:1,
+                        catagory:1,
+                        likes_num: 0,
+                        tag1: $scope.lines.tag1,
+                        tag2: $scope.lines.tag2,
+                        tag3: $scope.lines.tag3,
+                        line1: $scope.lines.firstLine,
+                        line1_x: $scope.positions.divleft1,
+                        line1_y: $scope.positions.divtop1,
+                        line2: $scope.lines.secondLine,
+                        line2_x: $scope.positions2.divleft2,
+                        line2_y: $scope.positions2.divtop2
+                }})
+                file.upload.then(function (response) {
+                        $timeout(function () {
+                            file.result = response.data;
+                        });
+                    }, function (response) {
+                        if (response.status > 0){
+                            $scope.errorMsg = response.status + ': ' + response.data;
+                            alert("response.status > 0");}
+                    }, function (evt) {
+                        // Math.min is to fix IE which reports 200% sometimes
+                        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                     });
+
+
+
         };
-    });
-    app3.directive('draggable', function () {
+
+
+
+
+
+
+    })
+
+
+   /* app3.directive('draggable', function () {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -198,7 +208,7 @@
                 });
             }
         };
-    });
+    });*/
 
 </script>
 

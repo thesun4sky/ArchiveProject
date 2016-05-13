@@ -2,32 +2,24 @@
 <div class="jumbotron text-center" style="margin-top: 20px">
     <h3 style="margin-bottom: 60px;">사진을 선택하시고 두줄 평을 입력하세요 <small>게시물당 사진은 <mark>1장만</mark> 업로드 가능합니다.</small></h3>
     <div class="row">
-        <form ng-submit="sendPost()">
+
+
+
+
+
+        <form name="myForm">
             <div class="col-lg-6">
-                <div flow-init="{singleFile:true}"
-                     flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]">
-                    <div>
-                        <span class="btn btn-primary " ng-show="!$flow.files.length" flow-btn>Select image</span>
-                        <span class="btn btn-info" ng-show="$flow.files.length" flow-btn>Change</span>
-                        <span class="btn btn-danger" ng-show="$flow.files.length" ng-click="$flow.cancel()">Remove</span>
-                    </div>
-                    <div class="thumbnail" ng-show="!$flow.files.length">
-                        <img src="img/paris.jpg" style="width:500px; height:300px;" />
-                    </div>
-                    <div class="thumbnail" ng-show="$flow.files.length">
-                        <img flow-img="$flow.files[0]" style="width:100%; max-height:420px;" />
-                        <div class="carousel-caption-line">
-                            <div>
-                                <p class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: positions.divtop1}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;">{{lines.firstLine}}</p>
-                            </div>
-                            <div>
-                                <p class="example" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{top: positions2.divtop2}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;">{{lines.secondLine}}</p>
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" >사진</label>
+                    <div class="col-sm-10">
+                        <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required
+                               ngf-model-invalid="errorFile">
+                        <i ng-show="myForm.file.$error.required">*required</i><br>
+                        <i ng-show="myForm.file.$error.maxSize">File too large
+                            {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+                        <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="col-lg-6">
@@ -80,9 +72,67 @@
                         <input type="number" ng-init="positions2.divtop2=-50" ng-model="positions2.divtop2"/>
                     </div>
                 </div>
-                <button type="submit">Send</button>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" ></label>
+                    <div class="col-sm-10">
+                    <button ng-disabled="!myForm.$valid" ng-click="uploadPic(picFile)">Submit</button>
+                    <span class="progress" ng-show="picFile.progress >= 0">
+                    <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div></span>
+                        <span ng-show="picFile.result">Upload Successful</span>
+                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                    </div>
+                </div>
+
             </div>
         </form>
+
+
+
+
+
+
+
+        <!--<form class="form-horizontal" name="myForm">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >제목</label>
+                <div class="col-sm-10">
+                    <input type="text" name="title" ng-model="title" size="30" required>
+                    <i ng-show="myForm.title.$error.required">*required</i><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >내용</label>
+                <div class="col-sm-10">
+                    <input type="text" name="content" ng-model="content" size="30" required>
+                    <i ng-show="myForm.content.$error.required">*required</i>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >사진</label>
+                <div class="col-sm-10">
+                    <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required
+                           ngf-model-invalid="errorFile">
+                    <i ng-show="myForm.file.$error.required">*required</i><br>
+                    <i ng-show="myForm.file.$error.maxSize">File too large
+                        {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+                    <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" ></label>
+                <div class="col-sm-10">
+                    <button ng-disabled="!myForm.$valid"
+                            ng-click="uploadPic(picFile)">Submit</button>
+            <span class="progress" ng-show="picFile.progress >= 0">
+              <div style="width:{{picFile.progress}}%"
+                   ng-bind="picFile.progress + '%'"></div>
+            </span>
+                    <span ng-show="picFile.result">Upload Successful</span>
+                    <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                </div>
+            </div>
+        </form>-->
+
     </div>
 </div>
-
