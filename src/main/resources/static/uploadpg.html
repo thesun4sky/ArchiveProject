@@ -96,10 +96,19 @@
 <script>
     ngFileUpload.controller("uploadCtrl", function($scope, $log, Upload, $timeout) {
         $scope.openAccess = [
-            "전체공개", "Toline", "나만보기"
+            {id :1 ,title :"전체공개"},
+            {id :2, title :"Toline"},
+            {id :3, title :"나만보기"}
         ];
         $scope.catagory = [
-            "영화", "연극", "콘서트", "드라마", "전시회", "음식", "여행", "음악"
+            {id :1 , title :"영화"},
+            {id :2 , title :"연극"},
+            {id :3 , title :"콘서트"},
+            {id :4 , title :"드라마"},
+            {id :5 , title :"전시회"},
+            {id :6 , title :"음식"},
+            {id :7 , title :"여행"},
+            {id :8 , title :"음악"}
         ];
         $scope.leftClass = function () {
             $scope.class_name = "left";
@@ -125,6 +134,7 @@
             $scope.class_name2 = "right2";
             $scope.multi_message2 = "우측 정렬 되었습니다.";
         };
+
         $scope.lines = [
             {
                 "firstLine": "",
@@ -136,37 +146,33 @@
         ];
         $scope.positions = [
             {
-                "divtop1": 0,
-                "divleft1": 0
+                "divtop1": 0
             }
         ];
         $scope.positions2 = [
             {
-                "divtop2": 0,
-                "divleft2": 0
+                "divtop2": 0
             }
         ];
 
         var BoardVO = {};
 
-        $scope.uploadPic = function(file)  {
+        $scope.uploadPic = function(file,p_level,c_list)  {
 
                 file.upload = Upload.upload({
                     url: '/api/board',
                     data: {
                         file:file,
                         user_id:1,
-                        public_level:1,
-                        catagory:1,
+                        public_level:p_level.id,
+                        catagory:c_list.id,
                         likes_num: 0,
                         tag1: $scope.lines.tag1,
                         tag2: $scope.lines.tag2,
                         tag3: $scope.lines.tag3,
                         line1: $scope.lines.firstLine,
-                        line1_x: $scope.positions.divleft1,
                         line1_y: $scope.positions.divtop1,
                         line2: $scope.lines.secondLine,
-                        line2_x: $scope.positions2.divleft2,
                         line2_y: $scope.positions2.divtop2
                 }})
                 file.upload.then(function (response) {
