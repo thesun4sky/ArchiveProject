@@ -103,4 +103,24 @@ public interface BoardMapper {
   void deleteFromFavorite(Favorite favorite);
   @Update("UPDATE board SET favorite_num=favorite_num-1 WHERE board_id = #{board_id}")
   void cancelToBoard(int board_id);
+
+
+
+
+
+  //게시판 삭제
+  @Select("SELECT stored_file_name FROM board_image WHERE board_id = #{board_id}")
+  String getFileName(int board_id);
+  @Delete("DELETE FROM board WHERE board_id = #{board_id}")
+  void deleteBoard(int board_id);
+  @Delete("DELETE FROM board_image WHERE board_id = #{board_id}")
+  void deleteBoardImage(int board_id);
+
+
+
+
+
+
+
+
 }

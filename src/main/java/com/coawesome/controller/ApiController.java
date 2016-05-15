@@ -35,6 +35,7 @@ public class ApiController {
   @RequestMapping(method = RequestMethod.POST, value = "/api/board" )
   public Result addBoard(@RequestParam("file") MultipartFile file, BoardVO board) throws Exception {
     //TODO 중복체크
+    System.out.println("board: " + board);
       ImageVO image = fileUtils.parseInsertFileInfo(file,board);
       boardMapper.insertBoardImage(image);
       boardMapper.insertBoard(board);
@@ -42,6 +43,26 @@ public class ApiController {
 
     return new Result(0, "success");
   }
+
+
+  //board_id로 게시글 삭제 API
+  @RequestMapping(method = RequestMethod.POST, value = "/api/deleteboard" )
+  public Result deleteBoard(@RequestBody BoardVO board) throws Exception {
+    int boardId = board.getBoard_id();
+    System.out.println("board_id: " + boardId);
+    String FileName = boardMapper.getFileName(boardId);
+    System.out.println("fileName: " + FileName);
+    boolean isDeleted = fileUtils.deleteFile(FileName);
+    if(isDeleted)
+      {
+        System.out.println("isDeleted: " + isDeleted);
+        boardMapper.deleteBoardImage(boardId); // 잘 만들어진 DB경우 한번에 지워질듯
+        boardMapper.deleteBoard(boardId);
+      }
+    return new Result(0, "success");
+  }
+
+
 
   //회원가입
   @RequestMapping(method = RequestMethod.POST, value = "/user/join")

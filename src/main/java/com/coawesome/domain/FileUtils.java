@@ -18,6 +18,11 @@ public class FileUtils {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
+    public boolean deleteFile(String fileName){
+        File file = new File(filePath+fileName);
+        return (file.delete());
+    }
+
     public ImageVO parseInsertFileInfo(MultipartFile multipartFile,BoardVO board) throws Exception{
 
         String originalFileName = null;
