@@ -81,6 +81,16 @@
                         <a href="#" class="btn btn-xs btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span></a>
                     </div>
                 </div>
+                <div>
+                    <div ng-switch on="!!x.replier">
+                        <div ng-switch-when="true">
+                            <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;> <p style="display: inline-block">{{x.replier}} : {{x.reply}} (공감: {{x.likes_num}} )</p>
+                        </div>
+                        <div ng-switch-default>
+                            <input ng-enter="commitReply()" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

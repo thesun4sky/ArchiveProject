@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reply {
-    private int reply_id;
     private int user_id;
     private int board_id;
     private int likes_num;
