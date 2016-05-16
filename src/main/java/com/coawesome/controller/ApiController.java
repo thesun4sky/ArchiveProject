@@ -35,11 +35,12 @@ public class ApiController {
   @RequestMapping(method = RequestMethod.POST, value = "/api/board" )
   public Result addBoard(@RequestParam("file") MultipartFile file, BoardVO board) throws Exception {
     //TODO 중복체크
+    boardMapper.insertBoard(board);
+    int storedBoardId = boardMapper.selectBoardId(board);
+    board.setBoard_id(storedBoardId);
     System.out.println("board: " + board);
-      ImageVO image = fileUtils.parseInsertFileInfo(file,board);
-      boardMapper.insertBoardImage(image);
-      boardMapper.insertBoard(board);
-//    }
+    ImageVO image = fileUtils.parseInsertFileInfo(file,board);
+    boardMapper.insertBoardImage(image);
 
     return new Result(0, "success");
   }
