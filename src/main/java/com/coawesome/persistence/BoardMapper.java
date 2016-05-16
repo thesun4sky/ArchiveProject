@@ -64,10 +64,12 @@ public interface BoardMapper {
   //사용자 검색
   @Select("select * from user where name Like  CONCAT('%', #{name}, '%')")
   ArrayList<UserResult> findUser(@Param("name") String name);
-  //게시글 등록
 
+  //게시글 등록
   @Insert("INSERT INTO board(user_id, public_level, tag1, tag2, tag3, line1, line1_x, line1_y, line2, line2_x, line2_y, catagory) VALUES(#{user_id}, #{public_level}, #{tag1}, #{tag2}, #{tag3}, #{line1}, #{line1_x}, #{line1_y}, #{line2}, #{line2_x}, #{line2_y},#{catagory})")
   void insertBoard(BoardVO board);
+  @Select("SELECT board_id FROM board where user_id = #{user_id} AND line1 = #{line1} AND line2 = #{line2}")
+  int selectBoardId(BoardVO board);
   @Insert("INSERT INTO board_image(board_id, original_file_name, stored_file_name, file_size, creator_id) VALUES(#{board_id}, #{original_file_name}, #{stored_file_name}, #{file_size}, #{creator_id})")
   void insertBoardImage(ImageVO image);
 
