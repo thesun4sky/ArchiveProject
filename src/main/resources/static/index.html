@@ -169,6 +169,7 @@
                             alert('페이버릿 실패')
                         }else{
                             alert('페이버릿 성공');
+                            $scope.favorite = 1;
                         }
                     })
                     .error(function (data, status, headers, config) {
@@ -194,6 +195,7 @@
                             alert('페이버릿취소 실패')
                         }else{
                             alert('페이버릿취소 성공');
+                            $scope.favorite = 0;
                         }
                     })
                     .error(function (data, status, headers, config) {
