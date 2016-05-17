@@ -1,9 +1,7 @@
 package com.coawesome.controller;
 
-import com.coawesome.domain.Friend;
 import com.coawesome.domain.Result;
 import com.coawesome.domain.User;
-import com.coawesome.persistence.BoardMapper;
 import com.coawesome.persistence.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

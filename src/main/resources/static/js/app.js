@@ -37,8 +37,8 @@ angular.module("homeApp",[
                 }
             })
 
-            .state('catagorypg', {
-                url: '/Catagorypg',
+            .state('catagory', {
+                url: '/catagory',
                 templateUrl: 'catagory.html',
                 controller: 'catagoryCtrl',
                 controllerAs: 'catagory',
