@@ -65,54 +65,8 @@ public class ApiController {
 
 
 
-  //회원가입
-  @RequestMapping(method = RequestMethod.POST, value = "/user/join")
-  public Result addUser(@RequestBody User user) {
-    System.out.println("user: " + user);
 
-    boardMapper.addUser(user);
-    boardMapper.initFriend(user); //친구리스트에 자기자신 추가
-
-    return new Result(0, "success");
-  }
-
-  //친구요청
-  @RequestMapping(method = RequestMethod.POST, value = "/user/requestFriend")
-  public Result requestFriend(@RequestBody Friend friend) {
-    System.out.println(friend);
-
-    boardMapper.requestFriend(friend);
-
-    return new Result(0, "success");
-  }
-
-  //친구승낙
-  @RequestMapping(method = RequestMethod.POST, value = "/user/acceptFriend")
-  public Result acceptFriend(@RequestBody Friend friend) {
-    System.out.println(friend);
-
-    boardMapper.updateFriend(friend);
-    boardMapper.acceptFriend(friend);
-
-    return new Result(0, "success");
-  }
-
-  //친구삭제
-  @RequestMapping(method = RequestMethod.POST, value = "/user/deleteFriend")
-  public Result deleteFriend(@RequestBody Friend friend) {
-    System.out.println(friend);
-
-    boardMapper.deleteFriend(friend);
-
-    int friendID = friend.getFriend_id();
-    int userID = friend.getUser_id();
-    friend.setUser_id(friendID);
-    friend.setFriend_id(userID);
-    boardMapper.deleteFriend(friend);
-    return new Result(0, "success");
-  }
-
-  //사용자 찾기
+  //사용자 검색
   @RequestMapping(method = RequestMethod.GET, value = "/user/findUser/{name}")
   public ArrayList<UserResult> findUser(@PathVariable("name") String name)  {
     System.out.println("try to find name: " + name);
@@ -126,70 +80,6 @@ public class ApiController {
     return find_User;
   }
 
-
-  //아이디 찾기
-  @RequestMapping(method = RequestMethod.POST, value = "/user/findID")
-  public Result findID(@RequestBody User user) {
-    System.out.println("try to find id: " + user);
-
-    String found_id = boardMapper.findID(user);
-    if(found_id == null){
-      System.out.println("해당하는 ID없음");
-      return new Result(0, "false");
-    }
-    System.out.println(found_id);
-    return new Result(0, found_id);
-  }
-
-
-  //비밀번호 찾기
-  @RequestMapping(method = RequestMethod.POST, value = "/user/findPASS")
-  public Result findPASS(@RequestBody User user) {
-    System.out.println("try to find pass: " + user);
-
-    String found_pass = boardMapper.findPASS(user);
-    if(found_pass == null){
-      System.out.println("해당하는 password 없음");
-      return new Result(0, "false");
-    }
-    System.out.println(found_pass);
-    return new Result(0, found_pass);
-  }
-
-  //로그인
-  @RequestMapping(method = RequestMethod.POST, value = "/user/login")
-  public Result Login(@RequestBody User user) {
-    System.out.println("try to login user: " + user);
-
-    String password = boardMapper.Login(user);
-    String input_password = user.getPassword();
-    System.out.println(password + " : " +  user.getPassword());
-    if(!password.equals(input_password)) {
-      return new Result(0, "fales");
-    }
-    return new Result(0, user.getLogin_id());
-  }
-
-
-  //친구신청조회
-  @RequestMapping(method = RequestMethod.POST, value = "/user/checkFriendRequest")
-  public ArrayList<UserResult> checkFriendRequest(@RequestBody User user) {
-    System.out.println(user + "친구신청 목록");
-    int user_id = user.getUser_id();
-    ArrayList<UserResult> result = boardMapper.checkFriendRequest(user_id);
-
-    return result;
-  }
-
-
-  //친구리스트 보기 API
-  @RequestMapping(method = RequestMethod.POST, value = "/user/showfriends")
-  public ArrayList<UserResult> ShowFriends(@RequestBody User user){
-    System.out.println(user.getUser_id());
-    int user_id = user.getUser_id();
-    ArrayList<UserResult> friends = boardMapper.showFriendsById(user_id);
-    return friends;
-  }
 
 
   //댓글 쓰기 API
@@ -229,8 +119,6 @@ public class ApiController {
 //    boardList =
     return boardList;
   }
-
-
 
     //게시판 글 상세 보기(댓글리스트 추가)
     @RequestMapping(method = RequestMethod.GET, value = "/api/board/{board_id}")
