@@ -23,7 +23,7 @@
      </div>-->
 </div>
 <!--업로드 되는 프레임 구성 화면-->
-<div class="container-fluid" style="margin-left: -20px;margin-right: -20px">
+<div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
     <div class="row">
         <div class="col-lg-6 text-center" ng-repeat="x in boards">
             <div class="thumbnail">
@@ -49,18 +49,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-caption-line">
+                <div class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div>
-                        <h1 class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: x.line2_y-30}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%; z-index: 12">"</h1>
+                        <h1 class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: x.line1_y-90, left :-{{x.line1.length+4}}+'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">"</h1>
                     </div>
                     <div>
-                        <p class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: x.line1_y}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;">{{x.line1}}</p>
+                        <p class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: x.line1_y}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{x.line1}}</p>
                     </div>
                     <div>
-                        <p class="example" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{top: x.line2_y}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;">{{x.line2}}</p>
+                        <p class="example" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{top: x.line2_y}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{x.line2}}</p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-bottom:10px;">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left">
                     <img src="img/someone.png" class="img-circle" alt="user" width=15%; height=15%;>
                     <p style="display: inline-block">{{x.name}}</p>
@@ -68,17 +68,13 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
                         <p><strong>{{x.tag1}} / {{x.tag2}} / {{x.tag3}}</strong></p>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+                    <div class="col-lg-3 col-md-3 col-sm-3 hidden-xs text-right">
+                        <div class="btn-group-sm">
                         <!--<a href="#" class="btn btn-sm btn-danger " style="border-radius: 50%;visibility: hidden;"><span class="glyphicon glyphicon-heart-empty"></span></a>-->
                         <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span></a>
                         <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-comment"></span></a>
                         <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-bell"></span></a>
-                    </div>
-                    <div class="hidden-lg hidden-md hidden-sm col-xs-3">
-                        <!--<a href="#" class="btn btn-xs btn-danger " style="border-radius: 50%;visibility: hidden;"><span class="glyphicon glyphicon-heart-empty"></span></a>-->
-                        <a href="#" class="btn btn-xs btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span></a>
-                        <a href="#" class="btn btn-xs btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span></a>
-                        <a href="#" class="btn btn-xs btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span></a>
+                        </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div ng-switch on="!!x.replier">
