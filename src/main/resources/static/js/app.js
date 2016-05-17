@@ -4,7 +4,8 @@
 
 angular.module("homeApp",[
         'ngAnimate',
-        'ui.router'
+        'ui.router',
+        'ngFileUpload'
     ])
 
     .filter('unique', function() {
