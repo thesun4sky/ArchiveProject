@@ -233,6 +233,7 @@ angular.module("homeApp",[
             })
                 .then(function (response) {
                     $scope.catagory_boards = response.data;
+                    //$scope.$apply();
                 })
         };
     })
@@ -409,6 +410,68 @@ angular.module("homeApp",[
                 });
         };
 
+
+        $http({
+            method: 'POST', //방식
+            url: "/user/showfriends", /* 통신할 URL */
+            data: loginObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function(response) {
+                $scope.friends = response.data;
+            });
+
+        $scope.acceptFriend = function (friend_id){
+            var acceptFriendObject =
+            {
+                user_id: friend_id, //임시로 1번사용자 지정
+                friend_id: 1
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/user/acceptFriend", /* 통신할 URL */
+                data: acceptFriendObject, /* 파라메터로 보낼 데이터 */
+                headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if(data.msg == 'false') {
+                        alert('친구승낙 실패')
+                    }else{
+                        alert('친구승낙 성공');
+                        window.location.href = 'Toline.html';
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+        $scope.deleteFriend = function (friend_id){
+            var deleteFriendObject =
+            {
+                user_id: 1, //임시로 1번사용자 지정
+                friend_id: friend_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/user/deleteFriend", /* 통신할 URL */
+                data: deleteFriendObject, /* 파라메터로 보낼 데이터 */
+                headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if(data.msg == 'false') {
+                        alert('친구삭제 실패')
+                    }else{
+                        alert('친구삭제 성공');
+                        window.location.href = 'Toline.html';
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
     });
 
 

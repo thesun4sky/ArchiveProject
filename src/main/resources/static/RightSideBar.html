@@ -1,7 +1,5 @@
 
-
-
-                <div class="jumbotron list-content">
+                <div class=" list-content">
 
                     <ul class="list-group">
                         <form class="navbar-form " role="search" style="text-align: right">
@@ -13,24 +11,20 @@
                             </div>
                         </form>
                         <li href="#" class="list-group-item title">
-                            연결고리
+                            My Friends
                         </li>
                         <li href="#" ng-repeat="x in friends | filter : finduser" class="list-group-item text-left">
-                            <img class="img-thumbnail" src="img/someone.png">
+                            <img class="img-thumbnail" src="img/someone.png" style="width: 30px; height: 30px">
                             <label class="name">
                                 {{x.name}}<br>
                             </label>
                             <label class="pull-right">
                                 <div ng-switch on="x.status">
                                     <div ng-switch-when="0">
-                                        Friend request
-                                        <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" ng-click="acceptFriend(x.user_id)" title="Ok"></a>
-                                        <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(x.user_id)" title="Delete"></a>
-                                        <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
+                                        <label style="color: darkred; align: right" >●</label>
                                     </div>
                                     <div ng-switch-when="1">
-                                        <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(x.user_id)" title="Delete"></a>
-                                        <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
+                                        <label style="color: mediumseagreen; align: right" >●</label>
                                     </div>
                                     <div ng-switch-when="2">
                                         <p class="text-center">Me</p>
