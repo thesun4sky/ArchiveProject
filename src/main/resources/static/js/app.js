@@ -220,10 +220,9 @@ angular.module("homeApp",[
             {catagory :8, link :"music", title: "음악", icon1: "glyphicon" , icon2 : "glyphicon-music"}
         ];
 
-        $scope.catagoryPost = function (menu) {
+        $scope.catagoryPost = function(menu) {
 
             var catagoryObject =
-
             {catagory: menu.catagory};
 
             $http({
@@ -233,7 +232,7 @@ angular.module("homeApp",[
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .then(function (response) {
-                    $scope.boards = response.data;
+                    $scope.catagory_boards = response.data;
                 })
         };
     })
