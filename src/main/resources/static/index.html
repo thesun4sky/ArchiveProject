@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="homeApp">
 <head>
     <title>Main</title>
     <link rel="icon" href="img/logoarchive.png" />
@@ -17,9 +17,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
     <script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>
-
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="ng-flow/dist/ng-flow-standalone.min.js"></script>
+    <script src="flow.js/dist/flow.min.js"></script>
+    <script src="ng-flow/dist/ng-flow.min.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
         .navbar {
@@ -47,13 +56,11 @@
     </style>
 
 </head>
-<body ng-app="homeApp" ng-controller="homeCtrl">
-
+<body ng-controller="indexCtrl">
 <!--메인헤더-->
 <div ng-include="'mainHeader.html'" ng-controller="findCtrl"></div>
 <!--서브헤더-->
 <div ng-include="'subHeader.html'"></div>
-
 
 <!--화면 분할 시작-->
 <div class="container-fluid" style="margin-bottom: 50px;">
@@ -61,13 +68,13 @@
         <!--좌측 화면분할-->
         <div class="col-sm-1 col-xs-1 sidenav hidden-xs" >
             <div class="container-fluid " >
-                <p> </p>
+                <p>좌측 화면 분할</p>
             </div>
         </div>
 
         <!--가운데 콘텐츠 화면분할-->
-        <div class="col-sm-9 col-xs-12">
-            <div ng-include="'homepg.html'"></div>
+        <div ui-view class="col-sm-9 col-xs-12">
+            <!--<div ng-include="'homepg.html'"></div>-->
         </div>
 
 
@@ -82,167 +89,13 @@
         </div>
     </div>
 </div>
-
+<script src="js/searchform.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/app.js"></script>
 
 <!--푸터-->
 <div ng-include="'mainFooter.html'"></div>
-<script src="js/searchform.js"></script>
-<script src="js/bootstrap.js"></script>
-<script>
-    var app0 = angular.module("homeApp",[]);
-    app0.filter('unique', function() {
-        return function(collection, keyname) {
-            var output = [],
-                    keys = [];
-
-            angular.forEach(collection, function(item) {
-                var key = item[keyname];
-                if(keys.indexOf(key) === -1) {
-                    keys.push(key);
-                    output.push(item);
-                }
-            });
-
-            return output;
-        };
-    });
-//   댓글 엔터 입력 처리
-//    app0.directive('ngEnter', function () {
-//        return function (scope, element, attrs) {
-//            element.bind("keydown keypress", function (event) {
-//                if(event.which === 13) {
-//                    scope.$apply(function (){
-//                        scope.$eval(attrs.ngEnter);
-//                    });
-//
-//                    event.preventDefault();
-//                }
-//            });
-//        };
-//    });
 
 
-    app0.controller("findCtrl",function($scope,$http){
-        $scope.find_user = "";
-
-        $scope.keyHit = function() {
-
-            $http.get("/user/findUser/"+$scope.find_user)
-                    .then(function (response) {
-                        $scope.users = response.data;
-                    });
-        }
-        });
-    app0.controller("homeCtrl",function($scope, $http){
-
-        //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
-
-        $scope.name = "김태선";
-        var loginObject = {
-            user_id : 1
-        };
-
-        $http({
-            method: 'POST', //방식
-            url: "/api/boardlist", /* 통신할 URL */
-            data: loginObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-                .then(function(response) {
-                    $scope.boards = response.data;
-                });
-
-        $scope.favoriteBoard = function (board_id){
-            var favoriteBoardObject =
-            {
-                user_id: 1, //임시로 1번사용자 지정
-                board_id: board_id
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/favoriteBoard", /* 통신할 URL */
-                data: favoriteBoardObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                    .success(function (data, status, headers, config) {
-                        if(data.msg == 'false') {
-                            alert('페이버릿 실패')
-                        }else{
-                            alert('페이버릿 성공');
-                            $scope.favorite = 1;
-                        }
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
-                    });
-        };
-
-        $scope.UnfavoriteBoard = function (board_id){
-            var UnfavoriteBoardObject =
-            {
-                user_id: 1, //임시로 1번사용자 지정
-                board_id: board_id
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/UnfavoriteBoard", /* 통신할 URL */
-                data: UnfavoriteBoardObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                    .success(function (data, status, headers, config) {
-                        if(data.msg == 'false') {
-                            alert('페이버릿취소 실패')
-                        }else{
-                            alert('페이버릿취소 성공');
-                            $scope.favorite = 0;
-                        }
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
-                    });
-        };
-
-        $scope.commitReply = function (){
-            var replyObject =
-            {
-                user_id: 1, //임시로 1번사용자 지정
-                board_id: 4,
-                reply : $scope.reply.content
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/reply", /* 통신할 URL */
-                data: replyObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                    .success(function (data, status, headers, config) {
-                        if(data.msg == 'success') {
-                            alert('댓글작성 성공')
-                        }else{
-                            alert('댓글작성 실패');
-                        }
-
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
-                    });
-        };
-
-    });
-
-
-    //        GET방식
-    //        var app = angular.module("homeApp" ,[]);
-    //        app.controller("homeCtrl",function($scope, $http){
-    //            $http.get("/api/getboardlist")
-    //                    .then(function(response) {
-    //                        $scope.boards = response.data;
-    //                    });
-    //        });
-
-</script>
 </body>
 </html>

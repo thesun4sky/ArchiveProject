@@ -1,56 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Category</title>
-    <link rel="icon" href="img/logoarchive.png" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/findnavi.css">
-    <link rel="stylesheet" href="css/sign-in.css">
-    <link rel="stylesheet" href="css/triangle.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<title>Category</title>-->
+    <!--<link rel="icon" href="img/logoarchive.png" />-->
+    <!--<meta charset="utf-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="css/bootstrap.css">-->
+    <!--<link rel="stylesheet" href="css/findnavi.css">-->
+    <!--<link rel="stylesheet" href="css/sign-in.css">-->
+    <!--<link rel="stylesheet" href="css/triangle.css">-->
+    <!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">-->
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
+    <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>-->
+    <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
+    <!--<script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>-->
+    <!--<style>-->
+        <!--/* Remove the navbar's default margin-bottom and rounded borders */-->
+        <!--.navbar {-->
+            <!--margin-bottom: 0;-->
+            <!--border-radius: 0;-->
+        <!--}-->
 
-    <style>
-        /* Remove the navbar's default margin-bottom and rounded borders */
-        .navbar {
-            margin-bottom: 0;
-            border-radius: 0;
-        }
-
-        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-        .row.content {height: 450px}
+        <!--/* Set height of the grid so .sidenav can be 100% (adjust as needed) */-->
+        <!--.row.content {height: 450px}-->
 
 
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
-        }
+        <!--footer {-->
+            <!--background-color: #555;-->
+            <!--color: white;-->
+            <!--padding: 15px;-->
+        <!--}-->
 
-        /* On small screens, set height to 'auto' for sidenav and grid */
-        @media screen and (max-width: 767px) {
-            .sidenav {
-                height: auto;
-                padding: 15px;
-            }
-            .row.content {height:auto;}
-        }
-    </style>
-</head>
-<body>
+        <!--/* On small screens, set height to 'auto' for sidenav and grid */-->
+        <!--@media screen and (max-width: 767px) {-->
+            <!--.sidenav {-->
+                <!--height: auto;-->
+                <!--padding: 15px;-->
+            <!--}-->
+            <!--.row.content {height:auto;}-->
+        <!--}-->
+    <!--</style>-->
+<!--</head>-->
+<!--<body>-->
 
-<div ng-app="catagoryApp" ng-controller="catagoryCtrl">
-    <!--메인헤더-->
-    <div ng-include="'mainHeader.html'"></div>
-    <!--서브헤더-->
-    <div ng-include="'subHeader.html'"></div>
+<div>
+    <!--&lt;!&ndash;메인헤더&ndash;&gt;-->
+    <!--<div ng-include="'mainHeader.html'"></div>-->
+    <!--&lt;!&ndash;서브헤더&ndash;&gt;-->
+    <!--<div ng-include="'subHeader.html'"></div>-->
 
 
     <!--화면 분할 시작-->
@@ -81,49 +80,15 @@
         </div>
     </div>
 
-
-    <!--푸터-->
-    <div ng-include="'mainFooter.html'"></div>
-
 </div>
+    <!--&lt;!&ndash;푸터&ndash;&gt;-->
+    <!--<div ng-include="'mainFooter.html'"></div>-->
 
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="js/searchform.js"></script>
-<script src="js/bootstrap.js"></script>
+<!--</div>-->
 
-<script>
-    var app2 = angular.module("catagoryApp",[]);
+<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
+<!--<script src="js/searchform.js"></script>-->
+<!--<script src="js/bootstrap.js"></script>-->
 
-    app2.controller('catagoryCtrl', function($scope,$http){
-        $scope.menuList = [
-            {catagory :1, link :"movie", title: "영화", icon1: "glyphicon" , icon2 : "glyphicon-film"},
-            {catagory :2, link :"act", title: "연극", icon1: "fa", icon2 : "fa-street-view"},
-            {catagory :3, link :"concert", title: "콘서트",  icon1: "fa" , icon2 : "fa-microphone"},
-            {catagory :4, link :"drama", title: "드라마", icon1: "fa", icon2 : "fa-tv"},
-            {catagory :5, link :"exhibition", title: "전시회", icon1: "glyphicon" , icon2 : "glyphicon-blackboard"},
-            {catagory :6, link :"food", title: "음식", icon1: "glyphicon" , icon2 : "glyphicon-cutlery"},
-            {catagory :7, link :"travel", title: "여행", icon1: "glyphicon" , icon2 : "glyphicon-plane"},
-            {catagory :8, link :"music", title: "음악", icon1: "glyphicon" , icon2 : "glyphicon-music"}
-        ];
-
-        $scope.catagoryPost = function (menu) {
-
-            var catagoryObject =
-
-            {catagory: menu.catagory};
-
-            $http({
-                method: 'POST', //방식
-                url: "/api/boardlistByCatagory", /* 통신할 URL */
-                data: catagoryObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                    .then(function (response) {
-                        $scope.boards = response.data;
-                    })
-        };
-    });
-
-</script>
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
