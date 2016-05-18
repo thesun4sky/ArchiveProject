@@ -15,6 +15,12 @@ public interface FolderMapper {
   @Insert("INSERT INTO folder(folder_name, user_id) VALUES(#{folder_name}, #{user_id})")
   void newFolder(Folder folder);
 
+  //폴더 삭제
+  @Delete("DELETE FROM folder WHERE folder_id = #{folder_id} AND user_id = #{user_id}")
+  void deleteFolder(Folder folder);
+  @Delete("DELETE FROM fboard WHERE folder_id = #{folder_id}")
+  void deleteFboard(Folder folder);
+
   //폴더목록 보기
   @Select("SELECT * FROM folder WHERE user_id = #{user_id}")
   ArrayList<Folder> getFolderList(@Param("user_id") int user_id);

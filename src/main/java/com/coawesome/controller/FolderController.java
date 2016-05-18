@@ -37,6 +37,19 @@ public class FolderController {
   }
 
 
+    //폴더 삭제
+    @RequestMapping(method = RequestMethod.POST, value = "/folder/deleteFolder" )
+    public Result deleteFolder(@RequestBody Folder folder) {
+        int folder_id = folder.getFolder_id();
+        System.out.println("delete folder : " + folder_id);
+
+        folderMapper.deleteFolder(folder);
+        folderMapper.deleteFboard(folder);
+
+        return new Result(0, "success");
+    }
+
+
     //폴더 목록 보기
     @RequestMapping(method = RequestMethod.POST, value = "/folder/getFolderList")
     public List<Folder> getFolderList(@RequestBody User user) {
