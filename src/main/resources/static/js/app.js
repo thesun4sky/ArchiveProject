@@ -50,8 +50,8 @@ angular.module("homeApp",[
             .state('Archive', {
                 url: '/Archive',
                 templateUrl: 'Archive.html',
-                controller: 'ContactCtrl',
-                controllerAs: 'contact',
+                controller: 'ArchiveCtrl',
+                controllerAs: 'archive',
                 data: {
                     requireLogin: false
                 }
@@ -500,15 +500,251 @@ angular.module("homeApp",[
                     //$scope.$apply();
                 })
         };
+        })
+
+        .controller("ArchiveCtrl",function($scope, $http) {
+
+
+            //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
+
+            $scope.name = "김태선";
+            var loginObject = {
+                user_id: 1
+            };
+
+            $http({
+                method: 'POST', //방식
+                url: "/folder/getFolderList", /* 통신할 URL */
+                data: loginObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.folders = response.data;
+                });
+
+
+
+
+            $scope.addNewFolder = function (new_folder_name){
+                    var newFolderObject =
+                    {
+                        user_id: 1, //임시로 1번사용자 지정
+                        folder_name: new_folder_name
+                    };
+
+                $http({
+                    method: 'POST', //방식
+                    url: "/folder/newFolder", /* 통신할 URL */
+                    data: newFolderObject, /* 파라메터로 보낼 데이터 */
+                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                })
+                    .success(function (data, status, headers, config) {
+                            if(data.msg == 'false') {
+                                alert('폴더생성 실패');
+                              }else{
+                                alert('폴더생성 성공');
+                                $scope.$apply();
+                             }
+                            })
+                           .error(function (data, status, headers, config) {
+                               /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                                console.log(status);
+                            });
+            };
+
+                $scope.deleteFolder = function (folder_id) {
+                    var deleteFolderObject =
+                    {
+                        user_id: 1, //임시로 1번사용자 지정
+                        folder_id: folder_id
+                    };
+
+                    $http({
+                        method: 'POST', //방식
+                        url: "/folder/deleteFolder", /* 통신할 URL */
+                        data: deleteFolderObject, /* 파라메터로 보낼 데이터 */
+                        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                    })
+                        .success(function (data, status, headers, config) {
+                            if (data.msg == 'false') {
+                                alert('폴더삭제 실패');
+                            } else {
+                                alert('폴더삭제 성공');
+                                $scope.$apply();
+                            }
+                        })
+                        .error(function (data, status, headers, config) {
+                            /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                            console.log(status);
+                        });
+                };
+            //
+            // $scope.favoriteBoard = function (board_id){
+            //     var favoriteBoardObject =
+            //     {
+            //         user_id: 1, //임시로 1번사용자 지정
+            //         board_id: board_id
+            //     };
+            //     $http({
+            //         method: 'POST', //방식
+            //         url: "/api/favoriteBoard", /* 통신할 URL */
+            //         data: favoriteBoardObject, /* 파라메터로 보낼 데이터 */
+            //         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            //     })
+            //         .success(function (data, status, headers, config) {
+            //             if(data.msg == 'false') {
+            //                 alert('페이버릿 실패')
+            //             }else{
+            //                 alert('페이버릿 성공');
+            //             }
+            //         })
+            //         .error(function (data, status, headers, config) {
+            //             /* 서버와의 연결이 정상적이지 않을 때 처리 */
+            //             console.log(status);
+            //         });
+            // };
+            //
+            // $scope.UnfavoriteBoard = function (board_id){
+            //     var UnfavoriteBoardObject =
+            //     {
+            //         user_id: 1, //임시로 1번사용자 지정
+            //         board_id: board_id
+            //     };
+            //     $http({
+            //         method: 'POST', //방식
+            //         url: "/api/UnfavoriteBoard", /* 통신할 URL */
+            //         data: UnfavoriteBoardObject, /* 파라메터로 보낼 데이터 */
+            //         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            //     })
+            //         .success(function (data, status, headers, config) {
+            //             if(data.msg == 'false') {
+            //                 alert('페이버릿취소 실패')
+            //             }else{
+            //                 alert('페이버릿취소 성공');
+            //             }
+            //         })
+            //         .error(function (data, status, headers, config) {
+            //             /* 서버와의 연결이 정상적이지 않을 때 처리 */
+            //             console.log(status);
+            //         });
+            // };
+            //
+            // $scope.commitReply = function (){
+            //     var replyObject =
+            //     {
+            //         user_id: 1, //임시로 1번사용자 지정
+            //         board_id: 4,
+            //         reply : $scope.reply.content
+            //     };
+            //     $http({
+            //         method: 'POST', //방식
+            //         url: "/api/reply", /* 통신할 URL */
+            //         data: replyObject, /* 파라메터로 보낼 데이터 */
+            //         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            //     })
+            //         .success(function (data, status, headers, config) {
+            //             if(data.msg == 'success') {
+            //                 alert('댓글작성 성공')
+            //             }else{
+            //                 alert('댓글작성 실패');
+            //             }
+            //
+            //         })
+            //         .error(function (data, status, headers, config) {
+            //             /* 서버와의 연결이 정상적이지 않을 때 처리 */
+            //             console.log(status);
+            //         });
+            // };
+            //
+            //
+            // $http({
+            //     method: 'POST', //방식
+            //     url: "/user/showfriends", /* 통신할 URL */
+            //     data: loginObject, /* 파라메터로 보낼 데이터 */
+            //     headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            // })
+            //     .then(function(response) {
+            //         $scope.friends = response.data;
+            //     });
+            //
+            // $scope.acceptFriend = function (friend_id){
+            //     var acceptFriendObject =
+            //     {
+            //         user_id: friend_id, //임시로 1번사용자 지정
+            //         friend_id: 1
+            //     };
+            //     $http({
+            //         method: 'POST', //방식
+            //         url: "/user/acceptFriend", /* 통신할 URL */
+            //         data: acceptFriendObject, /* 파라메터로 보낼 데이터 */
+            //         headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
+            //     })
+            //         .success(function (data, status, headers, config) {
+            //             if(data.msg == 'false') {
+            //                 alert('친구승낙 실패')
+            //             }else{
+            //                 alert('친구승낙 성공');
+            //                 window.location.href = 'Toline.html';
+            //             }
+            //         })
+            //         .error(function (data, status, headers, config) {
+            //             /* 서버와의 연결이 정상적이지 않을 때 처리 */
+            //             console.log(status);
+            //         });
+            // };
+            //
+            // $scope.deleteFriend = function (friend_id){
+            //     var deleteFriendObject =
+            //     {
+            //         user_id: 1, //임시로 1번사용자 지정
+            //         friend_id: friend_id
+            //     };
+            //     $http({
+            //         method: 'POST', //방식
+            //         url: "/user/deleteFriend", /* 통신할 URL */
+            //         data: deleteFriendObject, /* 파라메터로 보낼 데이터 */
+            //         headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
+            //     })
+            //         .success(function (data, status, headers, config) {
+            //             if(data.msg == 'false') {
+            //                 alert('친구삭제 실패')
+            //             }else{
+            //                 alert('친구삭제 성공');
+            //                 window.location.href = 'Toline.html';
+            //             }
+            //         })
+            //         .error(function (data, status, headers, config) {
+            //             /* 서버와의 연결이 정상적이지 않을 때 처리 */
+            //             console.log(status);
+            //         });
+            // };
+            //
+            // $scope.menuList = [
+            //     {catagory :1, link :"movie", title: "영화", icon1: "glyphicon" , icon2 : "glyphicon-film"},
+            //     {catagory :2, link :"act", title: "연극", icon1: "fa", icon2 : "fa-street-view"},
+            //     {catagory :3, link :"concert", title: "콘서트",  icon1: "fa" , icon2 : "fa-microphone"},
+            //     {catagory :4, link :"drama", title: "드라마", icon1: "fa", icon2 : "fa-tv"},
+            //     {catagory :5, link :"exhibition", title: "전시회", icon1: "glyphicon" , icon2 : "glyphicon-blackboard"},
+            //     {catagory :6, link :"food", title: "음식", icon1: "glyphicon" , icon2 : "glyphicon-cutlery"},
+            //     {catagory :7, link :"travel", title: "여행", icon1: "glyphicon" , icon2 : "glyphicon-plane"},
+            //     {catagory :8, link :"music", title: "음악", icon1: "glyphicon" , icon2 : "glyphicon-music"}
+            // ];
+            //
+            // $scope.catagoryPost = function(menu) {
+            //
+            //     var catagoryObject =
+            //     {catagory: menu.catagory};
+            //
+            //     $http({
+            //         method: 'POST', //방식
+            //         url: "/api/boardlistByCatagory", /* 통신할 URL */
+            //         data: catagoryObject, /* 파라메터로 보낼 데이터 */
+            //         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            //     })
+            //         .then(function (response) {
+            //             $scope.catagory_boards = response.data;
+            //             //$scope.$apply();
+            //         })
+            // };
 
     });
-
-
-//        GET방식
-//        var app = angular.module("homeApp" ,[]);
-//        app.controller("homeCtrl",function($scope, $http){
-//            $http.get("/api/getboardlist")
-//                    .then(function(response) {
-//                        $scope.boards = response.data;
-//                    });
-//        });
