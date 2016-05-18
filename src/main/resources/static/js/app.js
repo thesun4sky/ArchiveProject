@@ -50,8 +50,8 @@ angular.module("homeApp",[
             .state('Archive', {
                 url: '/Archive',
                 templateUrl: 'Archive.html',
-                controller: 'ContactCtrl',
-                controllerAs: 'contact',
+                controller: 'ArchiveCtrl',
+                controllerAs: 'archive',
                 data: {
                     requireLogin: false
                 }
@@ -68,6 +68,7 @@ angular.module("homeApp",[
                 }
             })
             
+
             .state('toline', {
                 url: '/Toline',
                 templateUrl: 'Toline.html',
@@ -209,6 +210,38 @@ angular.module("homeApp",[
     })
 
     .controller('catagoryCtrl', function($scope,$http){
+
+        var loginObject = {
+            user_id : 1
+        };
+
+        $http({
+            method: 'POST', //방식
+            url: "/api/boardlist", /* 통신할 URL */
+            data: loginObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function(response) {
+                $scope.catagory_boards = response.data;
+            });
+
+        $scope.view_allCatagory = function(){
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlist", /* 통신할 URL */
+                data: loginObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function(response) {
+                    $scope.catagory_boards = response.data;
+                    $scope.filters_catagory ={};
+                });
+
+        }
+
+        //클릭시마다 카테고리 변수를 갱신할 변수.
+        $scope.filters_catagory={};
+
         $scope.menuList = [
             {catagory :1, link :"movie", title: "영화", icon1: "glyphicon" , icon2 : "glyphicon-film"},
             {catagory :2, link :"act", title: "연극", icon1: "fa", icon2 : "fa-street-view"},
@@ -332,6 +365,23 @@ angular.module("homeApp",[
             .then(function(response) {
                 $scope.boards = response.data;
             });
+        $scope.viewAll= function(){
+
+            var loginObject = {
+                user_id : 1
+            };
+
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlist", /* 통신할 URL */
+                data: loginObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function(response) {
+                    $scope.boards = response.data;
+                    $scope.filters={};
+                });
+        }
 
         $scope.favoriteBoard = function (board_id){
             var favoriteBoardObject =
@@ -472,6 +522,8 @@ angular.module("homeApp",[
                     console.log(status);
                 });
         };
+
+        $scope.filters = { };
 
         $scope.menuList = [
             {catagory :1, link :"movie", title: "영화", icon1: "glyphicon" , icon2 : "glyphicon-film"},
