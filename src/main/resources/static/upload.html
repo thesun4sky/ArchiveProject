@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <div class="jumbotron text-center" style="margin-top: 20px">
     <h3 style="margin-bottom: 60px;">사진을 선택하시고 두줄 평을 입력하세요 <small>게시물당 사진은 <mark>1장만</mark> 업로드 가능합니다.</small></h3>
     <div class="row">
@@ -6,14 +7,14 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <div class="thumbnail" width="100%">
-                        <label class="col-sm-2 control-label" >사진 </label>
-                    <div class="col-sm-10">
+                        <label class="col-sm-2 control-label" ng-show="!myForm.file.$valid">사진 </label>
+                    <div class="col-sm-10" ng-show="!myForm.file.$valid">
                         <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required
                                ngf-model-invalid="errorFile">
                         <i ng-show="myForm.file.$error.required">*required</i><br>
                         <i ng-show="myForm.file.$error.maxSize">File too large
                             {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-                        </div>
+                    </div>
                         <img ng-show="myForm.file.$valid"  ngf-thumbnail="picFile" width="100%"style="left:0;height:300px;">
                         <div class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div>
@@ -83,4 +84,5 @@
         </form>
 
     </div>
+</div>
 </div>
