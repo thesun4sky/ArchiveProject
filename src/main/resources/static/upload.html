@@ -5,14 +5,28 @@
         <form name="myForm">
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" >사진</label>
+                    <div class="thumbnail" width="100%">
+                        <label class="col-sm-2 control-label" >사진 </label>
                     <div class="col-sm-10">
                         <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required
                                ngf-model-invalid="errorFile">
                         <i ng-show="myForm.file.$error.required">*required</i><br>
                         <i ng-show="myForm.file.$error.maxSize">File too large
                             {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-                        <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+                        </div>
+                        <img ng-show="myForm.file.$valid"  ngf-thumbnail="picFile" width="100%"style="left:0;height:300px;">
+                        <div class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div>
+                                <h1 ng-show="myForm.file.$valid" class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: positions.divtop1-90, left :-(lines.firstLine.length+8)+'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">"</h1>
+                            </div>
+                            <div>
+                                <input placeholder="첫번째 줄을 입력하세요!" type="text"  ng-show="myForm.file.$valid" class="example" ng-model="lines.firstLine" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top : positions.divtop1}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">
+                            </div>
+                            <div>
+                                <input placeholder="자!!이제 두번째 줄 차례" type="text" ng-show="myForm.file.$valid" class="example" ng-model="lines.secondLine" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{top : positions2.divtop2}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">
+                            </div>
+                            <button class="btn btn-sm btn-warning" ng-click="picFile = null" ng-show="picFile">Remove</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -45,31 +59,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" style="margin-top:8%">
-                        <input type="text" class="form-control" ng-model="lines.firstLine" style="margin:20px 0" placeholder="첫번째 줄 입력...">
-                        <button type="button" class="btn btn-info" ng-click="leftClass()"><span class="fa fa-align-left"></span></button>
-                        <button type="button" class="btn btn-primary" ng-click="centerClass()"><span class="fa fa-align-center"></span></button>
-                        <button type="button" class="btn btn-danger" ng-click="rightClass()"><span class="fa fa-align-right"></span></button>
-                        <br>{{multi_message}}
 
-                        <input type="text" class="form-control" ng-model="lines.secondLine" style="margin:20px 0" placeholder="두번째 줄 입력...">
-                        <button type="button" class="btn btn-info" ng-click="leftClass2()"><span class="fa fa-align-left"></span></button>
-                        <button type="button" class="btn btn-primary" ng-click="centerClass2()"><span class="fa fa-align-center"></span></button>
-                        <button type="button" class="btn btn-danger" ng-click="rightClass2()"><span class="fa fa-align-right"></span></button>
-                        <br>{{multi_message2}}
+                    <div class="form-group" style="margin-top:20px;">
+                        <input type="number" ng-init="positions.divtop1=-150" ng-model="positions.divtop1"/>
                     </div>
                     <div class="form-group">
-                        <input type="number" ng-init="positions.divtop1=-100" ng-model="positions.divtop1"/>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" ng-init="positions2.divtop2=-50" ng-model="positions2.divtop2"/>
+                        <input type="number" ng-init="positions2.divtop2=-100" ng-model="positions2.divtop2"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label" ></label>
                     <div class="col-sm-10">
-                    <button ng-disabled="!myForm.$valid" ng-click="uploadPic(picFile,p_level,c_list)">Submit</button>
+                    <button class="btn btn-success" ng-disabled="!myForm.$valid" ng-click="uploadPic(picFile,p_level,c_list)">Submit</button>
                     <span class="progress" ng-show="picFile.progress >= 0">
                     <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div></span>
                         <span ng-show="picFile.result">Upload Successful</span>
