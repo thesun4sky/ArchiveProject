@@ -1,13 +1,14 @@
 
-<div class="jumbotron text-center" style="margin-top: 20px">
-    <img src="img/someone.png" class="img-circle" alt="user" width="150" height="150">
-    <h3>{{name}}</h3>
-    <div class="container-fluid">
-        <div class="pull-right" style="margin-top: 20px;margin-bottom: -40px;">
-            <a href="#" class="btn btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-folder-open"></span></a>
-        </div>
-    </div>
-</div>
+<div class="container" data-spy="scroll">
+    <ul class="nav nav-pills">
+        <li ng-repeat="menu in menuList" >
+            <a data-toggle="tab" ng-model="menu.catagory" ng-click="catagoryPost(menu)">
+                <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;font-size: 50px;"></span>
+                <p>{{menu.title}}</p>
+            </a>
+        </li>
+    </ul>
+
 <!--업로드 되는 프레임 구성 화면-->
 <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
     <div class="row">
@@ -24,7 +25,9 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="carousel-caption-created-date">
+                    <span>{{x.created | date:'medium'}}</span>
+                </div>
                 <div class="carousel-caption-favorite" ng-init="favorite=x.favorite" >
                     <div ng-switch on="favorite">
                         <div ng-switch-when="0">
@@ -56,7 +59,6 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 hidden-xs text-right">
                         <div class="btn-group-sm">
-                        <!--<a href="#" class="btn btn-sm btn-danger " style="border-radius: 50%;visibility: hidden;"><span class="glyphicon glyphicon-heart-empty"></span></a>-->
                         <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span></a>
                         <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-comment"></span></a>
                         <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-bell"></span></a>
@@ -77,3 +79,4 @@
         </div>
     </div>
 </div>
+    </div>

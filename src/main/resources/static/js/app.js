@@ -472,6 +472,35 @@ angular.module("homeApp",[
                     console.log(status);
                 });
         };
+
+        $scope.menuList = [
+            {catagory :1, link :"movie", title: "영화", icon1: "glyphicon" , icon2 : "glyphicon-film"},
+            {catagory :2, link :"act", title: "연극", icon1: "fa", icon2 : "fa-street-view"},
+            {catagory :3, link :"concert", title: "콘서트",  icon1: "fa" , icon2 : "fa-microphone"},
+            {catagory :4, link :"drama", title: "드라마", icon1: "fa", icon2 : "fa-tv"},
+            {catagory :5, link :"exhibition", title: "전시회", icon1: "glyphicon" , icon2 : "glyphicon-blackboard"},
+            {catagory :6, link :"food", title: "음식", icon1: "glyphicon" , icon2 : "glyphicon-cutlery"},
+            {catagory :7, link :"travel", title: "여행", icon1: "glyphicon" , icon2 : "glyphicon-plane"},
+            {catagory :8, link :"music", title: "음악", icon1: "glyphicon" , icon2 : "glyphicon-music"}
+        ];
+
+        $scope.catagoryPost = function(menu) {
+
+            var catagoryObject =
+            {catagory: menu.catagory};
+
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlistByCatagory", /* 통신할 URL */
+                data: catagoryObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.catagory_boards = response.data;
+                    //$scope.$apply();
+                })
+        };
+
     });
 
 
