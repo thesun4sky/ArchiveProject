@@ -127,7 +127,7 @@ angular.module("homeApp",[
 
             $scope.logout = function(){
                 store.set('obj',null);
-                
+                $state.go('login');
             }
 
 
@@ -299,6 +299,7 @@ angular.module("homeApp",[
 
 
     .controller("uploadCtrl", function($scope, $log, Upload, $timeout, store, $state) {
+        var userObject = store.get('obj');
         $scope.openAccess = [
             {id :1 ,title :"전체공개"},
             {id :2, title :"Toline"},
@@ -358,7 +359,6 @@ angular.module("homeApp",[
                 "divtop2": 0
             }
         ];
-        var BoardVO = {};
 
         $scope.uploadPic = function(file,p_level,c_list)  {
 
@@ -366,7 +366,7 @@ angular.module("homeApp",[
                 url: '/api/board',
                 data: {
                     file:file,
-                    user_id:1,
+                    user_id:userObject.user_id,
                     public_level:p_level.id,
                     catagory:c_list.id,
                     likes_num: 0,
@@ -381,7 +381,7 @@ angular.module("homeApp",[
             file.upload.then(function (response) {
                 $timeout(function () {
                     file.result = response.data;
-                    window.location.href ='index.html';
+                    $state.go('main');
                 });
             }, function (response) {
                 if (response.status > 0){
@@ -746,7 +746,7 @@ angular.module("homeApp",[
             $scope.addNewFolder = function (new_folder_name) {
                 var newFolderObject =
                 {
-                    user_id: 1, //임시로 1번사용자 지정
+                    user_id: userObject.user_id,
                     folder_name: new_folder_name
                 };
 
@@ -773,7 +773,7 @@ angular.module("homeApp",[
             $scope.deleteFolder = function (folder_id) {
                 var deleteFolderObject =
                 {
-                    user_id: 1, //임시로 1번사용자 지정
+                    user_id: userObject.user_id,
                     folder_id: folder_id
                 };
 
@@ -802,7 +802,7 @@ angular.module("homeApp",[
             $scope.openFolder = function (folder_id) {
                 if(folder_id == 100){
                     var openLineFolderObject = {
-                        user_id: 1 //user_id
+                        user_id: userObject.user_id
                     };
                     $http({
                         method: 'POST', //방식
@@ -816,7 +816,7 @@ angular.module("homeApp",[
                 }
                 else if(folder_id == 200){
                     var openFavoriteFolderObject = {
-                        user_id: 1 //user_id
+                        user_id: userObject.user_id
                     };
                     $http({
                         method: 'POST', //방식
@@ -830,7 +830,7 @@ angular.module("homeApp",[
                 }
                 else if(folder_id == 300){
                     var openMyFolderObject = {
-                        user_id: 1 //user_id
+                        user_id: userObject.user_id
                     };
                     $http({
                         method: 'POST', //방식
