@@ -73,5 +73,44 @@ public class FolderController {
         return new Result(0, "success");
     }
 
+    //폴더 열기
+    @RequestMapping(method = RequestMethod.POST, value = "/folder/openFolder")
+    public List<HashMap> openFolder(@RequestBody Folder folder) {
+        int folder_id =  folder.getFolder_id();
+        System.out.println("open folder : " + folder_id);
+        ArrayList<HashMap> boardList = folderMapper.openFolder(folder);
+        return boardList;
+    }
+
+    //친구(라인)폴더 열기
+    @RequestMapping(method = RequestMethod.POST, value = "/folder/openLineFolder")
+    public List<HashMap> openLineFolder(@RequestBody User user) {
+        int user_id =  user.getUser_id();
+        System.out.println("open friends folder of : " + user_id);
+        ArrayList<HashMap> boardList = folderMapper.openLineFolder(user);
+        return boardList;
+    }
+
+    //페이버릿폴더 열기
+    @RequestMapping(method = RequestMethod.POST, value = "/folder/openFavoriteFolder")
+    public List<HashMap> openFavoriteFolder(@RequestBody User user) {
+        int user_id =  user.getUser_id();
+        System.out.println("open favorite folder of : " + user_id);
+        ArrayList<HashMap> boardList = folderMapper.openFavoriteFolder(user);
+        return boardList;
+    }
+
+
+    //내폴더 열기
+    @RequestMapping(method = RequestMethod.POST, value = "/folder/openMyFolder")
+    public List<HashMap> openMyFolder(@RequestBody User user) {
+        int user_id =  user.getUser_id();
+        System.out.println("open my folder of : " + user_id);
+        ArrayList<HashMap> boardList = folderMapper.openMyFolder(user);
+        return boardList;
+    }
+
+
+
 
 }

@@ -613,4 +613,67 @@ angular.module("homeApp",[
                         console.log(status);
                     })
             }
+
+            $scope.folders = { };
+
+            $scope.openFolder = function (folder_id) {
+                if(folder_id == 100){
+                    var openLineFolderObject = {
+                        user_id: 1 //user_id
+                    };
+                    $http({
+                        method: 'POST', //방식
+                        url: "/folder/openLineFolder", /* 통신할 URL */
+                        data: openLineFolderObject, /* 파라메터로 보낼 데이터 */
+                        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                    })
+                        .then(function (response) {
+                            $scope.folder_boards = response.data;
+                        });
+                }
+                else if(folder_id == 200){
+                    var openFavoriteFolderObject = {
+                        user_id: 1 //user_id
+                    };
+                    $http({
+                        method: 'POST', //방식
+                        url: "/folder/openFavoriteFolder", /* 통신할 URL */
+                        data: openFavoriteFolderObject, /* 파라메터로 보낼 데이터 */
+                        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                    })
+                        .then(function (response) {
+                            $scope.folder_boards = response.data;
+                        });
+                }
+                else if(folder_id == 300){
+                    var openMyFolderObject = {
+                        user_id: 1 //user_id
+                    };
+                    $http({
+                        method: 'POST', //방식
+                        url: "/folder/openMyFolder", /* 통신할 URL */
+                        data: openMyFolderObject, /* 파라메터로 보낼 데이터 */
+                        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                    })
+                        .then(function (response) {
+                            $scope.folder_boards = response.data;
+                        });
+                }
+                else{
+                var openFolderObject =
+                {
+                    folder_id: folder_id
+                };
+
+                $http({
+                    method: 'POST', //방식
+                    url: "/folder/openFolder", /* 통신할 URL */
+                    data: openFolderObject, /* 파라메터로 보낼 데이터 */
+                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                })
+                    .then(function (response) {
+                        $scope.folder_boards = response.data;
+                    });
+            }
+            }
         });
