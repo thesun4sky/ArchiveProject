@@ -5,8 +5,25 @@
 angular.module("homeApp",[
         'ngAnimate',
         'ui.router',
-        'ngFileUpload'
+        'ngFileUpload',
+        'angular-storage'
     ])
+    .config(function(storeProvider){
+        storeProvider.setStore('sessionStorage');
+    })
+
+
+    .run(function ($rootScope, $state, store) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+            var requireLogin = toState.data.requireLogin;
+
+            if (requireLogin && store.get('obj') == null) {
+                event.preventDefault();
+                // get me a login modal!
+                $state.go('login');
+            }
+        });
+    })
 
     .filter('unique', function() {
         return function(collection, keyname) {
@@ -27,13 +44,23 @@ angular.module("homeApp",[
 
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('index', {
+            .state('login', {
                 url: '/',
-                templateUrl: 'homepg.html',
+                templateUrl: 'login.html',
+                controller: 'loginCtrl',
+                controllerAs: 'loginCtrl',
+                data: {
+                    requireLogin: false
+                }
+            })
+
+            .state('main', {
+                url: '/main',
+                templateUrl: 'main.html',
                 controller: 'indexCtrl',
                 controllerAs: 'index',
                 data: {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
 
@@ -41,19 +68,19 @@ angular.module("homeApp",[
                 url: '/catagory',
                 templateUrl: 'catagory.html',
                 controller: 'catagoryCtrl',
-                controllerAs: 'catagory',
+                controllerAs: 'catagoryCtrl',
                 data: {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
-            
+
             .state('Archive', {
                 url: '/Archive',
                 templateUrl: 'Archive.html',
                 controller: 'ArchiveCtrl',
                 controllerAs: 'archive',
                 data: {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
 
@@ -64,10 +91,10 @@ angular.module("homeApp",[
                 controller: 'uploadCtrl',
                 controllerAs: 'upload',
                 data: {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
-            
+
 
             .state('toline', {
                 url: '/Toline',
@@ -75,7 +102,7 @@ angular.module("homeApp",[
                 controller: 'tolineCtrl',
                 controllerAs: 'toline',
                 data: {
-                    requireLogin: false
+                    requireLogin: true
                 }
             });
 
@@ -83,6 +110,176 @@ angular.module("homeApp",[
 
         $urlRouterProvider.otherwise('/');
     })
+
+
+
+
+
+
+
+
+        .controller("loginCtrl",function($scope, $http, store, $state){
+
+            $scope.login=[{
+                login_id :"" ,password :""
+            }];
+
+
+            $scope.logout = function(){
+                store.set('obj',null);
+                
+            }
+
+
+            $scope.loginPost = function(){
+                var loginObject = {
+                    login_id : $scope.login.login_id,
+                    password : $scope.login.password
+                };
+                $http({
+                    method: 'POST', //방식
+                    url: "/user/login", /* 통신할 URL */
+                    data: loginObject, /* 파라메터로 보낼 데이터 */
+                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                })
+                    .success(function (data, status, headers, config) {
+                        if(data){
+                            if (data.msg != 'fales') {
+                                var myInfo = {
+                                    login_id: data.msg,
+                                    user_id: data.result
+                                };
+                                store.set('obj',myInfo);
+                                $state.go('main');
+                                /* 맞음 */
+                            }
+                            else {
+                                console.log('login_fail');
+                                /* 틀림 */
+                            }
+                        }
+                        else {
+                            console.log('에러에러에러');
+
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                        console.log(status);
+                    });
+            };
+        })
+
+        .controller("joinCtrl",function($scope, $http){
+
+            $scope.join=[{
+                login_id :"" ,password :"", name :"", sex :"", born1 :"", born2 :"", born3 :"", email:""
+            }];
+
+            $scope.joinPost = function(){
+                var joinObject = {
+                    login_id : $scope.join.login_id,
+                    password : $scope.join.password,
+                    name : $scope.join.name,
+                    sex : $scope.join.sex,
+                    born : $scope.join.born1 + $scope.join.born2  + $scope.join.born3 ,
+                    email : $scope.join.email
+                };
+                $http({
+                    method: 'POST', //방식
+                    url: "/user/join", /* 통신할 URL */
+                    data: joinObject, /* 파라메터로 보낼 데이터 */
+                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                })
+                    .success(function (data, status, headers, config) {
+                        if(data){
+                            if (data.msg == 'success') {
+                                window.location.href ='main.html';
+                                /* 맞음 */
+                            }
+                            else {
+                                console.log('join_fail');
+                                /* 틀림 */
+                            }
+                        }
+                        else {
+                            console.log('에러에러에러');
+
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                        console.log(status);
+                    });
+            };
+        })
+
+
+
+        .controller("findIDCtrl",function($scope, $http){
+
+            $scope.findID=[{
+                name :"", born1 :"", born2 :"", born3 :""
+            }];
+
+            $scope.findIDPost = function(){
+                var findIDObject = {
+                    name : $scope.findID.name,
+                    born : $scope.findID.born1 + $scope.findID.born2  + $scope.findID.born3
+                };
+                $http({
+                    method: 'POST', //방식
+                    url: "/user/findID", /* 통신할 URL */
+                    data: findIDObject, /* 파라메터로 보낼 데이터 */
+                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                })
+                    .success(function (data, status, headers, config) {
+                        if(data.msg == 'false') {
+                            alert('해당하는 아이디가 없습니다.')
+                        }else{
+                            alert('아이디는 '+ data.msg + '입니다.');
+                            window.location.href = 'main.html';
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                        console.log(status);
+                    });
+            };
+        })
+
+
+        .controller("findPASSCtrl",function($scope, $http){
+
+            $scope.findPASS=[{
+                login_id :"", email :""
+            }];
+
+            $scope.findPASSPost = function(){
+                var findPASSObject = {
+                    login_id : $scope.findPASS.login_id,
+                    email : $scope.findPASS.email
+                };
+                $http({
+                    method: 'POST', //방식
+                    url: "/user/findPASS", /* 통신할 URL */
+                    data: findPASSObject, /* 파라메터로 보낼 데이터 */
+                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                })
+                    .success(function (data, status, headers, config) {
+                        if(data.msg == 'false') {
+                            alert('해당하는 비밀번호가 없습니다.')
+                        }else{
+                            alert('비밀번호는 '+ data.msg + '입니다.');
+                            window.location.href = 'main.html';
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                        console.log(status);
+                    });
+            };
+        })
 
 
     // 댓글 엔터 입력 처리
@@ -101,7 +298,7 @@ angular.module("homeApp",[
   //  });
 
 
-    .controller("uploadCtrl", function($scope, $log, Upload, $timeout) {
+    .controller("uploadCtrl", function($scope, $log, Upload, $timeout, store, $state) {
         $scope.openAccess = [
             {id :1 ,title :"전체공개"},
             {id :2, title :"Toline"},
@@ -197,7 +394,7 @@ angular.module("homeApp",[
         };
     })
 
-    .controller("findCtrl",function($scope,$http){
+    .controller("findCtrl",function($scope,$http, store, $state){
         $scope.find_user = "";
 
         $scope.keyHit = function() {
@@ -209,16 +406,14 @@ angular.module("homeApp",[
         }
     })
 
-    .controller('catagoryCtrl', function($scope,$http){
+    .controller('catagoryCtrl', function($scope,$http, store, $state){
 
-        var loginObject = {
-            user_id : 1
-        };
+        var userObject = store.get('obj');
 
         $http({
             method: 'POST', //방식
             url: "/api/boardlist", /* 통신할 URL */
-            data: loginObject, /* 파라메터로 보낼 데이터 */
+            data: userObject, /* 파라메터로 보낼 데이터 */
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .then(function(response) {
@@ -229,7 +424,7 @@ angular.module("homeApp",[
             $http({
                 method: 'POST', //방식
                 url: "/api/boardlist", /* 통신할 URL */
-                data: loginObject, /* 파라메터로 보낼 데이터 */
+                data: userObject, /* 파라메터로 보낼 데이터 */
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .then(function(response) {
@@ -273,18 +468,16 @@ angular.module("homeApp",[
 
 
 
-    .controller("tolineCtrl",function($scope, $http){
+    .controller("tolineCtrl",function($scope, $http, store, $state){
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
-        var loginObject = {
-            user_id : 1
-        };
+        var userObject = store.get('obj');
 
         $http({
             method: 'POST', //방식
             url: "/user/showfriends", /* 통신할 URL */
-            data: loginObject, /* 파라메터로 보낼 데이터 */
+            data: userObject, /* 파라메터로 보낼 데이터 */
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .then(function(response) {
@@ -346,20 +539,16 @@ angular.module("homeApp",[
 
 
 
-    .controller("indexCtrl",function($scope, $http) {
+    .controller("indexCtrl",function($scope, $http, store, $state) {
 
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
-
-        $scope.name = "김태선";
-        var loginObject = {
-            user_id: 1
-        };
+        var userObject = store.get('obj');
 
         $http({
             method: 'POST', //방식
             url: "/api/boardlist", /* 통신할 URL */
-            data: loginObject, /* 파라메터로 보낼 데이터 */
+            data: userObject, /* 파라메터로 보낼 데이터 */
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .then(function (response) {
@@ -367,14 +556,10 @@ angular.module("homeApp",[
             });
         $scope.viewAll= function(){
 
-            var loginObject = {
-                user_id : 1
-            };
-
             $http({
                 method: 'POST', //방식
                 url: "/api/boardlist", /* 통신할 URL */
-                data: loginObject, /* 파라메터로 보낼 데이터 */
+                data: userObject, /* 파라메터로 보낼 데이터 */
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .then(function(response) {
@@ -464,7 +649,7 @@ angular.module("homeApp",[
         $http({
             method: 'POST', //방식
             url: "/user/showfriends", /* 통신할 URL */
-            data: loginObject, /* 파라메터로 보낼 데이터 */
+            data: userObject, /* 파라메터로 보낼 데이터 */
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .then(function (response) {
@@ -539,20 +724,18 @@ angular.module("homeApp",[
         
     })
 
-        .controller("ArchiveCtrl",function($scope, $http) {
+        .controller("ArchiveCtrl",function($scope, $http, store, $state) {
 
 
             //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
-            $scope.name = "김태선";
-            var loginObject = {
-                user_id: 1
-            };
+            var userObject = store.get('obj');
+            $scope.name = userObject.login_id;
 
             $http({
                 method: 'POST', //방식
                 url: "/folder/getFolderList", /* 통신할 URL */
-                data: loginObject, /* 파라메터로 보낼 데이터 */
+                data: userObject, /* 파라메터로 보낼 데이터 */
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .then(function (response) {

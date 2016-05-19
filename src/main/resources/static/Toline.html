@@ -1,4 +1,18 @@
 
+<!--메인헤더-->
+<div ng-include="'mainHeader.html'" ng-controller="findCtrl"></div>
+<!--서브헤더-->
+<div ng-include="'subHeader.html'"></div>
+
+<!--화면 분할 시작-->
+<div class="container-fluid" style="margin-bottom: 50px;">
+    <div class="row content">
+        <!--좌측 화면분할-->
+        <div class="col-sm-2 col-md-2 col-lg-2 sidenav hidden-xs" >
+            <div class="container-fluid " >
+                <p></p>
+            </div>
+        </div>
 
 
                 <div class="jumbotron list-content">
@@ -51,3 +65,15 @@
                         -->
                     </ul>
                 </div>
+
+
+                <!--우측 화면 분할-->
+                <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs">
+                    <div ng-include="'RightSideBar.html'"></div>
+                </div>
+                </div>
+                </div>
+
+
+                <!--푸터-->
+                <div ng-include="'mainFooter.html'"></div>

@@ -65,13 +65,14 @@ public class UserController {
     public Result Login(@RequestBody User user) {
         System.out.println("try to login user: " + user);
 
-        String password = userMapper.Login(user);
+        User userInfo = userMapper.Login(user);
         String input_password = user.getPassword();
-        System.out.println(password + " : " +  user.getPassword());
-        if(!password.equals(input_password)) {
+        String user_pw = userInfo.getPassword();
+        System.out.println(user_pw + " : " +  user.getPassword());
+        if(!user_pw.equals(input_password)) {
             return new Result(0, "fales");
         }
-        return new Result(0, user.getLogin_id());
+        return new Result(userInfo.getUser_id(), userInfo.getName());
     }
 
 }

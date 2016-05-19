@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <nav class="navbar navbar-default navbar-static-top"  >
-    <div class="container-fluid">
+    <div ng-controller="loginCtrl" class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" style="background-color:#771107;border-color: #771107;"  data-toggle="collapse" data-target="#mynavbar" >
             <span class="glyphicon glyphicon-user" style="color:white;"></span>
@@ -25,13 +25,13 @@
                 <span class="caret" style="background-color: #771107;color: white" ></span>
             </button>
             <img src="img/logoarchive.png" class="pull-left">
-            <a id='homebtn' class= "navbar-brand navbar-brand-centered" ui-sref="index">
+            <a id='homebtn' class= "navbar-brand navbar-brand-centered" ui-sref="main">
                 Archive</a>
         </div>
 
         <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav navbar-right text-right" style="margin-top: 11px">
-                <li><a  href="main.html" ><span class="glyphicon glyphicon-user"></span>  Log out</a></li>
+                <li><a ng-click="logout()"><span class="glyphicon glyphicon-user"></span>  Log out</a></li>
             </ul>
             <form ng-controller="findCtrl" class="navbar-form navbar-right hidden-xs" role="search" style="margin-top: 17px;position:absolute;right:10%;">
                 <div class="input-group">

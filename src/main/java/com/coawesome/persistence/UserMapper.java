@@ -1,10 +1,9 @@
 package com.coawesome.persistence;
 
-import com.coawesome.domain.*;
-import org.apache.ibatis.annotations.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.coawesome.domain.User;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -28,7 +27,7 @@ public interface UserMapper {
 
 
   //로그인
-  @Select("select password from user where login_id = #{login_id}")
-  String Login(User user);
+  @Select("select * from user where login_id = #{login_id}")
+  User Login(User user);
 
 }

@@ -1,18 +1,34 @@
-<!--카테고리 페이지.-->
-    <ul class="nav nav-pills">
-        <li class="active">
-            <a data-toggle="tab" ng-click="view_allCatagory()">
-                <span class="glyphicon glyphicon-th-large"  style="display: block;font-size: 50px;"></span>
-                <p>전체보기</p>
-            </a>
-        </li>
-        <li ng-repeat="menu in menuList" >
-            <a data-toggle="tab" ng-model="menu.catagory" ng-click="filters_catagory.catagory=menu.catagory">
-                <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;font-size: 50px;"></span>
-                <p>{{menu.title}}</p>
-            </a>
-        </li>
-    </ul>
+
+<!--메인헤더-->
+<div ng-include="'mainHeader.html'" ng-controller="findCtrl"></div>
+<!--서브헤더-->
+<div ng-include="'subHeader.html'"></div>
+
+<!--화면 분할 시작-->
+<div class="container-fluid" style="margin-bottom: 50px;">
+    <div class="row content">
+        <!--좌측 화면분할-->
+        <div class="col-sm-2 col-md-2 col-lg-2 sidenav hidden-xs" >
+            <div class="container-fluid " >
+                <p></p>
+            </div>
+        </div>
+
+        <!--가운데 콘텐츠 화면분할-->
+        <ul class="nav nav-pills">
+            <li class="active">
+                <a data-toggle="tab" ng-click="view_allCatagory()">
+                    <span class="glyphicon glyphicon-th-large"  style="display: block;font-size: 50px;"></span>
+                    <p>전체보기</p>
+                </a>
+            </li>
+            <li ng-repeat="menu in menuList" >
+                <a data-toggle="tab" ng-model="menu.catagory" ng-click="filters_catagory.catagory=menu.catagory">
+                    <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;font-size: 50px;"></span>
+                    <p>{{menu.title}}</p>
+                </a>
+            </li>
+        </ul>
 
         <div class="container-fluid" style="margin-left: -20px;margin-right: -20px">
             <div class="row">
@@ -22,5 +38,15 @@
                 </div>
             </div>
         </div>
-    <!--</div>-->
-<!--</div>-->
+
+
+        <!--우측 화면 분할-->
+        <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs">
+            <div ng-include="'RightSideBar.html'"></div>
+        </div>
+    </div>
+</div>
+
+
+<!--푸터-->
+<div ng-include="'mainFooter.html'"></div>
