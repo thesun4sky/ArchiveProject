@@ -15,64 +15,56 @@
         </div>
 
 
-                <div class="jumbotron list-content">
+        <div class="jumbotron list-content">
 
-                    <ul class="list-group">
-                        <form class="navbar-form " role="search" style="text-align: right">
-                            <div class="input-group">
-                                <input type="text" ng-model="finduser" class="form-control" placeholder="Search" name="q">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="reset"><span class="glyphicon glyphicon-refresh"></span></button>
-                                </div>
+            <ul class="list-group">
+                <form class="navbar-form " role="search" style="text-align: right">
+                    <div class="input-group">
+                        <input type="text" ng-model="finduser" class="form-control" placeholder="Search" name="q">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="reset"><span class="glyphicon glyphicon-refresh"></span></button>
+                        </div>
+                    </div>
+                </form>
+                <li href="#" class="list-group-item title">
+                    연결고리
+                </li>
+                <li href="#" ng-repeat="x in friends | filter : finduser" class="list-group-item text-left">
+                    <img class="img-thumbnail" src="img/someone.png">
+                    <label class="name">
+                        {{x.name}}<br>
+                    </label>
+                    <label class="pull-right">
+                        <div ng-switch on="x.status">
+                            <div ng-switch-when="0">
+                                Friend request
+                                <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" ng-click="acceptFriend(x.user_id)" title="Ok"></a>
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(x.user_id)" title="Delete"></a>
+                                <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
                             </div>
-                        </form>
-                        <li href="#" class="list-group-item title">
-                            연결고리
-                        </li>
-                        <li href="#" ng-repeat="x in friends | filter : finduser" class="list-group-item text-left">
-                            <img class="img-thumbnail" src="img/someone.png">
-                            <label class="name">
-                                {{x.name}}<br>
-                            </label>
-                            <label class="pull-right">
-                                <div ng-switch on="x.status">
-                                    <div ng-switch-when="0">
-                                        Friend request
-                                        <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" ng-click="acceptFriend(x.user_id)" title="Ok"></a>
-                                        <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(x.user_id)" title="Delete"></a>
-                                        <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
-                                    </div>
-                                    <div ng-switch-when="1">
-                                        <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(x.user_id)" title="Delete"></a>
-                                        <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
-                                    </div>
-                                    <div ng-switch-when="2">
-                                        <p class="text-center">Me</p>
-                                    </div>
-                                </div>
+                            <div ng-switch-when="1">
+                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(x.user_id)" title="Delete"></a>
+                                <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
+                            </div>
+                            <div ng-switch-when="2">
+                                <p class="text-center">Me</p>
+                            </div>
+                        </div>
 
-                            </label>
-                            <div class="break"></div>
-                        </li>
-
-                        <!--
-                        <li href="#" class="list-group-item text-left">
-                            <a class="btn btn-block btn-primary">
-                                <i class="glyphicon glyphicon-refresh"></i>
-                                Load more...
-                            </a>
-                        </li>
-                        -->
-                    </ul>
-                </div>
+                    </label>
+                    <div class="break"></div>
+                </li>
+            </ul>
+        </div>
 
 
                 <!--우측 화면 분할-->
-                <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs">
-                    <div ng-include="'RightSideBar.html'"></div>
-                </div>
-                </div>
-                </div>
+
+        <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs">
+                <div ng-include="'RightSideBar.html'"></div>
+            </div>
+    </div>
+</div>
 
 
                 <!--푸터-->

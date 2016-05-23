@@ -601,6 +601,7 @@ angular.module("homeApp",[
                 });
         };
 
+        
         $scope.UnfavoriteBoard = function (board_id) {
             var UnfavoriteBoardObject =
             {
