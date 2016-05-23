@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ArchiveProject.iml" filepath="$PROJECT_DIR$/.idea/modules/ArchiveProject.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ArchiveProject_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ArchiveProject_main.iml" group="ArchiveProject" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ArchiveProject_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ArchiveProject_test.iml" group="ArchiveProject" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ARCHIV.iml" filepath="$PROJECT_DIR$/.idea/modules/ARCHIV.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ARCHIV_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ARCHIV_main.iml" group="ARCHIV" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ARCHIV_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ARCHIV_test.iml" group="ARCHIV" />
     </modules>
   </component>
 </project>

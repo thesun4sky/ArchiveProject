@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework.cloud:spring-cloud-starter-aws-jdbc:1.0.6.RELEASE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.cloud/spring-cloud-starter-aws-jdbc/1.0.6.RELEASE/8e49db3586966f83710c024ad99a40fc9b2e25f/spring-cloud-starter-aws-jdbc-1.0.6.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.cloud/spring-cloud-starter-aws-jdbc/1.0.6.RELEASE/7d712e9b23377feb973558a782e804bd311b52d3/spring-cloud-starter-aws-jdbc-1.0.6.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
