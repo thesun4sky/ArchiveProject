@@ -78,7 +78,7 @@
                             <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;> <p style="display: inline-block">{{x.replier}} : {{x.reply}} (공감: {{x.likes_num}} )</p>
                         </div>
                         <div ng-switch-default>
-                            <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px" ng-enter="commitReply()" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
+                            <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px" ng-enter="commitReply({{x.board_id}}, reply.content)" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
                             </div>
                         </div>
                     </div>

@@ -16,7 +16,6 @@ angular.module("homeApp",[
     .run(function ($rootScope, $state, store) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
             var requireLogin = toState.data.requireLogin;
-
             if (requireLogin && store.get('obj') == null) {
                 event.preventDefault();
                 // get me a login modal!
@@ -39,6 +38,20 @@ angular.module("homeApp",[
             });
 
             return output;
+        };
+    })
+
+    // 댓글 엔터 입력 처리
+    .directive('ngEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind("keydown keypress", function (event) {
+                if(event.which === 13) {
+                    scope.$apply(function (){
+                        scope.$eval(attrs.ngEnter);
+                    });
+                    event.preventDefault();
+                }
+            });
         };
     })
 
@@ -110,12 +123,6 @@ angular.module("homeApp",[
 
         $urlRouterProvider.otherwise('/');
     })
-
-
-
-
-
-
 
 
         .controller("loginCtrl",function($scope, $http, store, $state){
@@ -281,21 +288,6 @@ angular.module("homeApp",[
             };
         })
 
-
-    // 댓글 엔터 입력 처리
-  //   .directive('ngEnter', function () {
-  //      return function (scope, element, attrs) {
-  //          element.bind("keydown keypress", function (event) {
-  //              if(event.which === 13) {
-  //                  scope.$apply(function (){
-  //                      scope.$eval(attrs.ngEnter);
-  //                  });
-  //
-  //                  event.preventDefault();
-  //              }
-  //          });
-  //      };
-  //  });
 
 
     .controller("uploadCtrl", function($scope, $log, Upload, $timeout, store, $state) {
@@ -571,7 +563,7 @@ angular.module("homeApp",[
         $scope.favoriteBoard = function (board_id) {
             var favoriteBoardObject =
             {
-                user_id: 1, //임시로 1번사용자 지정
+                user_id: userObject.user_id, //임시로 1번사용자 지정
                 board_id: board_id
             };
             $http({
@@ -596,7 +588,7 @@ angular.module("homeApp",[
         $scope.UnfavoriteBoard = function (board_id) {
             var UnfavoriteBoardObject =
             {
-                user_id: 1, //임시로 1번사용자 지정
+                user_id: userObject.user_id, //임시로 1번사용자 지정
                 board_id: board_id
             };
             $http({
@@ -618,12 +610,12 @@ angular.module("homeApp",[
                 });
         };
 
-        $scope.commitReply = function () {
+        $scope.commitReply = function (board_id, msg) {
             var replyObject =
             {
-                user_id: 1, //임시로 1번사용자 지정
-                board_id: 4,
-                reply: $scope.reply.content
+                user_id: userObject.user_id, //임시로 1번사용자 지정
+                board_id: board_id,
+                reply: msg
             };
             $http({
                 method: 'POST', //방식
@@ -633,7 +625,8 @@ angular.module("homeApp",[
             })
                 .success(function (data, status, headers, config) {
                     if (data.msg == 'success') {
-                        alert('댓글작성 성공')
+                        alert('댓글작성 성공');
+                        $scope.reply.content = "";
                     } else {
                         alert('댓글작성 실패');
                     }
@@ -660,7 +653,7 @@ angular.module("homeApp",[
             var acceptFriendObject =
             {
                 user_id: friend_id, //임시로 1번사용자 지정
-                friend_id: 1
+                friend_id: userObject.user_id
             };
             $http({
                 method: 'POST', //방식
@@ -685,7 +678,7 @@ angular.module("homeApp",[
         $scope.deleteFriend = function (friend_id) {
             var deleteFriendObject =
             {
-                user_id: 1, //임시로 1번사용자 지정
+                user_id: userObject.user_id, //임시로 1번사용자 지정
                 friend_id: friend_id
             };
             $http({
