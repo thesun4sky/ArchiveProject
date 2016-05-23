@@ -323,6 +323,10 @@ angular.module("homeApp",[
             {id :7 , title :"여행"},
             {id :8 , title :"음악"}
         ];
+
+
+
+
         $scope.leftClass = function () {
             $scope.class_name = "left";
             $scope.multi_message = "좌측 정렬 되었습니다.";
@@ -367,6 +371,23 @@ angular.module("homeApp",[
                 "divtop2": 0
             }
         ];
+
+         $scope.myFunction = function() {
+            var words = $scope.lines.firstLine.concat(" ".concat($scope.lines.secondLine));
+            //삭제어
+            var res = words.replace(/은 |는 |이 |가 |의 |을 |를 /gi , " ");  //조사
+            res = res.replace(/하 |내가 |엔 |앤 |에서 |으로 |한다면 /gi , " ");  //동사 꾸밈어
+
+            //대체어
+            res = res.replace(/습니당 |습니다 |어요 |지요 |고 |며 |다면 /gi , "다 ");  //종조사
+            res = res.replace(/&#63;/gi , "물음표 ");  // ?
+            res = res.replace(/&#33;/gi , "느낌표 ");  // !
+            res = res.replace(/&#126;/gi , "물결 ");  // ~
+
+            res = res.split(" "); //배열로 분해
+
+            $scope.words = res;
+        };
 
         $scope.uploadPic = function(file,p_level,c_list)  {
 

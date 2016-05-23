@@ -29,6 +29,10 @@
                             <button class="btn btn-sm btn-warning" ng-click="picFile = null" ng-show="picFile">Remove</button>
                         </div>
                     </div>
+                    <div ng-repeat="x in words">
+                        <input type="text" style="width: inherit; text-align: center" value="{{x}}">
+                    </div>
+                    <button ng-click="myFunction()">Try it</button>
                 </div>
             </div>
 
