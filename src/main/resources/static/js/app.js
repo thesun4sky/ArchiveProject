@@ -3,13 +3,29 @@
  */
 
 angular.module("homeApp",[
+        'chart.js',
         'ngAnimate',
         'ui.router',
         'ngFileUpload',
         'angular-storage'
+
     ])
     .config(function(storeProvider){
         storeProvider.setStore('sessionStorage');
+    })
+
+    .controller('RadarCtrl', function ($scope) {
+        $scope.labels = ['만족', '반전', '박진감', '웃음', '통쾌', '후회', '식상', '지루', '혐오', '실망'];
+
+        $scope.data = [ //임의 값 집어넣음
+            [65, 59, 90, 81, 56, 55, 40, 80, 30, 90],
+            [28, 48, 40, 19, 96, 27, 100, 81, 56, 55]//,
+            //[58, 78, 20, 80, 70, 20, 40, 90, 50, 20]
+        ];
+
+        $scope.onClick = function (points, evt) {
+            console.log(points, evt);
+        };
     })
 
 
@@ -125,168 +141,168 @@ angular.module("homeApp",[
     })
 
 
-        .controller("loginCtrl",function($scope, $http, store, $state){
+    .controller("loginCtrl",function($scope, $http, store, $state){
 
-            $scope.login=[{
-                login_id :"" ,password :""
-            }];
-
-
-            $scope.logout = function(){
-                store.set('obj',null);
-                $state.go('login');
-            }
+        $scope.login=[{
+            login_id :"" ,password :""
+        }];
 
 
-            $scope.loginPost = function(){
-                var loginObject = {
-                    login_id : $scope.login.login_id,
-                    password : $scope.login.password
-                };
-                $http({
-                    method: 'POST', //방식
-                    url: "/user/login", /* 통신할 URL */
-                    data: loginObject, /* 파라메터로 보낼 데이터 */
-                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-                })
-                    .success(function (data, status, headers, config) {
-                        if(data){
-                            if (data.msg != 'fales') {
-                                var myInfo = {
-                                    login_id: data.msg,
-                                    user_id: data.result
-                                };
-                                store.set('obj',myInfo);
-                                $state.go('main');
-                                /* 맞음 */
-                            }
-                            else {
-                                console.log('login_fail');
-                                /* 틀림 */
-                            }
+        $scope.logout = function(){
+            store.set('obj',null);
+            $state.go('login');
+        }
+
+
+        $scope.loginPost = function(){
+            var loginObject = {
+                login_id : $scope.login.login_id,
+                password : $scope.login.password
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/user/login", /* 통신할 URL */
+                data: loginObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if(data){
+                        if (data.msg != 'fales') {
+                            var myInfo = {
+                                login_id: data.msg,
+                                user_id: data.result
+                            };
+                            store.set('obj',myInfo);
+                            $state.go('main');
+                            /* 맞음 */
                         }
                         else {
-                            console.log('에러에러에러');
-
+                            console.log('login_fail');
+                            /* 틀림 */
                         }
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
-                    });
-            };
-        })
+                    }
+                    else {
+                        console.log('에러에러에러');
 
-        .controller("joinCtrl",function($scope, $http){
-
-            $scope.join=[{
-                login_id :"" ,password :"", name :"", sex :"", born1 :"", born2 :"", born3 :"", email:""
-            }];
-
-            $scope.joinPost = function(){
-                var joinObject = {
-                    login_id : $scope.join.login_id,
-                    password : $scope.join.password,
-                    name : $scope.join.name,
-                    sex : $scope.join.sex,
-                    born : $scope.join.born1 + $scope.join.born2  + $scope.join.born3 ,
-                    email : $scope.join.email
-                };
-                $http({
-                    method: 'POST', //방식
-                    url: "/user/join", /* 통신할 URL */
-                    data: joinObject, /* 파라메터로 보낼 데이터 */
-                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                    }
                 })
-                    .success(function (data, status, headers, config) {
-                        if(data){
-                            if (data.msg == 'success') {
-                                window.location.href ='main.html';
-                                /* 맞음 */
-                            }
-                            else {
-                                console.log('join_fail');
-                                /* 틀림 */
-                            }
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+    })
+
+    .controller("joinCtrl",function($scope, $http){
+
+        $scope.join=[{
+            login_id :"" ,password :"", name :"", sex :"", born1 :"", born2 :"", born3 :"", email:""
+        }];
+
+        $scope.joinPost = function(){
+            var joinObject = {
+                login_id : $scope.join.login_id,
+                password : $scope.join.password,
+                name : $scope.join.name,
+                sex : $scope.join.sex,
+                born : $scope.join.born1 + $scope.join.born2  + $scope.join.born3 ,
+                email : $scope.join.email
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/user/join", /* 통신할 URL */
+                data: joinObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if(data){
+                        if (data.msg == 'success') {
+                            window.location.href ='main.html';
+                            /* 맞음 */
                         }
                         else {
-                            console.log('에러에러에러');
-
+                            console.log('join_fail');
+                            /* 틀림 */
                         }
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
-                    });
-            };
-        })
+                    }
+                    else {
+                        console.log('에러에러에러');
 
-
-
-        .controller("findIDCtrl",function($scope, $http){
-
-            $scope.findID=[{
-                name :"", born1 :"", born2 :"", born3 :""
-            }];
-
-            $scope.findIDPost = function(){
-                var findIDObject = {
-                    name : $scope.findID.name,
-                    born : $scope.findID.born1 + $scope.findID.born2  + $scope.findID.born3
-                };
-                $http({
-                    method: 'POST', //방식
-                    url: "/user/findID", /* 통신할 URL */
-                    data: findIDObject, /* 파라메터로 보낼 데이터 */
-                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                    }
                 })
-                    .success(function (data, status, headers, config) {
-                        if(data.msg == 'false') {
-                            alert('해당하는 아이디가 없습니다.')
-                        }else{
-                            alert('아이디는 '+ data.msg + '입니다.');
-                            window.location.href = 'main.html';
-                        }
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
-                    });
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+    })
+
+
+
+    .controller("findIDCtrl",function($scope, $http){
+
+        $scope.findID=[{
+            name :"", born1 :"", born2 :"", born3 :""
+        }];
+
+        $scope.findIDPost = function(){
+            var findIDObject = {
+                name : $scope.findID.name,
+                born : $scope.findID.born1 + $scope.findID.born2  + $scope.findID.born3
             };
-        })
-
-
-        .controller("findPASSCtrl",function($scope, $http){
-
-            $scope.findPASS=[{
-                login_id :"", email :""
-            }];
-
-            $scope.findPASSPost = function(){
-                var findPASSObject = {
-                    login_id : $scope.findPASS.login_id,
-                    email : $scope.findPASS.email
-                };
-                $http({
-                    method: 'POST', //방식
-                    url: "/user/findPASS", /* 통신할 URL */
-                    data: findPASSObject, /* 파라메터로 보낼 데이터 */
-                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            $http({
+                method: 'POST', //방식
+                url: "/user/findID", /* 통신할 URL */
+                data: findIDObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if(data.msg == 'false') {
+                        alert('해당하는 아이디가 없습니다.')
+                    }else{
+                        alert('아이디는 '+ data.msg + '입니다.');
+                        window.location.href = 'main.html';
+                    }
                 })
-                    .success(function (data, status, headers, config) {
-                        if(data.msg == 'false') {
-                            alert('해당하는 비밀번호가 없습니다.')
-                        }else{
-                            alert('비밀번호는 '+ data.msg + '입니다.');
-                            window.location.href = 'main.html';
-                        }
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
-                    });
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+    })
+
+
+    .controller("findPASSCtrl",function($scope, $http){
+
+        $scope.findPASS=[{
+            login_id :"", email :""
+        }];
+
+        $scope.findPASSPost = function(){
+            var findPASSObject = {
+                login_id : $scope.findPASS.login_id,
+                email : $scope.findPASS.email
             };
-        })
+            $http({
+                method: 'POST', //방식
+                url: "/user/findPASS", /* 통신할 URL */
+                data: findPASSObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if(data.msg == 'false') {
+                        alert('해당하는 비밀번호가 없습니다.')
+                    }else{
+                        alert('비밀번호는 '+ data.msg + '입니다.');
+                        window.location.href = 'main.html';
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+    })
 
 
 
@@ -714,128 +730,128 @@ angular.module("homeApp",[
             {catagory: 8, link: "music", title: "음악", icon1: "glyphicon", icon2: "glyphicon-music"}
         ];
 
-        
+
     })
 
-        .controller("ArchiveCtrl",function($scope, $http, store, $state) {
+    .controller("ArchiveCtrl",function($scope, $http, store, $state) {
 
 
-            //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
+        //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
-            var userObject = store.get('obj');
-            $scope.name = userObject.login_id;
+        var userObject = store.get('obj');
+        $scope.name = userObject.login_id;
+
+        $http({
+            method: 'POST', //방식
+            url: "/folder/getFolderList", /* 통신할 URL */
+            data: userObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.folders = response.data;
+            });
+
+
+        $scope.addNewFolder = function (new_folder_name) {
+            var newFolderObject =
+            {
+                user_id: userObject.user_id,
+                folder_name: new_folder_name
+            };
 
             $http({
                 method: 'POST', //방식
-                url: "/folder/getFolderList", /* 통신할 URL */
-                data: userObject, /* 파라메터로 보낼 데이터 */
+                url: "/folder/newFolder", /* 통신할 URL */
+                data: newFolderObject, /* 파라메터로 보낼 데이터 */
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
-                .then(function (response) {
-                    $scope.folders = response.data;
-                });
-
-
-            $scope.addNewFolder = function (new_folder_name) {
-                var newFolderObject =
-                {
-                    user_id: userObject.user_id,
-                    folder_name: new_folder_name
-                };
-
-                $http({
-                    method: 'POST', //방식
-                    url: "/folder/newFolder", /* 통신할 URL */
-                    data: newFolderObject, /* 파라메터로 보낼 데이터 */
-                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('폴더생성 실패');
+                    } else {
+                        alert('폴더생성 성공');
+                        $scope.$apply();
+                    }
                 })
-                    .success(function (data, status, headers, config) {
-                        if (data.msg == 'false') {
-                            alert('폴더생성 실패');
-                        } else {
-                            alert('폴더생성 성공');
-                            $scope.$apply();
-                        }
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
-                    });
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+        $scope.deleteFolder = function (folder_id) {
+            var deleteFolderObject =
+            {
+                user_id: userObject.user_id,
+                folder_id: folder_id
             };
 
-            $scope.deleteFolder = function (folder_id) {
-                var deleteFolderObject =
-                {
-                    user_id: userObject.user_id,
-                    folder_id: folder_id
-                };
+            $http({
+                method: 'POST', //방식
+                url: "/folder/deleteFolder", /* 통신할 URL */
+                data: deleteFolderObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('폴더삭제 실패');
+                    } else {
+                        alert('폴더삭제 성공');
+                        $scope.$apply();
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                })
+        }
 
+        $scope.folders = { };
+
+        $scope.openFolder = function (folder_id) {
+            if(folder_id == 100){
+                var openLineFolderObject = {
+                    user_id: userObject.user_id
+                };
                 $http({
                     method: 'POST', //방식
-                    url: "/folder/deleteFolder", /* 통신할 URL */
-                    data: deleteFolderObject, /* 파라메터로 보낼 데이터 */
+                    url: "/folder/openLineFolder", /* 통신할 URL */
+                    data: openLineFolderObject, /* 파라메터로 보낼 데이터 */
                     headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
                 })
-                    .success(function (data, status, headers, config) {
-                        if (data.msg == 'false') {
-                            alert('폴더삭제 실패');
-                        } else {
-                            alert('폴더삭제 성공');
-                            $scope.$apply();
-                        }
-                    })
-                    .error(function (data, status, headers, config) {
-                        /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                        console.log(status);
-                    })
+                    .then(function (response) {
+                        $scope.folder_boards = response.data;
+                    });
             }
-
-            $scope.folders = { };
-
-            $scope.openFolder = function (folder_id) {
-                if(folder_id == 100){
-                    var openLineFolderObject = {
-                        user_id: userObject.user_id
-                    };
-                    $http({
-                        method: 'POST', //방식
-                        url: "/folder/openLineFolder", /* 통신할 URL */
-                        data: openLineFolderObject, /* 파라메터로 보낼 데이터 */
-                        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-                    })
-                        .then(function (response) {
-                            $scope.folder_boards = response.data;
-                        });
-                }
-                else if(folder_id == 200){
-                    var openFavoriteFolderObject = {
-                        user_id: userObject.user_id
-                    };
-                    $http({
-                        method: 'POST', //방식
-                        url: "/folder/openFavoriteFolder", /* 통신할 URL */
-                        data: openFavoriteFolderObject, /* 파라메터로 보낼 데이터 */
-                        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-                    })
-                        .then(function (response) {
-                            $scope.folder_boards = response.data;
-                        });
-                }
-                else if(folder_id == 300){
-                    var openMyFolderObject = {
-                        user_id: userObject.user_id
-                    };
-                    $http({
-                        method: 'POST', //방식
-                        url: "/folder/openMyFolder", /* 통신할 URL */
-                        data: openMyFolderObject, /* 파라메터로 보낼 데이터 */
-                        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-                    })
-                        .then(function (response) {
-                            $scope.folder_boards = response.data;
-                        });
-                }
-                else{
+            else if(folder_id == 200){
+                var openFavoriteFolderObject = {
+                    user_id: userObject.user_id
+                };
+                $http({
+                    method: 'POST', //방식
+                    url: "/folder/openFavoriteFolder", /* 통신할 URL */
+                    data: openFavoriteFolderObject, /* 파라메터로 보낼 데이터 */
+                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                })
+                    .then(function (response) {
+                        $scope.folder_boards = response.data;
+                    });
+            }
+            else if(folder_id == 300){
+                var openMyFolderObject = {
+                    user_id: userObject.user_id
+                };
+                $http({
+                    method: 'POST', //방식
+                    url: "/folder/openMyFolder", /* 통신할 URL */
+                    data: openMyFolderObject, /* 파라메터로 보낼 데이터 */
+                    headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                })
+                    .then(function (response) {
+                        $scope.folder_boards = response.data;
+                    });
+            }
+            else{
                 var openFolderObject =
                 {
                     folder_id: folder_id
@@ -851,5 +867,6 @@ angular.module("homeApp",[
                         $scope.folder_boards = response.data;
                     });
             }
-            }
-        });
+        }
+    });
+

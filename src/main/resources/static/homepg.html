@@ -1,18 +1,32 @@
 
-    <ul class="nav nav-pills">
-        <li class="active">
-            <a data-toggle="tab" ng-click="viewAll()">
-                <span class="glyphicon glyphicon-th-large"  style="display: block;font-size: 50px;"></span>
-                <p>전체보기</p>
-            </a>
-        </li>
-        <li ng-repeat="menu in menuList" >
-            <a data-toggle="tab" ng-model="menu.catagory" ng-click="filters.catagory=menu.catagory">
-                <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;font-size: 50px;"></span>
-                <p>{{menu.title}}</p>
-            </a>
-        </li>
-    </ul>
+
+
+
+<ul class="nav nav-pills">
+    <li class="active">
+        <a data-toggle="tab" ng-click="viewAll()">
+            <span class="glyphicon glyphicon-th-large"  style="display: block;font-size: 50px;"></span>
+            <p>전체보기</p>
+        </a>
+    </li>
+    <li ng-repeat="menu in menuList" >
+        <a data-toggle="tab" ng-model="menu.catagory" ng-click="filters.catagory=menu.catagory">
+            <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;font-size: 50px;"></span>
+            <p>{{menu.title}}</p>
+        </a>
+    </li>
+</ul>
+
+<div class="col-lg-6 col-sm-12" id="radar-chart" ng-controller="RadarCtrl">
+    <div class="panel panel-default">
+        <div class="panel-heading">Radar Chart</div>
+        <div class="panel-body">
+            <canvas id="area" class="chart chart-radar" chart-data="data"
+                    chart-labels="labels" chart-click="onClick"></canvas>
+        </div>
+    </div>
+</div>
+
 
 <!--업로드 되는 프레임 구성 화면-->
 <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
@@ -59,26 +73,26 @@
                 </div>
                 <div class="row" style="margin-bottom:10px;">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left">
-                    <img src="img/someone.png" class="img-circle" alt="user" width=15%; height=15%;>
-                    <p style="display: inline-block">{{x.name}}</p>
-                      </div>
+                        <img src="img/someone.png" class="img-circle" alt="user" width=15%; height=15%;>
+                        <p style="display: inline-block">{{x.name}}</p>
+                    </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
                         <p><strong>{{x.tag1}} / {{x.tag2}} / {{x.tag3}}</strong></p>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 hidden-xs text-right">
                         <div class="btn-group-sm">
-                        <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span></a>
-                        <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-comment"></span></a>
-                        <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-bell"></span></a>
+                            <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span></a>
+                            <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-comment"></span></a>
+                            <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-bell"></span></a>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div ng-switch on="!!x.replier">
-                        <div ng-switch-when="true">
-                            <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;> <p style="display: inline-block">{{x.replier}} : {{x.reply}} (공감: {{x.likes_num}} )</p>
-                        </div>
-                        <div ng-switch-default>
-                            <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px" ng-enter="commitReply({{x.board_id}}, reply.content)" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
+                        <div ng-switch on="!!x.replier">
+                            <div ng-switch-when="true">
+                                <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;> <p style="display: inline-block">{{x.replier}} : {{x.reply}} (공감: {{x.likes_num}} )</p>
+                            </div>
+                            <div ng-switch-default>
+                                <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px" ng-enter="commitReply({{x.board_id}}, reply.content)" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
                             </div>
                         </div>
                     </div>

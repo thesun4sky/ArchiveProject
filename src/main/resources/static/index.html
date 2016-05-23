@@ -5,6 +5,7 @@
     <link rel="icon" href="img/logoarchive.png" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="js/searchform.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/app.js"></script>
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="css/findnavi.css">
     <link rel="stylesheet" href="css/sign-in.css">
     <link rel="stylesheet" href="css/triangle.css">
+    <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -28,6 +30,10 @@
     <script src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+    <script src="bower_components/Chart.js/Chart.js"></script>
     <script src="js/app.js"></script>
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
@@ -123,247 +129,7 @@
 
 
 
-
+    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
 <body ui-view>
-<!--
-<div id='mainhd2'></div>
-
-<div class="tab-content">
-    &lt;!&ndash;아이디,비밀번호 찾는 TAB 공간&ndash;&gt;
-    <div id="FindId" class="tab-pane fade" style="margin-top: -50px">
-        <div class="container-fluid">
-            <div id='findnavi'>
-                <ul>
-                    <li class="text-center" id="li1" ><a href="#men1" data-toggle="tab">회원가입</a></li>
-                    <li class="text-center" id="li2"><a href="#men2" data-toggle="tab">아이디찾기</a></li>
-                    <li class="text-center" id="li3"><a href="#men3" data-toggle="tab" >비밀번호찾기</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="tab-content">
-            <div id="men1" class="tab-pane fade">
-                &lt;!&ndash;실제로 회원가입 폼이 들어가는 바디부분&ndash;&gt;
-                <div ng-controller="joinCtrl">
-                    <form id='signupform' name="joinform" class="form-signin form-inline" ng-submit="joinPost()">
-                        <h4 class="form-signin-heading" style="margin-bottom: 30px">회원 가입을 위한 정보를 입력하세요</h4>
-                        <div class="form-group">
-                            <label for="inputID">아이디 입력 :</label>
-                            <input type="id" ng-model="join.login_id" id="inputID" class="form-control" placeholder="ID" required autofocus>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword">패스워드 입력:</label>
-                            <input type="password" ng-model="join.password" id="inputPassword" class="form-control" placeholder="PassWord" required autofocus>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputPasswordCheck">패스워드 확인 :</label>
-                            <input type="password" id="inputPasswordCheck" class="form-control" placeholder="Password Check" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputName">이름 입력 :</label>
-                            <input type="name" ng-model="join.name" id="inputName" class="form-control" placeholder="Name" required>
-
-                        </div>
-                        <div class="form-group">
-                            <input type="radio"  ng-model="join.sex" name="sex" value="man" checked> Male<br>
-                            <input type="radio"  ng-model="join.sex" name="sex" value="woman"> Female<br>
-                            <input type="radio" ng-model="join.sex"  name="sex" value="other"> Other
-
-                        </div>
-                        <div class="form-group">
-                            <label for="inputYear" >생년월일 : </label>
-                            <select type="date" ng-model="join.born1"  class="input-sm" id="inputYear" style="margin:0 10px 10px 3px">
-                                <option>년</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option>
-                                <option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option>
-                                <option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option>
-                                <option>2001</option><option>2000</option><option>1999</option><option>1998</option><option>1997</option>
-                                <option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option>
-                                <option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option>
-                                <option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option>
-                                <option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1978</option>
-                                <option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option>
-                                <option>1972</option><option>1971</option><option>1970
-                            </select>
-                            <select type="date" ng-model="join.born2"  class="input-sm" id="inputMonth" style="margin:0 10px 10px 3px">
-                                <option>월</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-                                <option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
-                            </select>
-
-                            <select type="date" ng-model="join.born3"  class="input-sm" id="inputDay" style="margin:0 10px 10px 3px">
-                                <option>일</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-                                <option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
-                                <option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option>
-                                <option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option>
-                                <option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option>
-                            </select>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="inputEmail">이메일 입력 :</label>
-                            <input type="email" ng-model="join.email"  id="inputEmail" class="form-control" placeholder="leemsmail@naver.com" required>
-                        </div>
-
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                    </form>
-
-                </div>
-            </div>
-
-            <div id="men2" class="tab-pane fade">
-
-                <div ng-controller="findIDCtrl">
-                    <form class="form-signin"  ng-submit="findIDPost()">
-                        <h4 class="form-signin-heading" style="margin-bottom: 30px">아이디를 찾기 위한 정보를 입력하세요 </h4>
-                        <div class="form-group">
-                            <label for="name-for-find">이름 입력 :</label>
-                            <input type="name" ng-model="findID.name" id="name-for-find" class="form-control" placeholder="Name" required autofocus>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputYear" >생년월일 : </label>
-                            <select type="date" ng-model="findID.born1"  class="input-sm" id="findYear" style="margin:0 10px 10px 3px">
-                                <option>년</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option>
-                                <option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option>
-                                <option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option>
-                                <option>2001</option><option>2000</option><option>1999</option><option>1998</option><option>1997</option>
-                                <option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option>
-                                <option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option>
-                                <option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option>
-                                <option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1978</option>
-                                <option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option>
-                                <option>1972</option><option>1971</option><option>1970
-                            </select>
-                            <select type="date" ng-model="findID.born2"  class="input-sm" id="findMonth" style="margin:0 10px 10px 3px">
-                                <option>월</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option>
-                                <option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option>
-                            </select>
-
-                            <select type="date" ng-model="findID.born3"  class="input-sm" id="findDay" style="margin:0 10px 10px 3px">
-                                <option>일</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option>
-                                <option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option>
-                                <option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option>
-                                <option>19</option><option>20</option><option>21</option><option>22</option><option>23</option><option>24</option>
-                                <option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">아이디 찾기</button>
-                    </form>
-                </div>
-            </div>
-            <div id="men3" class="tab-pane fade">
-                <div ng-controller="findPASSCtrl">
-                    <form  class="form-signin"  ng-submit="findPASSPost()">
-                        <h4 class="form-signin-heading" style="margin-bottom: 30px">비밀번호를 찾기 위한 정보를 입력하세요 </h4>
-                        <div class="form-group">
-                            <label for="id-for-findpw">아이디 입력 :</label>
-                            <input type="id" ng-model="findPASS.login_id" id="id-for-findpw" class="form-control" placeholder="ID" required autofocus>
-                        </div>
-                        <div class="form-group">
-                            <label for="name-for-findpw">이메일 입력 :</label>
-                            <input type="name" ng-model="findPASS.email" id="name-for-findpw" class="form-control" placeholder="Email" required autofocus>
-                        </div>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">이메일로 비밀번호 받기</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="mainhome" class="tab-pane fade in active">
-
-        &lt;!&ndash;사진 슬라이드가 들어가는 공간&ndash;&gt;
-        <div id="mycarousel" class="carousel slide" data-ride="carousel" style="margin-top: -115px;">
-            &lt;!&ndash; Indicators &ndash;&gt;
-            <ol class="carousel-indicators">
-                <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#mycarousel" data-slide-to="1"></li>
-                <li data-target="#mycarousel" data-slide-to="2"></li>
-                <li data-target="#mycarousel" data-slide-to="3"></li>
-            </ol>
-
-            &lt;!&ndash; Wrapper for slides &ndash;&gt;
-            <div class="carousel-inner" role="listbox">
-                &lt;!&ndash;첫번째 아이템&ndash;&gt;
-                <div class="item">
-                    <img src="img/item1.jpg" data-color="lightblue" alt="First Image">
-                    <div class="carousel-caption" style="margin-bottom: 2%">
-                        &lt;!&ndash;캡션안에 들어가는 로그인 폼&ndash;&gt;
-                        <div ng-controller="loginCtrl">
-                            <form  name="loginform" id='loginform' class="form-signin form-inline" ng-submit="loginPost()">
-                                <div class="nav">
-                                    <div class="form-group">
-                                        <label for="loginId">아이디 입력 :</label>
-                                        <input type="id" ng-model="login.login_id" id="loginId" class="form-control" style="border-radius: 0%" placeholder="ID" required autofocus>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="loginPw">패스워드 입력:</label>
-                                        <input type="password" ng-model="login.password" id="loginPw" class="form-control" style="border-radius: 0%" placeholder="PassWord" required autofocus>
-                                    </div>
-
-                                    <button class="btn btn-lg btn-primary btn-block" id="mainbtn" type="submit">Sign in</button>
-
-                                    <div class="checkbox">
-                                    </div>
-                                    <label>
-                                        <input type="checkbox" value="remember-me" style="margin-top: 10px"> Remember me
-                                    </label>
-                                </div>
-                            </form>
-                            <form  id='loginformbtn' class="form-signin form-inline">
-                                <div class="btn-group-sm ">
-                                    <button id="btn1" data-toggle="tab" class="btn btn-info" data-target="#FindId" data-dismiss="modal">회원가입</button>
-                                    <button id="btn2" data-toggle="tab" class="btn btn-info" data-target="#FindId" data-dismiss="modal">아이디찾기</button>
-                                    <button id="btn3" data-toggle="tab" class="btn btn-info" data-target="#FindId" data-dismiss="modal" >비밀번호찾기</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                &lt;!&ndash;두번째 아이템&ndash;&gt;
-                <div class="item">
-                    <img src="img/item2.jpg" data-color="firebrick" alt="Second Image">
-                    <div class="carousel-caption">
-                        <form>
-                            <div class="form-group">
-                                <input type="text" class="form-control text-center input-lg" placeholder="Pick me Pick me Pick me Pick me up">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control text-center input-lg" placeholder="Pick me Pick me Pick me Pick me up">
-                            </div>
-                        </form>
-                        <h3>Second Image</h3>
-                    </div>
-                </div>
-                &lt;!&ndash;세번째 아이템&ndash;&gt;
-                <div class="item">
-                    <img src="img/item3.jpg" data-color="violet" alt="Third Image">
-                    <div class="carousel-caption">
-                        <h3>Third Image</h3>
-                    </div>
-                </div>
-                &lt;!&ndash;네번째 아이템&ndash;&gt;
-                <div class="item">
-                    <img src="img/item4.jpg" data-color="lightgreen" alt="Fourth Image">
-                    <div class="carousel-caption">
-                        <h3>Fourth Image</h3>
-                    </div>
-                </div>
-            </div>
-
-            &lt;!&ndash; Controls &ndash;&gt;
-            <a class="left carousel-control" href="#mycarousel" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#mycarousel" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-</div>
-<script src="js/load2.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/jquery.carousel.fullscreen.js"></script>-->
 </body>
 </html>
