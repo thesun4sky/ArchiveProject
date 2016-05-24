@@ -38,7 +38,7 @@
 
                     <input type="text" class="form-control" placeholder="Search for..." style="border-color :#771107;" ng-model="find_user" ng-keyup="keyHit()">
                     <div class="input-group-btn">
-							<button type="reset" ng-click="remove_find()" class="btn btn-default" style="border-color :#771107;">
+							<button type="reset" class="btn btn-default" style="border-color :#771107;">
 								<span class="glyphicon glyphicon-remove" style="color:#771107;">
 									<span class="sr-only">Close</span>
 								</span>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <ul class="list-group" ng-show="find_user.length" style="z-index: 1030;background-color: white;width:100%">
-                    <li class="list-group-item" ng-repeat="x in users"><a>{{x.name}}</a></li>
+                    <li class="list-group-item" ng-repeat="others in users" ng-model="others.user_id" ng-click="toOthers(others)"><a>{{others.name}}</a></li>
                 </ul>
             </form>
 
