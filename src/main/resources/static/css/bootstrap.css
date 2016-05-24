@@ -6931,4 +6931,7 @@ button.close {
   top:-200px;
   left: 50%;
 }
-
+.image-upload > input
+{
+  display: none;
+}
