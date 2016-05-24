@@ -511,8 +511,7 @@ angular.module("homeApp",[
 
     .controller("othersCtrl",function($rootScope,$scope,$http, store, $state) {
         $scope.others_id = $rootScope.others_id;
-
-       var othersObject = {
+        var othersObject = {
            user_id : $scope.others_id
     };
         $http({
@@ -534,7 +533,27 @@ angular.module("homeApp",[
             .then(function (response) {
                 $scope.my_boards = response.data;
             });
-
+        $scope.applyFriend = function(){
+            var applyObject ={
+                user_id : store.get('obj').user_id,
+                friend_id : $scope.others_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/user/requestFriend", /* 통신할 URL */
+                data: applyObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function(data, status, headers, config) {
+                    if( data ) {
+                        alert("친구신청 성공")
+                    }
+                    else {
+                        alert("실패")
+                    }
+                })
+        }
+        $rootScope.others_id={};
     })
 
 
