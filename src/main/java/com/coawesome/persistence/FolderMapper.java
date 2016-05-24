@@ -69,6 +69,9 @@ public interface FolderMapper {
           "LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id\n" +
           "LEFT OUTER JOIN (SELECT user.name as replier, reply.reply, reply.likes_num, reply.board_id FROM reply INNER JOIN user ON reply.user_id = user.user_id where (reply.user_id, reply.reply_id) IN (select user_id, min(reply_id) from reply)) as reply on board.board_id = reply.board_id\n" +
           "WHERE board.user_id = #{user_id}")
-  ArrayList<HashMap> openMyFolder(User user);
+  ArrayList<BoardResult> openMyFolder(User user);
+
+  @Select("SELECT * FROM board_value WHERE board_id = #{board_id}")
+  wordVO getValues(@Param("board_id") int board_id);
 
 }

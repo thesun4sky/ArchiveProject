@@ -103,10 +103,30 @@ public class FolderController {
 
     //내폴더 열기
     @RequestMapping(method = RequestMethod.POST, value = "/folder/openMyFolder")
-    public List<HashMap> openMyFolder(@RequestBody User user) {
+    public List<BoardResult> openMyFolder(@RequestBody User user) {
         int user_id =  user.getUser_id();
+        int[] numbers = new int[10];
         System.out.println("open my folder of : " + user_id);
-        ArrayList<HashMap> boardList = folderMapper.openMyFolder(user);
+        ArrayList<BoardResult> boardList = folderMapper.openMyFolder(user);
+        for(int x=0; x < boardList.size(); x++){
+            wordVO values = folderMapper.getValues( boardList.get(x).getBoard_id() );
+            System.out.println("insert values" + values);
+            if(values != null) {
+                numbers[0] = values.getPos1();
+                numbers[1] = values.getPos2();
+                numbers[2] = values.getPos3();
+                numbers[3] = values.getPos4();
+                numbers[4] = values.getPos5();
+                numbers[5] = values.getNeg1();
+                numbers[6] = values.getNeg2();
+                numbers[7] = values.getNeg3();
+                numbers[8] = values.getNeg4();
+                numbers[9] = values.getNeg5();
+            }
+            boardList.get(x).setValues( numbers );   //게시글 별로 단어 테이블 주입
+            System.out.println("insert values" + boardList.get(x));
+        }
+
         return boardList;
     }
 

@@ -18,8 +18,7 @@ angular.module("homeApp",[
         $scope.labels = ['만족', '반전', '박진감', '웃음', '통쾌', '후회', '식상', '지루', '혐오', '실망'];
 
         $scope.data = [ //임의 값 집어넣음
-            [65, 59, 90, 81, 56, 55, 40, 80, 30, 90],
-            [28, 48, 40, 19, 96, 27, 100, 81, 56, 55]//,
+            [65, 59, 90, 81, 56, 55, 40, 80, 30, 90]
             //[58, 78, 20, 80, 70, 20, 40, 90, 50, 20]
         ];
 
@@ -873,7 +872,7 @@ angular.module("homeApp",[
 
         var userObject = store.get('obj');
         $scope.name = userObject.login_id;
-
+        $scope.labels = ['만족', '반전', '박진감', '웃음', '통쾌', '후회', '식상', '지루', '혐오', '실망'];
         $http({
             method: 'POST', //방식
             url: "/folder/getFolderList", /* 통신할 URL */
@@ -1001,5 +1000,11 @@ angular.module("homeApp",[
                     });
             }
         }
+
+        $scope.onClick = function (points, evt) {
+            console.log(points, evt);
+        };
+
+        
     });
 

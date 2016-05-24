@@ -17,9 +17,9 @@ import java.util.HashMap;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardVO {
+public class BoardResult {
     private int board_id;
-    private int user_id;
+    private String name;
     private int public_level;
     private int likes_num;
     private int favorite_num;
@@ -32,10 +32,9 @@ public class BoardVO {
     private String line2;
     private int line2_x;
     private int line2_y;
-    private int word_table_id;
-    private String created;
-    private ArrayList<Reply> list;
+    private String replier;
+    private String reply;
+    private int favorite;
     private int catagory;
-    private ArrayList<String> words;
-    private ArrayList<HashMap> values;
+    private int[] values;
 }
