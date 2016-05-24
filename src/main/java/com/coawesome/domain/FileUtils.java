@@ -56,6 +56,45 @@ public class FileUtils {
         return image;
    }
 
+
+    public ImageVO parseInsertFileInfoForUser(MultipartFile multipartFile,User user) throws Exception{
+
+        String originalFileName = null;
+        String originalFileExtension = null;
+        String storedFileName = null;
+
+
+
+        File file = new File(filePath);
+        if(file.exists() == false){
+            file.mkdirs();
+        }
+
+        ImageVO image = new ImageVO();
+        if(multipartFile.isEmpty() == false){
+            originalFileName = multipartFile.getOriginalFilename();
+            originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            storedFileName = getRandomString() + originalFileExtension;
+
+            file = new File(filePath + storedFileName);
+            multipartFile.transferTo(file);
+
+//
+//            image.setOriginal_file_name(originalFileName);
+//            image.setStored_file_name(storedFileName);
+
+            image.setUser_img(storedFileName);  //저장된 이미지 이름
+            image.setUser_id(user.getUser_id());
+//
+//            image.setFile_size(multipartFile.getSize());
+//            image.setBoard_id(user.getUser_id());
+//            image.setCreator_id(user.getUser_id());
+            System.out.println(image);
+        }
+        return image;
+    }
+
+
     public List<Map<String, Object>> parseUpdateFileInfo(Map<String, Object> map, HttpServletRequest request) throws Exception{
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();

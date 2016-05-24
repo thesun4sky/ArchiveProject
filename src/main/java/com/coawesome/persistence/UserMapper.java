@@ -1,9 +1,13 @@
 package com.coawesome.persistence;
 
+import com.coawesome.domain.BoardVO;
+import com.coawesome.domain.ImageVO;
 import com.coawesome.domain.User;
+import com.coawesome.domain.UserResult;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -29,5 +33,16 @@ public interface UserMapper {
   //로그인
   @Select("select * from user where login_id = #{login_id}")
   User Login(User user);
+
+
+  //프로필사진 등록
+  @Update("UPDATE user SET user_img=#{user_img} WHERE user_id=#{user_id}")
+  void insertUserImage(ImageVO image);
+
+
+  //프로필 사진 불러오기
+
+  @Select("Select * from user where user_id=#{user_id}")
+  UserResult loadProfile(User user);
 
 }

@@ -1,13 +1,12 @@
 package com.coawesome.controller;
 
-import com.coawesome.domain.Result;
-import com.coawesome.domain.User;
+import com.coawesome.domain.*;
 import com.coawesome.persistence.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 
 /**
  * Created by TeasunKim on 2016-05-17.
@@ -18,6 +17,8 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
+    @Resource(name="fileUtils")
+    private FileUtils fileUtils;
     //회원가입
     @RequestMapping(method = RequestMethod.POST, value = "/user/join")
     public Result addUser(@RequestBody User user) {
@@ -74,5 +75,24 @@ public class UserController {
         }
         return new Result(userInfo.getUser_id(), userInfo.getName());
     }
+    //프로필사진등록
+    @RequestMapping(method = RequestMethod.POST, value = "/user/insertUserImage")
+    public Result insertUserImage(@RequestParam("file") MultipartFile file, User user) throws Exception {
+        System.out.println("이미지 삽입 user: " + user);
 
+        ImageVO image = fileUtils.parseInsertFileInfoForUser(file,user);
+        userMapper.insertUserImage(image); //친구리스트에 자기자신 추가
+
+
+        return new Result(0, "success");
+    }
+
+    //프로필불러오기
+    @RequestMapping(method = RequestMethod.POST, value = "/user/loadProfile")
+    public UserResult loadProfile(@RequestBody User user) {
+        System.out.println("Load Profile : " + user);
+        UserResult userProfile = userMapper.loadProfile(user);
+
+        return userProfile;
+    }
 }

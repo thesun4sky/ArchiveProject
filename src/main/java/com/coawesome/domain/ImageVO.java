@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 public class ImageVO {
     private int id;
     private int board_id;
+    private int user_id;
+    private String user_img;
     private String original_file_name;
     private String stored_file_name;
     private long file_size;

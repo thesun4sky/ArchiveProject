@@ -32,6 +32,8 @@ public interface BoardMapper {
   void insertBoardImage(ImageVO image);
 
 
+
+
   //게시판 글 목록 조회( 친구들의 친구공개 게시글, 모든사람의 전체공개 게시글 목록)
   @Select("SELECT DISTINCT user.name, board.board_id, board.public_level, board.catagory, board.likes_num, board.tag1, board.tag2, board.tag3,\n" +
           "          board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, reply.replier, reply.likes_num, reply.reply, IFNULL(favorite.user_id,0) as favorite FROM board \n" +
@@ -74,5 +76,6 @@ ArrayList<HashMap> getBoardById(int user_id);
   void deleteBoard(int board_id);
   @Delete("DELETE FROM board_image WHERE board_id = #{board_id}")
   void deleteBoardImage(int board_id);
+
 
 }

@@ -18,4 +18,6 @@ public class User {
     private String sex;
     private int born;
     private String email;
+    private String user_img;
+    private String background_img;
 }

@@ -125,6 +125,18 @@ angular.module("homeApp",[
             })
 
 
+
+            .state('profile', {
+                url: '/profile',
+                templateUrl: 'profile.html',
+                controller: 'profileCtrl',
+                controllerAs: 'profile',
+                data: {
+                    requireLogin: true
+                }
+            })
+
+
             .state('toline', {
                 url: '/Toline',
                 templateUrl: 'Toline.html',
@@ -496,7 +508,56 @@ angular.module("homeApp",[
         };
     })
 
+    //프로필 페이지 컨트롤러
 
+    .controller('profileCtrl', function($scope,$http,Upload,store,$timeout,$state){
+
+        var userObject = store.get('obj');
+        
+        $http({
+            method: 'POST', //방식
+            url: "/folder/openMyFolder", /* 통신할 URL */
+            data: userObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.my_boards = response.data;
+            });
+        
+        $http({
+            method: 'POST', //방식
+            url: "/user/loadProfile", /* 통신할 URL */
+            data: userObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.Profile = response.data;
+            });
+
+
+        $scope.uploadProfile = function(file)  {
+
+            file.upload = Upload.upload({
+                url: '/user/insertUserImage',
+                data: {
+                    file:file,
+                    user_id:userObject.user_id,
+                }})
+            file.upload.then(function (response) {
+                $timeout(function () {
+                    file.result = response.data;
+                    $state.go('profile');
+                });
+            }, function (response) {
+                if (response.status > 0){
+                    $scope.errorMsg = response.status + ': ' + response.data;
+                    alert("response.status > 0");}
+            }, function (evt) {
+                // Math.min is to fix IE which reports 200% sometimes
+                file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            });
+        };
+    })
 
     .controller("tolineCtrl",function($scope, $http, store, $state){
 
