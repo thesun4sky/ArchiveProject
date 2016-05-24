@@ -31,7 +31,18 @@ public interface BoardMapper {
   @Insert("INSERT INTO board_image(board_id, original_file_name, stored_file_name, file_size, creator_id) VALUES(#{board_id}, #{original_file_name}, #{stored_file_name}, #{file_size}, #{creator_id})")
   void insertBoardImage(ImageVO image);
 
+  //게시글 감정테이블 생성
+  @Insert("INSERT INTO board_value(board_id) VALUES(#{storedBoardId})")
+  void newBoardValue(@Param("storedBoardId") int storedBoardId);
 
+  //단어 감정값 얻어오기
+  @Select("SELECT * FROM word where word = #{word}")
+  wordVO getWordsValue(@Param("word") String word);
+
+  //단어 감정값 적용
+  @Update("UPDATE board_value SET pos1=pos1+#{pos1}/#{word_num}, pos2=pos2+#{pos2}/#{word_num}, pos3=pos3+#{pos3}/#{word_num}, pos4=pos4+#{pos4}/#{word_num}, pos5=pos5+#{pos5}/#{word_num}, " +
+          " neg1=neg1+#{neg1}/#{word_num}, neg2=neg2+#{neg2}/#{word_num}, neg3=neg3+#{neg3}/#{word_num}, neg4=neg4+#{neg4}/#{word_num}, neg5=neg5+#{neg5}/#{word_num} WHERE board_id = #{board_id}")
+  void updateValue(wordVO wordsValue);
 
 
   //게시판 글 목록 조회( 친구들의 친구공개 게시글, 모든사람의 전체공개 게시글 목록)

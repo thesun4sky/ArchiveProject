@@ -35,4 +35,5 @@ public class BoardVO {
     private String created;
     private ArrayList<Reply> list;
     private int catagory;
+    private ArrayList<String> words;
 }
