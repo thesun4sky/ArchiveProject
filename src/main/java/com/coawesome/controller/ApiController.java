@@ -42,6 +42,33 @@ public class ApiController {
     ImageVO image = fileUtils.parseInsertFileInfo(file,board);
     boardMapper.insertBoardImage(image);
 
+    //////////////////////Archive Emotion////////////////////////
+    boardMapper.newBoardValue(storedBoardId);
+    //게시글 단어테이블 생성
+
+    ArrayList<String> wordsTable = board.getWords(); //단어 테이블 받아오기
+    System.out.println("wordsTable: " + board);
+
+   wordVO wordsValue = new wordVO();
+
+    for(int counter = 0; counter < wordsTable.size()-1; counter++) {
+      wordsValue = boardMapper.getWordsValue(wordsTable.get(counter));   //단어 감정값 얻어오기
+      wordsValue.setBoard_id(storedBoardId);   //board_id 주입
+      wordsValue.setWord_num(wordsTable.size()-1);
+      System.out.println("wordsValue: " + wordsValue);
+
+      boardMapper.updateValue(wordsValue);   //단어 감정값 적용
+      //단어 감정값 테그에 적용
+    }
+/*
+    for(int counter = 0; counter < wordsTable.size(); counter++) {
+      ArrayList<HashMap> wordsEmotion = boardMapper.getWordsEmotion(wordsTable);
+      //TODO 단어 감성값 얻어오기
+      boardMapper.updateUserEmotion(wordsValue);
+      //TODO 단어 감성값 사용자 프로필에 적용
+    }
+*/
+
     return new Result(0, "success");
   }
 

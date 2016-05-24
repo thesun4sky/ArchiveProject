@@ -83,9 +83,12 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 hidden-xs text-right">
                         <div class="btn-group-sm">
                             <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span></a>
-                            <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-comment"></span></a>
+                            <a ng-click="isCollapsed = !isCollapsed" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-comment">{{x.cnt}}</span></a>
                             <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-bell"></span></a>
                         </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" uib-collapse="isCollapsed">
+                    <div class="well well-lg">Some reply</div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div ng-switch on="!!x.replier">
@@ -97,6 +100,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

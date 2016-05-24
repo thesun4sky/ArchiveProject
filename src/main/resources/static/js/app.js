@@ -7,8 +7,8 @@ angular.module("homeApp",[
         'ngAnimate',
         'ui.router',
         'ngFileUpload',
-        'angular-storage'
-
+        'angular-storage',
+        'ui.bootstrap'
     ])
     .config(function(storeProvider){
         storeProvider.setStore('sessionStorage');
@@ -374,6 +374,7 @@ angular.module("homeApp",[
 
     .controller("uploadCtrl", function($scope, $log, Upload, $timeout, store, $state) {
         var userObject = store.get('obj');
+        var res="";
         $scope.openAccess = [
             {id :1 ,title :"전체공개"},
             {id :2, title :"Toline"},
@@ -442,14 +443,15 @@ angular.module("homeApp",[
              var words = $scope.lines.firstLine + " " + $scope.lines.secondLine + " ";
            // var words = $scope.lines.firstLine.concat(" ".concat($scope.lines.secondLine));
             //삭제어
-            var res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |랑 /gi , " ");  //조사
-            res = res.replace(/하 |내가 |엔 |앤 |에서 |으로 |한다면 /gi , " ");  //동사 꾸밈어
+           res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |나랑 /gi , " ");  //조사
+            res = res.replace(/하 |내 |너 |나 |네 |엔 |앤 |에서 |으로 |한다면 /gi , " ");  //동사 꾸밈어
 
             //대체어
             res = res.replace(/입니당 |입니다 |습니당 |습니다 |어요 |지요 |며 |다면 |니 |자 /gi , "다 ");  //종조사
-            res = res.replace(/[?]/gi , "물음표 ");  // ?
-            res = res.replace(/[!]/gi , "느낌표 ");  // !
-            res = res.replace(/[~]/gi , "물결 ");  // ~
+            // res = res.replace(/[?]/gi, " 물음표 ");  // ?
+            // res = res.replace(/[!]/gi, " 느낌표 ");  // !
+            // res = res.replace(/[~]/gi, " 물결 ");  // ~
+             res = res.replace(/[~!?@\#$%^&*\()\-=+_']/gi, "");  //특수문자 삭제
 
             res = res.split(" "); //배열로 분해
 
@@ -472,7 +474,8 @@ angular.module("homeApp",[
                     line1: $scope.lines.firstLine,
                     line1_y: $scope.positions.divtop1,
                     line2: $scope.lines.secondLine,
-                    line2_y: $scope.positions2.divtop2
+                    line2_y: $scope.positions2.divtop2,
+                    words: $scope.words
                 }})
             file.upload.then(function (response) {
                 $timeout(function () {
@@ -725,6 +728,7 @@ angular.module("homeApp",[
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
         var userObject = store.get('obj');
 
+        //$scope.isCollapsed = false;
         $http({
             method: 'POST', //방식
             url: "/api/boardlist", /* 통신할 URL */
