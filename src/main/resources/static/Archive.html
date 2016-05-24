@@ -135,13 +135,14 @@
                                 </div>
                             </div>
                             </div>
-                                <div class="col-lg-6 col-sm-12" id="radar-chart">
-                                    <div class="panel panel-default">
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="panel panel-default" style="margin-top: 50px; margin-bottom: 200px">
                                         <div class="panel-heading">Radar Chart</div>
                                         <div class="panel-body">
-                                            <canvas id="area" class="chart chart-radar" chart-data="[x.values]"
+                                            <canvas class="chart chart-radar" chart-data="[x.values]"
                                                     chart-labels="labels" chart-click="onClick"></canvas>
                                         </div>
+                                        <p>{{x.values}}</p>
                                     </div>
                                 </div>
                         </div>

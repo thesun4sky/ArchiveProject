@@ -105,28 +105,28 @@ public class FolderController {
     @RequestMapping(method = RequestMethod.POST, value = "/folder/openMyFolder")
     public List<BoardResult> openMyFolder(@RequestBody User user) {
         int user_id =  user.getUser_id();
-        int[] numbers = new int[10];
+        int[][] numbers = new int[1000][10];
         System.out.println("open my folder of : " + user_id);
         ArrayList<BoardResult> boardList = folderMapper.openMyFolder(user);
         for(int x=0; x < boardList.size(); x++){
             wordVO values = folderMapper.getValues( boardList.get(x).getBoard_id() );
             System.out.println("insert values" + values);
             if(values != null) {
-                numbers[0] = values.getPos1();
-                numbers[1] = values.getPos2();
-                numbers[2] = values.getPos3();
-                numbers[3] = values.getPos4();
-                numbers[4] = values.getPos5();
-                numbers[5] = values.getNeg1();
-                numbers[6] = values.getNeg2();
-                numbers[7] = values.getNeg3();
-                numbers[8] = values.getNeg4();
-                numbers[9] = values.getNeg5();
+                numbers[x][0] = values.getPos1();
+                numbers[x][1] = values.getPos2();
+                numbers[x][2] = values.getPos3();
+                numbers[x][3] = values.getPos4();
+                numbers[x][4] = values.getPos5();
+                numbers[x][5] = values.getNeg1();
+                numbers[x][6] = values.getNeg2();
+                numbers[x][7] = values.getNeg3();
+                numbers[x][8] = values.getNeg4();
+                numbers[x][9] = values.getNeg5();
+                boardList.get(x).setValues(numbers[x]);   //게시글 별로 단어 테이블 주입
             }
-            boardList.get(x).setValues( numbers );   //게시글 별로 단어 테이블 주입
-            System.out.println("insert values" + boardList.get(x));
+            System.out.println("insert values in for 문" + boardList.get(x));
         }
-
+        System.out.println("insert values" + boardList);
         return boardList;
     }
 
