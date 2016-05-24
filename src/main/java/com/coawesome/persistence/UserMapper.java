@@ -14,12 +14,18 @@ public interface UserMapper {
   //회원가입
   @Insert("INSERT INTO user(login_id, password, name, sex, born, email) VALUES(#{login_id}, #{password}, #{name}, #{sex}, #{born}, #{email})")
   void addUser(User user);
+  @Select("select user_id from user where login_id = #{login_id}")
+  int getUserid(User user);
   @Insert("INSERT INTO friend(user_id, friend_id, status) VALUES(#{user_id}, #{user_id}, 2)")
   void initFriend(User user);
 
   //아이디 찾기
   @Select("select login_id from user where name = #{name} and born = #{born}")
   String findID(User user);
+
+  //아이디 찾기
+  @Select("select login_id from user where login_id = #{login_id}")
+  String checkID(User user);
 
   //비밀전호 찾기
   @Select("select password from user where login_id = #{login_id} and email = #{email}")

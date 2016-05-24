@@ -24,6 +24,7 @@ public class UserController {
         System.out.println("user: " + user);
 
         userMapper.addUser(user);
+        user.setUser_id(userMapper.getUserid(user));
         userMapper.initFriend(user); //친구리스트에 자기자신 추가
 
         return new Result(0, "success");
@@ -43,6 +44,21 @@ public class UserController {
         }
         System.out.println(found_id);
         return new Result(0, found_id);
+    }
+
+
+    //아이디 중복 확인
+    @RequestMapping(method = RequestMethod.POST, value = "/user/checkID")
+    public Result checkID(@RequestBody User user) {
+        String found_id = userMapper.checkID(user);
+        System.out.println("아이디 중복 체크 id: " + user.getLogin_id() + "<< input id ,  found_id  >>" + found_id);
+        if(user.getLogin_id().equals(found_id)){
+            System.out.println("아이디 있음. 사용 불가 1");
+            return new Result(1, "false");
+        }
+        else{
+            System.out.println("아이디 없음. 사용 가능 0");
+        return new Result(0, found_id);}
     }
 
 
