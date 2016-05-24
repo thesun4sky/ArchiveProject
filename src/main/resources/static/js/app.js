@@ -135,6 +135,15 @@ angular.module("homeApp",[
                 }
             })
 
+            .state('others', {
+                url: '/others',
+                templateUrl: 'othersprofile.html',
+                controller: 'othersCtrl',
+                controllerAs: 'others',
+                data: {
+                    requireLogin: true
+                }
+            })
 
             .state('toline', {
                 url: '/Toline',
@@ -483,7 +492,7 @@ angular.module("homeApp",[
         };
     })
 
-    .controller("findCtrl",function($scope,$http, store, $state){
+    .controller("findCtrl",function($rootScope,$scope,$http, store, $state){
         $scope.find_user = "";
 
         $scope.keyHit = function() {
@@ -492,8 +501,43 @@ angular.module("homeApp",[
                 .then(function (response) {
                     $scope.users = response.data;
                 });
+        };
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            $state.go("others");
         }
     })
+
+
+    .controller("othersCtrl",function($rootScope,$scope,$http, store, $state) {
+        $scope.others_id = $rootScope.others_id;
+
+       var othersObject = {
+           user_id : $scope.others_id
+    };
+        $http({
+            method: 'POST', //방식
+            url: "/user/loadProfile", /* 통신할 URL */
+            data: othersObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.Profile = response.data;
+            });
+
+        $http({
+            method: 'POST', //방식
+            url: "/folder/openMyFolder", /* 통신할 URL */
+            data: othersObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.my_boards = response.data;
+            });
+
+    })
+
+
 
     .controller('catagoryCtrl', function($scope,$http, store, $state){
 

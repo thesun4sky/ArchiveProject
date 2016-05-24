@@ -9,8 +9,8 @@ $(document).ready(function(){
             console.log(event.currentTarget);
             $("#srch1").removeClass("important");
             $("#srch1").addClass("search-default");
-            if (event.which == 27 && $('.navbar-collapse form[role="search"]').hasClass('active') ||
-                $(event.currentTarget).attr('type') == 'reset') {
+            if (event.which == 27 && $('.navbar-collapse form[role="search"]').hasClass('active')
+               ) {
                 closeSearch();
             }
         });

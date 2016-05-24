@@ -106,9 +106,9 @@ public class UserController {
     //프로필불러오기
     @RequestMapping(method = RequestMethod.POST, value = "/user/loadProfile")
     public UserResult loadProfile(@RequestBody User user) {
-        System.out.println("Load Profile : " + user);
-        UserResult userProfile = userMapper.loadProfile(user);
 
+        UserResult userProfile = userMapper.loadProfile(user);
+        System.out.println("Load Profile : " + userProfile);
         return userProfile;
     }
 }
