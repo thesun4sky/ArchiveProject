@@ -36,12 +36,12 @@ public interface BoardMapper {
 
   //게시판 글 목록 조회( 친구들의 친구공개 게시글, 모든사람의 전체공개 게시글 목록)
   @Select("SELECT DISTINCT user.name, board.board_id, board.public_level, board.catagory, board.likes_num, board.tag1, board.tag2, board.tag3,\n" +
-          "          board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, reply.replier, reply.likes_num, reply.reply, IFNULL(favorite.user_id,0) as favorite FROM board \n" +
+          "          board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, IFNULL(favorite.user_id,0) as favorite, replycnt.cnt FROM board \n" +
           "          INNER JOIN friend on board.user_id = friend.friend_id \n" +
           "          INNER JOIN board_image on board.board_id = board_image.board_id \n" +
           "          INNER JOIN user on board.user_id = user.user_id\n" +
           "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
-          "          LEFT OUTER JOIN (SELECT user.name as replier, reply.reply, reply.likes_num, reply.board_id FROM reply INNER JOIN user ON reply.user_id = user.user_id where (reply.user_id, reply.reply_id) IN (select user_id, min(reply_id) from reply)) as reply on board.board_id = reply.board_id \n" +
+          "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
           "          WHERE board.user_id != #{user_id}  AND ((friend.user_id = #{user_id} AND friend.status >= 1 AND board.public_level <= 1) OR board.public_level = 0)")
          // "LEFT OUTER JOIN (SELECT favorite.board_id as board_id, CASE favorite.board_id WHEN board.board_id THEN'1' ELSE '0' END as favorite FROM favorite INNER JOIN board ON board.board_id = favorite.board_id WHERE favorite.user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id  " +
 ArrayList<HashMap> getBoardById(int user_id);

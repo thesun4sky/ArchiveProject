@@ -7,8 +7,8 @@ angular.module("homeApp",[
         'ngAnimate',
         'ui.router',
         'ngFileUpload',
-        'angular-storage'
-
+        'angular-storage',
+        'ui.bootstrap'
     ])
     .config(function(storeProvider){
         storeProvider.setStore('sessionStorage');
@@ -680,7 +680,7 @@ angular.module("homeApp",[
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
         var userObject = store.get('obj');
-
+        $scope.isCollapsed = false;
         $http({
             method: 'POST', //방식
             url: "/api/boardlist", /* 통신할 URL */
