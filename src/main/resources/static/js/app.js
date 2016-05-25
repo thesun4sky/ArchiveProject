@@ -674,16 +674,19 @@ angular.module("homeApp",[
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
         var userObject = store.get('obj');
+        $scope.tolineList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function(response) {
+                    $scope.friends = response.data;
+                });
+        };
 
-        $http({
-            method: 'POST', //방식
-            url: "/user/showfriends", /* 통신할 URL */
-            data: userObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function(response) {
-                $scope.friends = response.data;
-            });
+        $scope.tolineList();
 
         $scope.acceptFriend = function (friend_id){
             var acceptFriendObject =
@@ -702,7 +705,7 @@ angular.module("homeApp",[
                         alert('친구승낙 실패')
                     }else{
                         alert('친구승낙 성공');
-                        $state.go('toline');
+                        $scope.tolineList();
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -728,7 +731,7 @@ angular.module("homeApp",[
                         alert('친구삭제 실패')
                     }else{
                         alert('친구삭제 성공');
-                        $state.go('toline');
+                        $scope.tolineList();
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -746,17 +749,6 @@ angular.module("homeApp",[
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
         var userObject = store.get('obj');
 
-        //$scope.isCollapsed = false;
-        $http({
-            method: 'POST', //방식
-            url: "/api/boardlist", /* 통신할 URL */
-            data: userObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function (response) {
-                $scope.boards = response.data;
-            });
-
         $scope.boardList = function () {
             $http({
                 method: 'POST', //방식
@@ -765,11 +757,12 @@ angular.module("homeApp",[
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .then(function (response) {
-                    alert('boards Update');
                     $scope.boards = response.data;
                 })
         };
 
+
+        $scope.boardList();
 
         $scope.viewAll= function(){
 
@@ -867,15 +860,19 @@ angular.module("homeApp",[
         };
 
 
-        $http({
-            method: 'POST', //방식
-            url: "/user/showfriends", /* 통신할 URL */
-            data: userObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function (response) {
-                $scope.friends = response.data;
-            });
+        $scope.showFriendList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.friends = response.data;
+                });
+        };
+
+        $scope.showFriendList();
 
         $scope.acceptFriend = function (friend_id) {
             var acceptFriendObject =
@@ -894,7 +891,7 @@ angular.module("homeApp",[
                         alert('친구승낙 실패')
                     } else {
                         alert('친구승낙 성공');
-                        window.location.href = 'Toline.html';
+                        $scope.showFriendList();
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -920,6 +917,7 @@ angular.module("homeApp",[
                         alert('친구삭제 실패')
                     } else {
                         alert('친구삭제 성공');
+                        $scope.showFriendList();
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -952,19 +950,8 @@ angular.module("homeApp",[
         var userObject = store.get('obj');
         $scope.name = userObject.login_id;
         $scope.labels = ['만족', '반전', '박진감', '웃음', '통쾌', '후회', '식상', '지루', '혐오', '실망'];
-        $http({
-            method: 'POST', //방식
-            url: "/folder/getFolderList", /* 통신할 URL */
-            data: userObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function (response) {
-                $scope.folders = response.data;
-            });
-
 
         $scope.archiveList = function () {
-            alert('Update Function');
             $http({
                 method: 'POST', //방식
                 url: "/folder/getFolderList", /* 통신할 URL */
@@ -973,9 +960,10 @@ angular.module("homeApp",[
             })
                 .then(function (response) {
                     $scope.folders = response.data;
-                    alert('Update Page');
                 })
         };
+
+        $scope.archiveList();
 
         $scope.addNewFolder = function (new_folder_name) {
             var newFolderObject =
