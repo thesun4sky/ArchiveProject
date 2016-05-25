@@ -119,6 +119,7 @@ public class ApiController {
   //댓글 보기 API
   @RequestMapping(method = RequestMethod.POST, value = "/api/showreply")
   public ArrayList<Reply> ShowReply(@RequestBody BoardVO board){
+    System.out.println(board);
     int board_id = board.getBoard_id();
     ArrayList<Reply> list = boardMapper.showreplybyId(board_id);
     return list;

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.*;
 
+
+
 @Component("fileUtils")
 public class FileUtils {
     private static final String filePath = "C:\\dev\\ArchiveProject\\src\\main\\resources\\static\\storedimg\\";
@@ -35,6 +37,11 @@ public class FileUtils {
         if(file.exists() == false){
             file.mkdirs();
         }
+
+
+
+
+
 
         ImageVO image = new ImageVO();
         if(multipartFile.isEmpty() == false){

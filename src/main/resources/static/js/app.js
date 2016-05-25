@@ -17,13 +17,40 @@ angular.module("homeApp",[
     .controller('RadarCtrl', function ($scope) {
         $scope.labels = ['만족', '반전', '박진감', '웃음', '통쾌', '후회', '식상', '지루', '혐오', '실망'];
 
-        $scope.data = [ //임의 값 집어넣음
-            [65, 59, 90, 81, 56, 55, 40, 80, 30, 90]
-            //[58, 78, 20, 80, 70, 20, 40, 90, 50, 20]
-        ];
-
         $scope.onClick = function (points, evt) {
             console.log(points, evt);
+        };
+    })
+
+    .controller('ModalDemoCtrl', function ($http, $rootScope, $scope, $uibModal, $log) {
+        $scope.modalboard=$rootScope.modalboard;
+        $scope.reply=$rootScope.reply;
+
+        $scope.open = function (size,board) {
+
+            $rootScope.modalboard=board;
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalDemoCtrl',
+                size: size
+            });
+
+            $http({
+                method: 'POST', //방식
+                url: "/api/showreply", /* 통신할 URL */
+                data: board, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            }).success(function (data, status, headers, config) {
+                $rootScope.reply=data;
+                alert($rootScope.reply);
+            });
+
+            modalInstance.result.then(function () {
+
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+                $rootScope.modalboard={};
+            });
         };
     })
 
@@ -33,7 +60,6 @@ angular.module("homeApp",[
             var requireLogin = toState.data.requireLogin;
             if (requireLogin && store.get('obj') == null) {
                 event.preventDefault();
-                // get me a login modal!
                 $state.go('login');
             }
         });
@@ -281,6 +307,7 @@ angular.module("homeApp",[
                 .success(function (data, status, headers, config) {
                     if(data){
                         if (data.msg == 'success') {
+                            // alert(data.msg)
                             $state.go('/');
                             /* 맞음 */
                         }
@@ -804,7 +831,7 @@ angular.module("homeApp",[
                 });
         };
 
-        
+
         $scope.UnfavoriteBoard = function (board_id) {
             var UnfavoriteBoardObject =
             {
