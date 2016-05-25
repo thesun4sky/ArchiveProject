@@ -651,8 +651,8 @@ angular.module("homeApp",[
                 url: '/user/insertUserImage',
                 data: {
                     file:file,
-                    user_id:userObject.user_id,
-                }})
+                    user_id:userObject.user_id
+                }});
             file.upload.then(function (response) {
                 $timeout(function () {
                     file.result = response.data;
@@ -702,7 +702,7 @@ angular.module("homeApp",[
                         alert('친구승낙 실패')
                     }else{
                         alert('친구승낙 성공');
-                        window.location.href = 'Toline.html';
+                        $state.go('toline');
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -728,7 +728,7 @@ angular.module("homeApp",[
                         alert('친구삭제 실패')
                     }else{
                         alert('친구삭제 성공');
-                        window.location.href = 'Toline.html';
+                        $state.go('toline');
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -756,6 +756,21 @@ angular.module("homeApp",[
             .then(function (response) {
                 $scope.boards = response.data;
             });
+
+        $scope.boardList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlist", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    alert('boards Update');
+                    $scope.boards = response.data;
+                })
+        };
+
+
         $scope.viewAll= function(){
 
             $http({
@@ -768,7 +783,7 @@ angular.module("homeApp",[
                     $scope.boards = response.data;
                     $scope.filters={};
                 });
-        }
+        };
 
         $scope.favoriteBoard = function (board_id) {
             var favoriteBoardObject =
@@ -787,6 +802,7 @@ angular.module("homeApp",[
                         alert('페이버릿 실패')
                     } else {
                         alert('페이버릿 성공');
+                        $scope.boardList();
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -813,6 +829,7 @@ angular.module("homeApp",[
                         alert('페이버릿취소 실패')
                     } else {
                         alert('페이버릿취소 성공');
+                        $scope.boardList();
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -837,7 +854,7 @@ angular.module("homeApp",[
                 .success(function (data, status, headers, config) {
                     if (data.msg == 'success') {
                         alert('댓글작성 성공');
-                        $scope.reply.content = "";
+                        $scope.boardList();
                     } else {
                         alert('댓글작성 실패');
                     }
@@ -903,7 +920,6 @@ angular.module("homeApp",[
                         alert('친구삭제 실패')
                     } else {
                         alert('친구삭제 성공');
-                        window.location.href = 'Toline.html';
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -947,6 +963,20 @@ angular.module("homeApp",[
             });
 
 
+        $scope.archiveList = function () {
+            alert('Update Function');
+            $http({
+                method: 'POST', //방식
+                url: "/folder/getFolderList", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.folders = response.data;
+                    alert('Update Page');
+                })
+        };
+
         $scope.addNewFolder = function (new_folder_name) {
             var newFolderObject =
             {
@@ -965,7 +995,7 @@ angular.module("homeApp",[
                         alert('폴더생성 실패');
                     } else {
                         alert('폴더생성 성공');
-                        $scope.$apply();
+                        $scope.archiveList();
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -992,7 +1022,7 @@ angular.module("homeApp",[
                         alert('폴더삭제 실패');
                     } else {
                         alert('폴더삭제 성공');
-                        $scope.$apply();
+                        $scope.archiveList();
                     }
                 })
                 .error(function (data, status, headers, config) {
