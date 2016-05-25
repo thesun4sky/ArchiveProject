@@ -118,10 +118,10 @@ public class ApiController {
 
   //댓글 보기 API
   @RequestMapping(method = RequestMethod.POST, value = "/api/showreply")
-  public ArrayList<Reply> ShowReply(@RequestBody BoardVO board){
+  public ArrayList<HashMap> ShowReply(@RequestBody BoardVO board){
     System.out.println(board);
     int board_id = board.getBoard_id();
-    ArrayList<Reply> list = boardMapper.showreplybyId(board_id);
+    ArrayList<HashMap> list = boardMapper.showreplybyId(board_id);
     return list;
   }
 
@@ -147,18 +147,6 @@ public class ApiController {
 //    boardList =
     return boardList;
   }
-
-    //게시판 글 상세 보기(댓글리스트 추가)
-    @RequestMapping(method = RequestMethod.GET, value = "/api/board/{board_id}")
-    public BoardVO getBoard(@PathVariable int board_id) {
-        System.out.println("board_id: " + board_id);
-
-        BoardVO board = boardMapper.findById(board_id);
-        ArrayList<Reply> list = boardMapper.showreplybyId(board_id);
-        board.setList(list);
-        return board;
-    }
-
 
     //게시판 글 수정하기
     @RequestMapping(method = RequestMethod.PUT, value = "/api/board/{board_id}")

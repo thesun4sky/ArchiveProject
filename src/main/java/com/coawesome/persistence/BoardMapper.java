@@ -16,8 +16,8 @@ public interface BoardMapper {
   void addReply(Reply reply);
 
   //댓글 확인
-  @Select("select * from reply where board_id = #{board_id}")
-  ArrayList<Reply> showreplybyId(@Param("board_id") int board_id);
+  @Select("SELECT user.user_img, user.name, reply.reply, reply.created from reply INNER JOIN user on reply.user_id = user.user_id where board_id = #{board_id}")
+  ArrayList<HashMap> showreplybyId(@Param("board_id") int board_id);
 
   //사용자 검색
   @Select("select * from user where name Like  CONCAT('%', #{name}, '%')")

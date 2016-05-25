@@ -24,16 +24,11 @@ angular.module("homeApp",[
 
     .controller('ModalDemoCtrl', function ($http, $rootScope, $scope, $uibModal, $log) {
         $scope.modalboard=$rootScope.modalboard;
-        $scope.reply=$rootScope.reply;
+        // $scope.reply=$rootScope.reply;
 
         $scope.open = function (size,board) {
 
-            $rootScope.modalboard=board;
-            var modalInstance = $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: 'ModalDemoCtrl',
-                size: size
-            });
+
 
             $http({
                 method: 'POST', //방식
@@ -42,7 +37,14 @@ angular.module("homeApp",[
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             }).success(function (data, status, headers, config) {
                 $rootScope.reply=data;
-                alert($rootScope.reply);
+            });
+            $scope.reply=$rootScope.reply;
+
+            $rootScope.modalboard=board;
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalDemoCtrl',
+                size: size
             });
 
             modalInstance.result.then(function () {

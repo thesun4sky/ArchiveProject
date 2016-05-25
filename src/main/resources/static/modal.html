@@ -39,10 +39,10 @@
                         <h1 class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: modalboard.line1_y-90, left :-{{modalboard.line1.length+4}}+'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">"</h1>
                     </div>
                     <div>
-                        <p class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: modalboard.line1_y}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{modalboard.line1}}</p>
+                        <center><p class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: modalboard.line1_y}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{modalboard.line1}}</p></center>
                     </div>
                     <div>
-                        <p class="example" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{top: modalboard.line2_y}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{modalboard.line2}}</p>
+                        <center><p class="example" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{top: modalboard.line2_y}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{modalboard.line2}}</p></center>
                     </div>
                 </div>
                 <div class="row" style="margin-bottom:10px;">
@@ -67,7 +67,7 @@
                             </div>
 
                             <div ng-repeat="r in reply">
-                                <div class="well well-lg">{{r.reply}} {{r.created}}</div>
+                                <div class="well well-lg"><img src="storedimg/{{r.user_img}}" width=50px; height=50px;/>{{r.name}}  {{r.reply}} {{r.created}}</div>
                             </div>
                         </div>
                     </div>
