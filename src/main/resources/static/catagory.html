@@ -34,9 +34,9 @@
         <div class="container-fluid" style="margin-left: -20px;margin-right: -20px">
             <div class="row">
                 <div class="col-lg-3 text-center" ng-repeat="x in catagory_boards | filter : filters_catagory ">
-                    <p>{{x.tag1}}</p>
-                    <p>{{x.tag2}}</p>
-                    <p>{{x.tag3}}</p>
+                    <a ng-click="toTag(x.tag1)"><p>{{x.tag1}}</p></a>
+                    <a ng-click="toTag(x.tag2)"><p>{{x.tag2}}</p></a>
+                    <a ng-click="toTag(x.tag3)"><p>{{x.tag3}}</p></a>
                 </div>
             </div>
         </div>

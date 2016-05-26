@@ -732,7 +732,7 @@ angular.module("homeApp",[
 
 
 
-    .controller('catagoryCtrl', function($scope,$http, store, $state){
+    .controller('catagoryCtrl', function($scope,$http, store, $state, $rootScope){
 
         
         var userObject = store.get('obj');
@@ -762,7 +762,7 @@ angular.module("homeApp",[
                     $scope.filters_catagory ={};
                 });
 
-        }
+        };
 
         //클릭시마다 카테고리 변수를 갱신할 변수.
         $scope.filters_catagory={};
@@ -794,6 +794,12 @@ angular.module("homeApp",[
                     //$scope.$apply();
                 })
         };
+
+        $scope.toTag = function(tags){
+            $rootScope.tag_name = tags;
+            alert($rootScope.tag_name);
+            $state.go("tag");
+        }
     })
 
     //프로필 페이지 컨트롤러
@@ -845,9 +851,11 @@ angular.module("homeApp",[
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
         };
+
+
     })
 
-
+    //테그 프로필페이지 컨트롤러
     .controller("tagCtrl",function($rootScope,$scope,$http, store, $state) {
         var userObject = store.get('obj');
         $scope.tag_name = $rootScope.tag_name;
