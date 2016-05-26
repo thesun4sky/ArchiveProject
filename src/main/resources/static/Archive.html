@@ -20,7 +20,7 @@
                     </div>
 
                     <!--가운데 콘텐츠 화면분할-->
-                    <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xs-9">
                         <h1 class="text-center">기본 폴더 숨기기: <input type="checkbox" ng-model="myCheck"></h1>
                         <div class="hidefolder" ng-hide="myCheck">
                             <div class="col-sm-3 col-xs-4">
@@ -69,7 +69,7 @@
                         <div ng-repeat="x in folder_boards | filter : filters">
                         <div class="col-lg-6 col-sm-12 text-center">
                             <div class="thumbnail">
-                                <img src="storedimg/{{x.stored_file_name}}" alt="images" style="width:100%; height:300px;">
+                                <a href="" ng-click="open('lg', x)"><img src="storedimg/{{x.stored_file_name}}" alt="images" style="width:100%; height:300px;"></a>
                                 <div class="carousel-caption-public_level">
                                     <div ng-switch on="x.public_level">
                                         <div ng-switch-when="1">
@@ -128,8 +128,6 @@
                                                 <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;> <p style="display: inline-block">{{x.replier}} : {{x.reply}} (공감: {{x.likes_num}} )</p>
                                             </div>
                                             <div ng-switch-default>
-                                                <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px" ng-enter="commitReply()" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -152,7 +150,7 @@
 
 
                     <!--우측 화면 분할-->
-                    <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs">
+                    <div class="col-sm-0 col-md-2 col-lg-3 hidden-xs">
                         <div ng-include="'RightSideBar.html'"></div>
                     </div>
                 </div>

@@ -22,38 +22,109 @@ angular.module("homeApp",[
         };
     })
 
-    .controller('ModalDemoCtrl', function ($http, $rootScope, $scope, $uibModal, $log) {
-        $scope.modalboard=$rootScope.modalboard;
-        // $scope.reply=$rootScope.reply;
+    .controller('ModalDemoCtrl', function (store, $http, $rootScope, $scope, $uibModal, $log) {
+        var userObject = store.get('obj');
+        $scope.board=$rootScope.modalboard;
 
-        $scope.open = function (size,board) {
-
-
-
+        $scope.replylist = function(board) {
             $http({
                 method: 'POST', //방식
                 url: "/api/showreply", /* 통신할 URL */
                 data: board, /* 파라메터로 보낼 데이터 */
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    $rootScope.reply=data;
+                    $scope.reply=$rootScope.reply;
+                });
+        }
+
+        $scope.commitReply = function (msg) {
+            var replyObject =
+            {
+                user_id: userObject.user_id, //임시로 1번사용자 지정
+                board_id: $rootScope.modalboard.board_id,
+                reply: msg
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/reply", /* 통신할 URL */
+                data: replyObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'success') {
+                        alert('댓글작성 성공');
+                        $scope.replylist($rootScope.modalboard);
+                    } else {
+                        alert('댓글작성 실패');
+                    }
+
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+/*
+        $scope.replylist = function(board) {
+            $http({
+                method: 'POST', //방식
+                url: "/api/showreply", /!* 통신할 URL *!/
+                data: board, /!* 파라메터로 보낼 데이터 *!/
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             }).success(function (data, status, headers, config) {
                 $rootScope.reply=data;
+                $scope.reply=$rootScope.reply;
             });
-            $scope.reply=$rootScope.reply;
+        }*/
 
+       /* $scope.commitReply = function (msg) {
+            var replyObject =
+            {
+                user_id: userObject.user_id, //임시로 1번사용자 지정
+                board_id: $rootScope.modalboard.board_id,
+                reply: msg
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/reply", /!* 통신할 URL *!/
+                data: replyObject, /!* 파라메터로 보낼 데이터 *!/
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'success') {
+                        alert('댓글작성 성공');
+                        $scope.replylist($rootScope.modalboard);
+                    } else {
+                        alert('댓글작성 실패');
+                    }
+
+                })
+                .error(function (data, status, headers, config) {
+                    /!* 서버와의 연결이 정상적이지 않을 때 처리 *!/
+                    console.log(status);
+                });
+        };*/
+
+        /*$scope.open = function (size, board) {
             $rootScope.modalboard=board;
+            $scope.replylist($rootScope.modalboard);
             var modalInstance = $uibModal.open({
                 templateUrl: 'modal.html',
                 controller: 'ModalDemoCtrl',
                 size: size
             });
-
             modalInstance.result.then(function () {
 
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
                 $rootScope.modalboard={};
+                $rootScope.reply={};
+                $scope.boardList();
             });
-        };
+        };*/
     })
 
 
@@ -193,10 +264,64 @@ angular.module("homeApp",[
                 }
             });
 
-
-
         $urlRouterProvider.otherwise('/');
     })
+
+
+    .controller("bodyCtrl",function($scope, $http, store, $state, $rootScope) {
+
+
+        $scope.replylist = function(board) {
+            $http({
+                method: 'POST', //방식
+                url: "/api/showreply", /* 통신할 URL */
+                data: board, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    $rootScope.reply=data;
+                    $scope.reply=$rootScope.reply;
+                 });
+          }
+
+
+
+        $scope.boardList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlist", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.boards = response.data;
+                })
+        };
+
+
+        //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
+        var userObject = store.get('obj');
+
+
+
+        $scope.showFriendList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.friends = response.data;
+                });
+        };
+        if (userObject!=null){
+            $scope.showFriendList();}
+
+    })
+
+
+
 
 
     .controller("loginCtrl",function($scope, $http, store, $state){
@@ -309,7 +434,7 @@ angular.module("homeApp",[
                 $scope.join.passwordck = ""
             }
             else{
-            
+
             $http({
                 method: 'POST', //방식
                 url: "/user/join", /* 통신할 URL */
@@ -675,7 +800,7 @@ angular.module("homeApp",[
     .controller('profileCtrl', function($scope,$http,Upload,store,$timeout,$state){
 
         var userObject = store.get('obj');
-        
+
         $http({
             method: 'POST', //방식
             url: "/folder/openMyFolder", /* 통신할 URL */
@@ -685,7 +810,7 @@ angular.module("homeApp",[
             .then(function (response) {
                 $scope.my_boards = response.data;
             });
-        
+
         $http({
             method: 'POST', //방식
             url: "/user/loadProfile", /* 통신할 URL */
@@ -846,24 +971,29 @@ angular.module("homeApp",[
 
 
 
-    .controller("indexCtrl",function($scope, $http, store, $state) {
-
+    .controller("indexCtrl",function($scope, $http, store, $state, $uibModal, $rootScope) {
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
         var userObject = store.get('obj');
+        $scope.filters={};
 
-        $scope.boardList = function () {
-            $http({
-                method: 'POST', //방식
-                url: "/api/boardlist", /* 통신할 URL */
-                data: userObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function (response) {
-                    $scope.boards = response.data;
-                })
+        $scope.open = function (size, board) {
+            $rootScope.modalboard=board;
+            $scope.replylist($rootScope.modalboard);
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                 controller: 'ModalDemoCtrl',
+                 size: size
+            });
+            modalInstance.result.then(function () {
+
+            }, function () {
+                 // $log.info('Modal dismissed at: ' + new Date());
+                 $rootScope.modalboard={};
+                 $rootScope.reply={};
+                 $scope.boardList();
+             });
         };
-
 
         $scope.boardList();
 
@@ -882,15 +1012,10 @@ angular.module("homeApp",[
         };
 
         $scope.favoriteBoard = function (board_id) {
-            var favoriteBoardObject =
-            {
-                user_id: userObject.user_id, //임시로 1번사용자 지정
-                board_id: board_id
-            };
             $http({
                 method: 'POST', //방식
                 url: "/api/favoriteBoard", /* 통신할 URL */
-                data: favoriteBoardObject, /* 파라메터로 보낼 데이터 */
+                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .success(function (data, status, headers, config) {
@@ -932,7 +1057,7 @@ angular.module("homeApp",[
                 });
         };
 
-        $scope.commitReply = function (board_id, msg) {
+        /*$scope.commitReply = function (board_id, msg) {
             var replyObject =
             {
                 user_id: userObject.user_id, //임시로 1번사용자 지정
@@ -941,8 +1066,8 @@ angular.module("homeApp",[
             };
             $http({
                 method: 'POST', //방식
-                url: "/api/reply", /* 통신할 URL */
-                data: replyObject, /* 파라메터로 보낼 데이터 */
+                url: "/api/reply", /!* 통신할 URL *!/
+                data: replyObject, /!* 파라메터로 보낼 데이터 *!/
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .success(function (data, status, headers, config) {
@@ -954,27 +1079,27 @@ angular.module("homeApp",[
 
                 })
                 .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    /!* 서버와의 연결이 정상적이지 않을 때 처리 *!/
                     console.log(status);
                 });
-        };
+        };*/
 
 
-        $scope.showFriendList = function () {
+       /* $scope.showFriendList = function () {
             $http({
                 method: 'POST', //방식
-                url: "/user/showfriends", /* 통신할 URL */
-                data: userObject, /* 파라메터로 보낼 데이터 */
+                url: "/user/showfriends", /!* 통신할 URL *!/
+                data: userObject, /!* 파라메터로 보낼 데이터 *!/
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .then(function (response) {
                     $scope.friends = response.data;
                 });
-        };
+        };*/
 
-        $scope.showFriendList();
+        // $scope.showFriendList();
 
-        $scope.acceptFriend = function (friend_id) {
+        /*$scope.acceptFriend = function (friend_id) {
             var acceptFriendObject =
             {
                 user_id: friend_id, //임시로 1번사용자 지정
@@ -982,8 +1107,8 @@ angular.module("homeApp",[
             };
             $http({
                 method: 'POST', //방식
-                url: "/user/acceptFriend", /* 통신할 URL */
-                data: acceptFriendObject, /* 파라메터로 보낼 데이터 */
+                url: "/user/acceptFriend", /!* 통신할 URL *!/
+                data: acceptFriendObject, /!* 파라메터로 보낼 데이터 *!/
                 headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
             })
                 .success(function (data, status, headers, config) {
@@ -994,7 +1119,7 @@ angular.module("homeApp",[
                     }
                 })
                 .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    /!* 서버와의 연결이 정상적이지 않을 때 처리 *!/
                     console.log(status);
                 });
         };
@@ -1007,8 +1132,8 @@ angular.module("homeApp",[
             };
             $http({
                 method: 'POST', //방식
-                url: "/user/deleteFriend", /* 통신할 URL */
-                data: deleteFriendObject, /* 파라메터로 보낼 데이터 */
+                url: "/user/deleteFriend", /!* 통신할 URL *!/
+                data: deleteFriendObject, /!* 파라메터로 보낼 데이터 *!/
                 headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
             })
                 .success(function (data, status, headers, config) {
@@ -1019,10 +1144,10 @@ angular.module("homeApp",[
                     }
                 })
                 .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    /!* 서버와의 연결이 정상적이지 않을 때 처리 *!/
                     console.log(status);
                 });
-        };
+        };*/
 
         $scope.filters = { };
 
@@ -1040,7 +1165,7 @@ angular.module("homeApp",[
 
     })
 
-    .controller("ArchiveCtrl",function($scope, $http, store, $state) {
+    .controller("ArchiveCtrl",function($scope, $http, store, $state, $uibModal, $rootScope) {
 
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
@@ -1059,6 +1184,72 @@ angular.module("homeApp",[
                 .then(function (response) {
                     $scope.folders = response.data;
                 })
+        };
+
+        $scope.favoriteBoard = function (board_id) {
+            $http({
+                method: 'POST', //방식
+                url: "/api/favoriteBoard", /* 통신할 URL */
+                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('페이버릿 실패')
+                    } else {
+                        alert('페이버릿 성공');
+                        $scope.archiveList();
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+
+        $scope.UnfavoriteBoard = function (board_id) {
+            var UnfavoriteBoardObject =
+            {
+                user_id: userObject.user_id, //임시로 1번사용자 지정
+                board_id: board_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/UnfavoriteBoard", /* 통신할 URL */
+                data: UnfavoriteBoardObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('페이버릿취소 실패')
+                    } else {
+                        alert('페이버릿취소 성공');
+                        $scope.archiveList();
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+        $scope.open = function (size, board) {
+            $rootScope.modalboard=board;
+            $scope.replylist($rootScope.modalboard);
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalDemoCtrl',
+                size: size
+            });
+            modalInstance.result.then(function () {
+
+            }, function () {
+                // $log.info('Modal dismissed at: ' + new Date());
+                $rootScope.modalboard={};
+                $rootScope.reply={};
+                $scope.archiveList();
+            });
         };
 
         $scope.archiveList();
@@ -1182,6 +1373,6 @@ angular.module("homeApp",[
             console.log(points, evt);
         };
 
-        
+
     });
 

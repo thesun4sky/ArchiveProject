@@ -65,6 +65,9 @@
                             <div ng-switch-when="true">
                                 <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;> <p style="display: inline-block">{{modalboard.replier}} : {{board.reply}} (공감: {{modalboard.likes_num}} )</p>
                             </div>
+                            <div ng-switch-default>
+                                <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px" ng-enter="commitReply(reply.content)" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
+                            </div>
 
                             <div ng-repeat="r in reply">
                                 <div class="well well-lg"><img src="storedimg/{{r.user_img}}" width=50px; height=50px;/>{{r.name}}  {{r.reply}} {{r.created}}</div>

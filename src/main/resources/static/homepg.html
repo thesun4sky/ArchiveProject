@@ -32,7 +32,7 @@
 <!--업로드 되는 프레임 구성 화면-->
 <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
     <div class="row" ng-controller="ModalDemoCtrl">
-        <div class="col-lg-6 text-center" ng-repeat="x in boards">
+        <div class="col-lg-6 text-center" ng-repeat="x in boards | filter : filters.catagory">
             <div class="thumbnail">
                 <a href="" ng-click="open('lg', x)"><img src="storedimg/{{x.stored_file_name}}" alt="images" style="width:100%; height:auto;"></a>
                 <div class="carousel-caption-public_level">
@@ -93,9 +93,6 @@
                         <div ng-switch on="!!x.replier">
                             <div ng-switch-when="true">
                                 <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;> <p style="display: inline-block">{{x.replier}} : {{x.reply}} (공감: {{x.likes_num}} )</p>
-                            </div>
-                            <div ng-switch-default>
-                                <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px" ng-enter="commitReply({{x.board_id}}, reply.content)" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
                             </div>
                         </div>
                 </div>
