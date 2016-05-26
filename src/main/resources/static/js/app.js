@@ -992,7 +992,22 @@ angular.module("homeApp",[
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
         var userObject = store.get('obj');
-        $scope.filters={};
+
+        $scope.boardList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlist", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.boards = response.data;
+                })
+        };
+
+        $scope.boardList();
+
+        $scope.filters = {};
 
         $scope.open = function (size, board) {
             $rootScope.modalboard=board;

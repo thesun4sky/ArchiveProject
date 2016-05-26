@@ -20,16 +20,17 @@
                         <i ng-show="myForm.file.$error.maxSize">File too large
                             {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
                     </div>
-                        <img ng-show="myForm.file.$valid"  ngf-thumbnail="picFile" width="100%"style="left:0;height:300px;">
+                        <img ng-show="myForm.file.$valid"  ngf-thumbnail="picFile" width="100%"style="height:300px;">
+
                         <div class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div>
-                                <h1 ng-show="myForm.file.$valid" class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: positions.divtop1-90, left :-(lines.firstLine.length+8)+'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">"</h1>
+                                <h1 ng-show="myForm.file.$valid" class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{bottom: ((positions.divtop1) * 11 +4) +'%', left :-(lines.firstLine.length+8)+'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">"</h1>
                             </div>
                             <div>
-                                <input placeholder="첫번째 줄을 입력하세요!" type="text" ng-keydown="myFunction()" ng-show="myForm.file.$valid" class="example" ng-model="lines.firstLine" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top : positions.divtop1}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">
+                                <input placeholder="첫번째 줄을 입력하세요!" type="text" ng-keydown="myFunction()" ng-show="myForm.file.$valid" class="example" ng-model="lines.firstLine" ng-style="{'bottom' : (positions.divtop1) * 11 +'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">
                             </div>
                             <div>
-                                <input placeholder="자!!이제 두번째 줄 차례" type="text" ng-keydown="myFunction()" ng-show="myForm.file.$valid" class="example" ng-model="lines.secondLine" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{top : positions2.divtop2}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">
+                                <input placeholder="자!!이제 두번째 줄 차례" type="text" ng-keydown="myFunction()" ng-show="myForm.file.$valid" class="example" ng-model="lines.secondLine" ng-style="{'bottom' : (positions2.divtop2) * 11+'%'}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">
                             </div>
                             <button class="btn btn-sm btn-warning" ng-click="picFile = null" ng-show="picFile">Remove</button>
                         </div>
@@ -84,11 +85,11 @@
 
                     <div class="form-group" style="margin-top:20px;">
                         <label><span class="glyphicon glyphicon-console">첫번째 줄 위치</span></label>
-                        <input type="number" ng-init="positions.divtop1=-150" ng-model="positions.divtop1"/>
+                        <input type="number" ng-init="positions.divtop1=20" ng-model="positions.divtop1"/>
                     </div>
                     <div class="form-group">
                         <label><span class="glyphicon glyphicon-console">두번째 줄 위치</span></label>
-                        <input type="number" ng-init="positions2.divtop2=-100" ng-model="positions2.divtop2"/>
+                        <input type="number" ng-init="positions2.divtop2=10" ng-model="positions2.divtop2"/>
                     </div>
                 </div>
 

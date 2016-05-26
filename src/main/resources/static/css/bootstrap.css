@@ -6339,12 +6339,12 @@ button.close {
 .carousel-caption-created-date{
   position: absolute;
   bottom: 20%;
-  left: 67%;
+
   z-index: 10;
   padding-top: 20px;
   padding-bottom: 20px;
   color: rgba(256, 256, 256, .6);
-  text-align: left;
+
   display: table-cell;
   text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
 }
@@ -6934,4 +6934,11 @@ button.close {
 .image-upload > input
 {
   display: none;
+}
+#action a{
+  color:black;
+}
+#action a:hover{
+  text-decoration: none;
+  color:red;
 }

@@ -5,7 +5,6 @@ package com.coawesome.controller;
  */
 
 import com.coawesome.domain.*;
-import com.coawesome.persistence.CategoryMapper;
 import com.coawesome.persistence.TagMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
