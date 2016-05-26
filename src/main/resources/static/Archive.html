@@ -1,9 +1,3 @@
-
-
-
-
-
-
             <!--메인헤더-->
             <div ng-include="'mainHeader.html'" ng-controller="findCtrl"></div>
             <!--서브헤더-->
@@ -20,7 +14,7 @@
                     </div>
 
                     <!--가운데 콘텐츠 화면분할-->
-                    <div class="col-sm-8 col-md-8 col-lg-8 col-xs-9">
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
                         <h1 class="text-center">기본 폴더 숨기기: <input type="checkbox" ng-model="myCheck"></h1>
                         <div class="hidefolder" ng-hide="myCheck">
                             <div class="col-sm-3 col-xs-4">
@@ -38,7 +32,7 @@
 
                                     <div class="row" style="margin-bottom:10px;">
                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-center">
-                                            <h3 class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{top: -170}" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{x.folder_name}}</h3>
+                                            <h3 class="example" style="border: none; color :black;font-weight: bolder;font-size:18px;width:60%;left:0; margin-bottom:5px;">{{x.folder_name}}</h3>
                                         </div>
                                         <!--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">-->
                                         <!--<p><strong>{{x.tag1}} / {{x.tag2}} / {{x.tag3}}</strong></p>-->
@@ -145,12 +139,12 @@
                                 </div>
                         </div>
                     </div>
-
+                    </div>
 
 
 
                     <!--우측 화면 분할-->
-                    <div class="col-sm-0 col-md-2 col-lg-3 hidden-xs">
+                    <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs">
                         <div ng-include="'RightSideBar.html'"></div>
                     </div>
                 </div>
