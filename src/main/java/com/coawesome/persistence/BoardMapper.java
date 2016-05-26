@@ -98,4 +98,9 @@ ArrayList<HashMap> getBoardById(int user_id);
   @Insert("INSERT INTO tag(tag) VALUES(#{tag})")
   void insertTag(String tag);
 
+
+
+  //테그 워드 테이블에 단어 추가
+  @Insert("INSERT INTO tag_word(tag, word) VALUES(#{tag}, #{word})")
+  void addWordToTag(@Param("tag")String tag, @Param("word")String word);
 }

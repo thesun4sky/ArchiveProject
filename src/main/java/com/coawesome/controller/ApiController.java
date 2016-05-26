@@ -90,6 +90,9 @@ public class ApiController {
           System.out.println("wordsValue: " + wordsValue);
 
           boardMapper.updateValue(wordsValue);   //단어 감정값 적용
+          boardMapper.addWordToTag(board.getTag1(),wordsValue.getWord());
+          boardMapper.addWordToTag(board.getTag2(),wordsValue.getWord());
+          boardMapper.addWordToTag(board.getTag3(),wordsValue.getWord()); //단어 테그에 등록
           //단어 감정값 테그에 적용
         }
       }
