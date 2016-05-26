@@ -34,9 +34,9 @@
         <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;text-align: center">
 
                 <div ng-repeat="x in catagory_boards | filter : filters_catagory" style="display: inline-block;">
-                    <a ng-click="toTag(x.tag1)" ><p ng-style="{'font-size': x.hit1*15} ">{{x.tag1}} </p></a>
-                    <a ng-click="toTag(x.tag2)" ><p ng-style="{ 'font-size': x.hit2*15} ">{{x.tag2}} </p></a>
-                    <a ng-click="toTag(x.tag3)" ><p ng-style="{ 'font-size': x.hit3*15} ">{{x.tag3}} </p></a>
+                    <a ng-click="toTag(x.tag1)" ><p ng-style="{'font-size': x.hit1*15, 'color': colorCode1}">{{x.tag1}} </p></a>
+                    <a ng-click="toTag(x.tag2)" ><p ng-style="{ 'font-size': x.hit2*15, 'color': colorCode2} ">{{x.tag2}} </p></a>
+                    <a ng-click="toTag(x.tag3)" ><p ng-style="{ 'font-size': x.hit3*15, 'color': colorCode3} ">{{x.tag3}} </p></a>
                 </div>
         </div>
 

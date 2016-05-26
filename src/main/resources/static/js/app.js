@@ -736,6 +736,11 @@ angular.module("homeApp",[
 
         
         var userObject = store.get('obj');
+
+        $scope.colorCode1 = "#" + Math.round(Math.random() * 0xFFFFFF).toString(16);
+        $scope.colorCode2 = "#" + Math.round(Math.random() * 0xFFFFFF).toString(16);
+        $scope.colorCode3 = "#" + Math.round(Math.random() * 0xFFFFFF).toString(16);
+
         $http({
             method: 'POST', //방식
             url: "/api/boardlist", /* 통신할 URL */
@@ -782,17 +787,6 @@ angular.module("homeApp",[
             {catagory :8, link :"music", title: "음악", icon1: "glyphicon" , icon2 : "glyphicon-music"}
         ];
 
-        // $scope.getTagElement = function(catagory_board){
-        //     $http({
-        //         method: 'POST', //방식
-        //         url: "/tag/tagElement", /* 통신할 URL */
-        //         data: catagory_board, /* 파라메터로 보낼 데이터 */
-        //         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        //     })
-        //         .then(function(response) {
-        //             $scope.tagElement = response.data;
-        //         });
-        // };
 
 
         $scope.catagoryPost = function(menu) {
