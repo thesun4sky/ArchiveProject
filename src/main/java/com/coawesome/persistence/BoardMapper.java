@@ -22,7 +22,7 @@ public interface BoardMapper {
   //게시글 등록
   @Insert("INSERT INTO board(user_id, public_level, tag1, tag2, tag3, line1, line1_x, line1_y, line2, line2_x, line2_y, catagory) VALUES(#{user_id}, #{public_level}, #{tag1}, #{tag2}, #{tag3}, #{line1}, #{line1_x}, #{line1_y}, #{line2}, #{line2_x}, #{line2_y},#{catagory})")
   void insertBoard(BoardVO board);
-  @Select("SELECT board_id FROM board where user_id = #{user_id} AND line1 = #{line1} AND line2 = #{line2}")
+  @Select("SELECT board_id FROM board where user_id = #{user_id} AND line1 = #{line1} AND line2 = #{line2} LIMIT 1")
   int selectBoardId(BoardVO board);
   @Insert("INSERT INTO board_image(board_id, original_file_name, stored_file_name, file_size, creator_id) VALUES(#{board_id}, #{original_file_name}, #{stored_file_name}, #{file_size}, #{creator_id})")
   void insertBoardImage(ImageVO image);
@@ -32,7 +32,7 @@ public interface BoardMapper {
   void newBoardValue(@Param("storedBoardId") int storedBoardId);
 
   //단어 감정값 얻어오기
-  @Select("SELECT * FROM word where word = #{word}")
+  @Select("SELECT * FROM word where word = #{word} LIMIT 1")
   wordVO getWordsValue(@Param("word") String word);
 
   //단어 감정값 적용
@@ -60,7 +60,7 @@ ArrayList<HashMap> getBoardById(int user_id);
 
 
   //게시글 보기 TODO 디테일 작업전
-  @Select("select * from board where board_id = #{board_id}")
+  @Select("select * from board where board_id = #{board_id} LIMIT 1")
   BoardVO findById(@Param("board_id") int board_id);
 
 
@@ -77,12 +77,22 @@ ArrayList<HashMap> getBoardById(int user_id);
   void cancelToBoard(int board_id);
 
   //게시판 삭제
-  @Select("SELECT stored_file_name FROM board_image WHERE board_id = #{board_id}")
+  @Select("SELECT stored_file_name FROM board_image WHERE board_id = #{board_id} LIMIT 1")
   String getFileName(int board_id);
   @Delete("DELETE FROM board WHERE board_id = #{board_id}")
   void deleteBoard(int board_id);
   @Delete("DELETE FROM board_image WHERE board_id = #{board_id}")
   void deleteBoardImage(int board_id);
 
+
+  //테그 존재확인
+  @Select("SELECT tag FROM tag WHERE tag = #{tag} LIMIT 1")
+  String existTag(String tag);
+  //히트 +1
+  @Update("UPDATE tag SET hit=hit+1 WHERE tag = #{tag}")
+  void updateTag(String tag);
+  //테그 삽입
+  @Insert("INSERT INTO tag(tag) VALUES(#{tag})")
+  void insertTag(String tag);
 
 }

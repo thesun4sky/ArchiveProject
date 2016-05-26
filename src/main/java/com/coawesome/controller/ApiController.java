@@ -42,6 +42,36 @@ public class ApiController {
     ImageVO image = fileUtils.parseInsertFileInfo(file,board);
     boardMapper.insertBoardImage(image);
 
+
+
+      //테그 넣기
+      if (boardMapper.existTag(board.getTag1()) == board.getTag1()) //테그가 있다면
+      {
+        System.out.println(board.getTag1() + "is exist");
+        boardMapper.updateTag(board.getTag1()); //히트 +1
+      } else {                          //테그가 없다면
+        System.out.println(board.getTag1() + "is not exist");
+        boardMapper.insertTag(board.getTag1()); //테그 삽입
+      }
+
+    if (boardMapper.existTag(board.getTag2()) == board.getTag2()) //테그가 있다면
+    {
+      System.out.println(board.getTag2() + "is exist");
+      boardMapper.updateTag(board.getTag2()); //히트 +1
+    } else {                          //테그가 없다면
+      System.out.println(board.getTag2() + "is not exist");
+      boardMapper.insertTag(board.getTag2()); //테그 삽입
+    }
+
+    if (boardMapper.existTag(board.getTag3()) == board.getTag3()) //테그가 있다면
+    {
+      System.out.println(board.getTag3() + "is exist");
+      boardMapper.updateTag(board.getTag3()); //히트 +1
+    } else {                          //테그가 없다면
+      System.out.println(board.getTag3() + "is not exist");
+      boardMapper.insertTag(board.getTag3()); //테그 삽입
+    }
+
     //////////////////////Archive Emotion////////////////////////
     boardMapper.newBoardValue(storedBoardId);
     //게시글 단어테이블 생성
@@ -52,13 +82,17 @@ public class ApiController {
    wordVO wordsValue = new wordVO();
 
     for(int counter = 0; counter < wordsTable.size()-1; counter++) {
-      wordsValue = boardMapper.getWordsValue(wordsTable.get(counter));   //단어 감정값 얻어오기
-      wordsValue.setBoard_id(storedBoardId);   //board_id 주입
-      wordsValue.setWord_num(wordsTable.size()-1);
-      System.out.println("wordsValue: " + wordsValue);
+      if(wordsTable.get(counter) != null) {
+        wordsValue = boardMapper.getWordsValue(wordsTable.get(counter));   //단어 감정값 얻어오기
+        if(wordsValue != null) {
+          wordsValue.setBoard_id(storedBoardId);   //board_id 주입
+          wordsValue.setWord_num(wordsTable.size());
+          System.out.println("wordsValue: " + wordsValue);
 
-      boardMapper.updateValue(wordsValue);   //단어 감정값 적용
-      //단어 감정값 테그에 적용
+          boardMapper.updateValue(wordsValue);   //단어 감정값 적용
+          //단어 감정값 테그에 적용
+        }
+      }
     }
 /*
     for(int counter = 0; counter < wordsTable.size(); counter++) {
@@ -68,7 +102,7 @@ public class ApiController {
       //TODO 단어 감성값 사용자 프로필에 적용
     }
 */
-
+//////////////////////////////////////////////////////////////////////////////
     return new Result(0, "success");
   }
 

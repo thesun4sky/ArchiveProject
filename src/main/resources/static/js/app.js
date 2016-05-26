@@ -8,7 +8,8 @@ angular.module("homeApp",[
         'ui.router',
         'ngFileUpload',
         'angular-storage',
-        'ui.bootstrap'
+        'ui.bootstrap',
+    'angular-jqcloud'
     ])
     .config(function(storeProvider){
         storeProvider.setStore('sessionStorage');
@@ -733,6 +734,7 @@ angular.module("homeApp",[
 
     .controller('catagoryCtrl', function($scope,$http, store, $state){
 
+        
         var userObject = store.get('obj');
         var tagObject = [];
         $http({
@@ -743,10 +745,9 @@ angular.module("homeApp",[
         })
             .then(function(response) {
                 $scope.catagory_boards = response.data;
-
-                for(var i=0; i< response.data.length();i++){
-                tagObject[i] = response.data.tag1;
-                }
+                // for(var i=0; i< response.data.length();i++){
+                // tagObject[i] = response.data.tag1;
+                // }
             });
 
         $scope.view_allCatagory = function(){
@@ -850,6 +851,8 @@ angular.module("homeApp",[
     .controller("tagCtrl",function($rootScope,$scope,$http, store, $state) {
         var userObject = store.get('obj');
         $scope.tag_name = $rootScope.tag_name;
+
+
         var tagObject = {
             user_id : userObject.user_id,
             tag : $scope.tag_name
@@ -873,25 +876,39 @@ angular.module("homeApp",[
             .then(function (response) {
                 $scope.my_tagBoards = response.data;
             });
-        // $scope.applyFriend = function(){
-        //     var applyObject ={
-        //         user_id : store.get('obj').user_id,
-        //         friend_id : $scope.others_id
-        //     };
-        //     $http({
-        //         method: 'POST', //방식
-        //         url: "/user/requestFriend", /* 통신할 URL */
-        //         data: applyObject, /* 파라메터로 보낼 데이터 */
-        //         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        //     })
-        //         .success(function(data, status, headers, config) {
-        //             if( data ) {
-        //             }
-        //             else {
-        //                 alert("실패")
-        //             }
-        //         })
-        // }
+
+
+        $scope.tagCloud = function () {
+            $scope.Cwords = [
+                {text: "음악", weight: 13},
+                {text: "여행", weight: 10.5},
+                {text: "영화", weight: 9.4},
+                {text: "맛집", weight: 8},
+                {text: "악뮤", weight: 6.2},
+                {text: "이탈리아", weight: 5},
+                {text: "스파이더맨", weight: 5},
+                {text: "치킨", weight: 5},
+                {text: "발라드", weight: 5},
+                {text: "밀라노", weight: 4},
+                {text: "액션", weight: 4},
+                {text: "치맥", weight: 3},
+                {text: "맥주", weight: 3},
+                {text: "몰래", weight: 3},
+                {text: "대박", weight: 3},
+                {text: "충격", weight: 3},
+                {text: "감자", weight: 3},
+                {text: "드러옴", weight: 3}
+            ];
+
+            $scope.colors = ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976"];
+
+            $scope.update = function() {
+                $scope.Cwords.splice(-5);
+            };
+        };
+
+        $scope.tagCloud();
+        
         $rootScope.tag_name={};
     })
 
