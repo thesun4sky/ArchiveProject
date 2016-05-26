@@ -33,18 +33,4 @@ public interface FriendMapper {
   //친구목록 조회
   @Select("select friend.friend_id, friend.user_id, user.name, user.email, user.sex, user.login_id, user.born, friend.status from friend INNER JOIN user on friend.user_id = user.user_id where friend.friend_id= #{user_id}")
   ArrayList<UserResult> showFriendsById(@Param("user_id") int user_id);
-
-
-  //페이버릿 하기
-  @Insert("INSERT INTO favorite(user_id, board_id) VALUES(#{user_id}, #{board_id})")
-  void addToFavorite(Favorite favorite);
-  @Update("UPDATE board SET favorite_num=favorite_num+1 WHERE board_id = #{board_id}")
-  void addToBoard(int board_id);
-
-  //페이버릿 취소
-  @Delete("DELETE FROM favorite WHERE user_id = #{user_id} AND board_id = #{board_id}")
-  void deleteFromFavorite(Favorite favorite);
-  @Update("UPDATE board SET favorite_num=favorite_num-1 WHERE board_id = #{board_id}")
-  void cancelToBoard(int board_id);
-
 }

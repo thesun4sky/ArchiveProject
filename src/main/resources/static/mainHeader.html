@@ -52,6 +52,7 @@
                 </div>
                 <ul class="list-group" ng-show="find_user.length" style="z-index: 1030;background-color: white;width:100%">
                     <li class="list-group-item" ng-repeat="others in users" ng-model="others.user_id" ng-click="toOthers(others)"><a>{{others.name}}</a></li>
+                    <li class="list-group-item" ng-repeat="found_tag in tags" ng-model="found_tag.tag" ng-click="toTag(found_tag)"><a>{{found_tag.tag}}</a></li>
                 </ul>
             </form>
 

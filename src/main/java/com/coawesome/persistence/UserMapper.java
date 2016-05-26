@@ -4,10 +4,9 @@ import com.coawesome.domain.BoardVO;
 import com.coawesome.domain.ImageVO;
 import com.coawesome.domain.User;
 import com.coawesome.domain.UserResult;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+
+import java.util.ArrayList;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -50,5 +49,12 @@ public interface UserMapper {
 
   @Select("Select * from user where user_id=#{user_id}")
   UserResult loadProfile(User user);
+
+
+
+  //사용자 검색
+  @Select("select * from user where name Like  CONCAT('%', #{name}, '%')")
+  ArrayList<UserResult> findUser(@Param("name") String name);
+
 
 }

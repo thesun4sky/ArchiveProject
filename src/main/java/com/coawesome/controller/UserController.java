@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 /**
  * Created by TeasunKim on 2016-05-17.
@@ -111,4 +112,20 @@ public class UserController {
         System.out.println("Load Profile : " + userProfile);
         return userProfile;
     }
+
+
+    //사용자 검색
+    @RequestMapping(method = RequestMethod.GET, value = "/user/findUser/{name}")
+    public ArrayList<UserResult> findUser(@PathVariable("name") String name)  {
+        System.out.println("try to find name: " + name);
+
+        ArrayList<UserResult> find_User = userMapper.findUser(name);
+        if(find_User == null){
+            System.out.println("해당하는 사용자없음");
+            return new ArrayList<>();
+        }
+        System.out.println(find_User);
+        return find_User;
+    }
+
 }

@@ -19,10 +19,6 @@ public interface BoardMapper {
   @Select("SELECT user.user_img, user.name, reply.reply, reply.created from reply INNER JOIN user on reply.user_id = user.user_id where board_id = #{board_id}")
   ArrayList<HashMap> showreplybyId(@Param("board_id") int board_id);
 
-  //사용자 검색
-  @Select("select * from user where name Like  CONCAT('%', #{name}, '%')")
-  ArrayList<UserResult> findUser(@Param("name") String name);
-
   //게시글 등록
   @Insert("INSERT INTO board(user_id, public_level, tag1, tag2, tag3, line1, line1_x, line1_y, line2, line2_x, line2_y, catagory) VALUES(#{user_id}, #{public_level}, #{tag1}, #{tag2}, #{tag3}, #{line1}, #{line1_x}, #{line1_y}, #{line2}, #{line2_x}, #{line2_y},#{catagory})")
   void insertBoard(BoardVO board);

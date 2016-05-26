@@ -93,20 +93,6 @@ public class ApiController {
 
 
 
-  //사용자 검색
-  @RequestMapping(method = RequestMethod.GET, value = "/user/findUser/{name}")
-  public ArrayList<UserResult> findUser(@PathVariable("name") String name)  {
-    System.out.println("try to find name: " + name);
-
-    ArrayList<UserResult> find_User = boardMapper.findUser(name);
-    if(find_User == null){
-      System.out.println("해당하는 사용자없음");
-      return new ArrayList<>();
-    }
-    System.out.println(find_User);
-    return find_User;
-  }
-
 
 
   //댓글 쓰기 API

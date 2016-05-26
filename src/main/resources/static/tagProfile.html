@@ -25,16 +25,16 @@
                 <div class="container-fluid text-center">
                     <form name="myForm">
                         <div class="image-upload">
-                            <h3>Who Am I?</h3>
+                            <h3>How is it?</h3>
                             <label for="file-input">
-                                <img src="storedimg/{{Profile.user_img}}" class="img-circle" alt="Profile" width="200" height="200">
+                                <img src="storedimg/{{tagProfile.tag_img}}" class="img-circle" alt="Profile" width="200" height="200">
                             </label>
-                            <h3>{{Profile.name}}</h3>
+                            <h3>{{tagProfile.tag}}</h3>
                             <input type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required
                                    ngf-model-invalid="errorFile">
                         </div>
                     </form>
-                    <a class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>
+                    <!--<a class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>-->
                 </div>
             </div>
             <div class="row">
@@ -50,7 +50,7 @@
             </div>
             <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
                 <div class="row">
-                    <div class="col-lg-6 text-center" ng-repeat="x in my_boards">
+                    <div class="col-lg-6 text-center" ng-repeat="x in my_tagBoards">
                         <div class="thumbnail">
                             <img src="storedimg/{{x.stored_file_name}}" alt="images" style="width:100%; height:300px;">
                             <div class="carousel-caption-public_level">
@@ -105,16 +105,7 @@
                                         <a onclick="" class="btn btn-sm btn-danger" style="border-radius: 50%;"><span class="glyphicon glyphicon-bell"></span></a>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div ng-switch on="!!x.replier">
-                                        <div ng-switch-when="true">
-                                            <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;> <p style="display: inline-block">{{x.replier}} : {{x.reply}} (공감: {{x.likes_num}} )</p>
-                                        </div>
-                                        <div ng-switch-default>
-                                            <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px" ng-enter="commitReply({{x.board_id}}, reply.content)" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>

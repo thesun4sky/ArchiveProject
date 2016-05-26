@@ -173,6 +173,16 @@ angular.module("homeApp",[
                 }
             })
 
+            .state('tag', {
+                url: '/tag',
+                templateUrl: 'tagProfile.html',
+                controller: 'tagCtrl',
+                controllerAs: 'tag',
+                data: {
+                    requireLogin: true
+                }
+            })
+
             .state('toline', {
                 url: '/Toline',
                 templateUrl: 'Toline.html',
@@ -530,10 +540,20 @@ angular.module("homeApp",[
                 .then(function (response) {
                     $scope.users = response.data;
                 });
+
+            $http.get("/tag/findTag/"+$scope.find_user)
+                .then(function (response) {
+                    $scope.tags = response.data; 
+                });
         };
         $scope.toOthers = function(others){
             $rootScope.others_id = others.user_id;
             $state.go("others");
+        };
+
+        $scope.toTag = function(tags){
+            $rootScope.tag_name = tags.tag;
+            $state.go("tag");
         }
     })
 
@@ -575,7 +595,6 @@ angular.module("homeApp",[
             })
                 .success(function(data, status, headers, config) {
                     if( data ) {
-                        alert("친구신청 성공")
                     }
                     else {
                         alert("실패")
@@ -590,7 +609,7 @@ angular.module("homeApp",[
     .controller('catagoryCtrl', function($scope,$http, store, $state){
 
         var userObject = store.get('obj');
-
+        var tagObject = [];
         $http({
             method: 'POST', //방식
             url: "/api/boardlist", /* 통신할 URL */
@@ -599,6 +618,10 @@ angular.module("homeApp",[
         })
             .then(function(response) {
                 $scope.catagory_boards = response.data;
+
+                for(var i=0; i< response.data.length();i++){
+                tagObject[i] = response.data.tag1;
+                }
             });
 
         $scope.view_allCatagory = function(){
@@ -698,6 +721,59 @@ angular.module("homeApp",[
         };
     })
 
+
+    .controller("tagCtrl",function($rootScope,$scope,$http, store, $state) {
+        var userObject = store.get('obj');
+        $scope.tag_name = $rootScope.tag_name;
+        var tagObject = {
+            user_id : userObject.user_id,
+            tag : $scope.tag_name
+        };
+        $http({  //TODO 테그정보 가져오기(사진 등..)
+            method: 'POST', //방식
+            url: "/tag/loadTagProfile", /* 통신할 URL */
+            data: tagObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.tagProfile = response.data;
+            });
+
+        $http({  //TODO 테그된 게시글 가져오기
+            method: 'POST', //방식
+            url: "/tag/openTagFolder", /* 통신할 URL */
+            data: tagObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.my_tagBoards = response.data;
+            });
+        // $scope.applyFriend = function(){
+        //     var applyObject ={
+        //         user_id : store.get('obj').user_id,
+        //         friend_id : $scope.others_id
+        //     };
+        //     $http({
+        //         method: 'POST', //방식
+        //         url: "/user/requestFriend", /* 통신할 URL */
+        //         data: applyObject, /* 파라메터로 보낼 데이터 */
+        //         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        //     })
+        //         .success(function(data, status, headers, config) {
+        //             if( data ) {
+        //             }
+        //             else {
+        //                 alert("실패")
+        //             }
+        //         })
+        // }
+        $rootScope.tag_name={};
+    })
+
+
+
+
+
     .controller("tolineCtrl",function($scope, $http, store, $state){
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
@@ -721,7 +797,7 @@ angular.module("homeApp",[
             var acceptFriendObject =
             {
                 user_id: friend_id, //임시로 1번사용자 지정
-                friend_id: 1
+                friend_id: store.get('obj').user_id
             };
             $http({
                 method: 'POST', //방식
@@ -733,7 +809,6 @@ angular.module("homeApp",[
                     if(data.msg == 'false') {
                         alert('친구승낙 실패')
                     }else{
-                        alert('친구승낙 성공');
                         $scope.tolineList();
                     }
                 })
@@ -746,7 +821,7 @@ angular.module("homeApp",[
         $scope.deleteFriend = function (friend_id){
             var deleteFriendObject =
             {
-                user_id: 1, //임시로 1번사용자 지정
+                user_id: store.get('obj').user_id, //임시로 1번사용자 지정
                 friend_id: friend_id
             };
             $http({
@@ -759,7 +834,6 @@ angular.module("homeApp",[
                     if(data.msg == 'false') {
                         alert('친구삭제 실패')
                     }else{
-                        alert('친구삭제 성공');
                         $scope.tolineList();
                     }
                 })
@@ -823,7 +897,6 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('페이버릿 실패')
                     } else {
-                        alert('페이버릿 성공');
                         $scope.boardList();
                     }
                 })
@@ -850,7 +923,6 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('페이버릿취소 실패')
                     } else {
-                        alert('페이버릿취소 성공');
                         $scope.boardList();
                     }
                 })
@@ -875,7 +947,6 @@ angular.module("homeApp",[
             })
                 .success(function (data, status, headers, config) {
                     if (data.msg == 'success') {
-                        alert('댓글작성 성공');
                         $scope.boardList();
                     } else {
                         alert('댓글작성 실패');
@@ -919,7 +990,6 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('친구승낙 실패')
                     } else {
-                        alert('친구승낙 성공');
                         $scope.showFriendList();
                     }
                 })
@@ -945,7 +1015,6 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('친구삭제 실패')
                     } else {
-                        alert('친구삭제 성공');
                         $scope.showFriendList();
                     }
                 })
@@ -1011,7 +1080,6 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('폴더생성 실패');
                     } else {
-                        alert('폴더생성 성공');
                         $scope.archiveList();
                     }
                 })
@@ -1038,7 +1106,6 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('폴더삭제 실패');
                     } else {
-                        alert('폴더삭제 성공');
                         $scope.archiveList();
                     }
                 })
