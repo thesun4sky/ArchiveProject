@@ -46,7 +46,21 @@ public class TagController {
     }
 
 
+    //테그 단어 리스트
+    @RequestMapping(method = RequestMethod.POST, value = "/tag/getTagWords")
+    public List<CloudVO> getTagWords(@RequestBody TagElement tagElement) {
+        String tag =  tagElement.getTag();
+        System.out.println("get word list of tag : " + tag);
+        ArrayList<String> tagWordList = tagMapper.getTagWords(tag);
+        ArrayList<CloudVO> tagCloudeList = new ArrayList<>();
+        for(int i=0; i<tagWordList.size(); i++)
+            tagCloudeList.add(new CloudVO(tagWordList.get(i),8));
 
+        System.out.println("tag word list : " + tagWordList);
+        return tagCloudeList;
+    }
+
+    //테그 게시글 리스트
     @RequestMapping(method = RequestMethod.POST, value = "/tag/openTagFolder")
     public List<HashMap> openTagFolder(@RequestBody TagElement tagElement) {
         String tag =  tagElement.getTag();
@@ -55,6 +69,7 @@ public class TagController {
         System.out.println("tag boards : " + tagBoardList);
         return tagBoardList;
     }
+
 
 
 }
