@@ -736,7 +736,6 @@ angular.module("homeApp",[
 
         
         var userObject = store.get('obj');
-        var tagObject = [];
         $http({
             method: 'POST', //방식
             url: "/api/boardlist", /* 통신할 URL */
@@ -745,6 +744,10 @@ angular.module("homeApp",[
         })
             .then(function(response) {
                 $scope.catagory_boards = response.data;
+                // $scope.getTagElement($scope.catagory_boards);
+
+
+
                 // for(var i=0; i< response.data.length();i++){
                 // tagObject[i] = response.data.tag1;
                 // }
@@ -760,6 +763,7 @@ angular.module("homeApp",[
                 .then(function(response) {
                     $scope.catagory_boards = response.data;
                     $scope.filters_catagory ={};
+                    // $scope.getTagElement($scope.catagory_boards);
                 });
 
         };
@@ -777,6 +781,19 @@ angular.module("homeApp",[
             {catagory :7, link :"travel", title: "여행", icon1: "glyphicon" , icon2 : "glyphicon-plane"},
             {catagory :8, link :"music", title: "음악", icon1: "glyphicon" , icon2 : "glyphicon-music"}
         ];
+
+        // $scope.getTagElement = function(catagory_board){
+        //     $http({
+        //         method: 'POST', //방식
+        //         url: "/tag/tagElement", /* 통신할 URL */
+        //         data: catagory_board, /* 파라메터로 보낼 데이터 */
+        //         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        //     })
+        //         .then(function(response) {
+        //             $scope.tagElement = response.data;
+        //         });
+        // };
+
 
         $scope.catagoryPost = function(menu) {
 
@@ -797,7 +814,6 @@ angular.module("homeApp",[
 
         $scope.toTag = function(tags){
             $rootScope.tag_name = tags;
-            alert($rootScope.tag_name);
             $state.go("tag");
         }
     })
@@ -1082,97 +1098,6 @@ angular.module("homeApp",[
                 });
         };
 
-        /*$scope.commitReply = function (board_id, msg) {
-            var replyObject =
-            {
-                user_id: userObject.user_id, //임시로 1번사용자 지정
-                board_id: board_id,
-                reply: msg
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/reply", /!* 통신할 URL *!/
-                data: replyObject, /!* 파라메터로 보낼 데이터 *!/
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'success') {
-                        $scope.boardList();
-                    } else {
-                        alert('댓글작성 실패');
-                    }
-
-                })
-                .error(function (data, status, headers, config) {
-                    /!* 서버와의 연결이 정상적이지 않을 때 처리 *!/
-                    console.log(status);
-                });
-        };*/
-
-
-       /* $scope.showFriendList = function () {
-            $http({
-                method: 'POST', //방식
-                url: "/user/showfriends", /!* 통신할 URL *!/
-                data: userObject, /!* 파라메터로 보낼 데이터 *!/
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function (response) {
-                    $scope.friends = response.data;
-                });
-        };*/
-
-        // $scope.showFriendList();
-
-        /*$scope.acceptFriend = function (friend_id) {
-            var acceptFriendObject =
-            {
-                user_id: friend_id, //임시로 1번사용자 지정
-                friend_id: userObject.user_id
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/user/acceptFriend", /!* 통신할 URL *!/
-                data: acceptFriendObject, /!* 파라메터로 보낼 데이터 *!/
-                headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'false') {
-                        alert('친구승낙 실패')
-                    } else {
-                        $scope.showFriendList();
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    /!* 서버와의 연결이 정상적이지 않을 때 처리 *!/
-                    console.log(status);
-                });
-        };
-
-        $scope.deleteFriend = function (friend_id) {
-            var deleteFriendObject =
-            {
-                user_id: userObject.user_id, //임시로 1번사용자 지정
-                friend_id: friend_id
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/user/deleteFriend", /!* 통신할 URL *!/
-                data: deleteFriendObject, /!* 파라메터로 보낼 데이터 *!/
-                headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'false') {
-                        alert('친구삭제 실패')
-                    } else {
-                        $scope.showFriendList();
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    /!* 서버와의 연결이 정상적이지 않을 때 처리 *!/
-                    console.log(status);
-                });
-        };*/
 
         $scope.filters = { };
 
