@@ -43,7 +43,7 @@ public interface BoardMapper {
 
   //게시판 글 목록 조회( 친구들의 친구공개 게시글, 모든사람의 전체공개 게시글 목록)
   @Select("SELECT DISTINCT user.name, board.board_id, board.public_level, board.catagory, board.likes_num, board.tag1, tag_1.hit as hit1,  board.tag2, tag_2.hit as hit2, board.tag3, tag_3.hit as hit3,\n" +
-          "          board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, IFNULL(favorite.user_id,0) as favorite, replycnt.cnt FROM board \n" +
+          "          board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, IFNULL(favorite.user_id,0) as favorite, replycnt.cnt, user.user_img FROM board \n" +
           "          INNER JOIN friend on board.user_id = friend.friend_id \n" +
           "          INNER JOIN board_image on board.board_id = board_image.board_id \n" +
           "          INNER JOIN user on board.user_id = user.user_id\n" +

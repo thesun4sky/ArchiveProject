@@ -63,7 +63,7 @@ public interface FolderMapper {
 
   //내폴더 열기
   @Select("SELECT DISTINCT user.name, board.board_id, board.public_level, board.catagory, board.likes_num, board.tag1, board.tag2, board.tag3\n" +
-          ",board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, reply.replier, reply.likes_num, reply.reply, IFNULL(favorite.user_id,0) as favorite FROM board \n" +
+          ",board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, reply.replier, reply.likes_num, reply.reply, IFNULL(favorite.user_id,0) as favorite, user.user_img FROM board \n" +
           "INNER JOIN board_image on board.board_id = board_image.board_id\n" +
           "INNER JOIN user on board.user_id = user.user_id\n" +
           "LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id\n" +

@@ -607,7 +607,7 @@ angular.module("homeApp",[
              var words = $scope.lines.firstLine + " " + $scope.lines.secondLine + " ";
            // var words = $scope.lines.firstLine.concat(" ".concat($scope.lines.secondLine));
             //삭제어
-           res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |나랑 /gi , " ");  //조사
+           res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |나랑 |하는 |들과 |했던 /gi , " ");  //조사
             res = res.replace(/하 |내 |너 |나 |네 |엔 |앤 |에서 |으로 |한다면 /gi , " ");  //동사 꾸밈어
 
             //대체어

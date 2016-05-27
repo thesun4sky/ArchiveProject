@@ -37,4 +37,6 @@ public class BoardResult {
     private int favorite;
     private int catagory;
     private int[] values;
+    private String stored_file_name;
+    private String user_img;
 }
