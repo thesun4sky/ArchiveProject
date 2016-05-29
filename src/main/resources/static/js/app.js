@@ -9,7 +9,8 @@ angular.module("homeApp",[
         'ngFileUpload',
         'angular-storage',
         'ui.bootstrap',
-    'angular-jqcloud'
+        'angular-jqcloud',
+        'ui.bootstrap.alert'
     ])
     .config(function(storeProvider){
         storeProvider.setStore('sessionStorage');
@@ -68,64 +69,6 @@ angular.module("homeApp",[
                 });
         };
 
-/*
-        $scope.replylist = function(board) {
-            $http({
-                method: 'POST', //방식
-                url: "/api/showreply", /!* 통신할 URL *!/
-                data: board, /!* 파라메터로 보낼 데이터 *!/
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            }).success(function (data, status, headers, config) {
-                $rootScope.reply=data;
-                $scope.reply=$rootScope.reply;
-            });
-        }*/
-
-       /* $scope.commitReply = function (msg) {
-            var replyObject =
-            {
-                user_id: userObject.user_id, //임시로 1번사용자 지정
-                board_id: $rootScope.modalboard.board_id,
-                reply: msg
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/reply", /!* 통신할 URL *!/
-                data: replyObject, /!* 파라메터로 보낼 데이터 *!/
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'success') {
-                        alert('댓글작성 성공');
-                        $scope.replylist($rootScope.modalboard);
-                    } else {
-                        alert('댓글작성 실패');
-                    }
-
-                })
-                .error(function (data, status, headers, config) {
-                    /!* 서버와의 연결이 정상적이지 않을 때 처리 *!/
-                    console.log(status);
-                });
-        };*/
-
-        /*$scope.open = function (size, board) {
-            $rootScope.modalboard=board;
-            $scope.replylist($rootScope.modalboard);
-            var modalInstance = $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: 'ModalDemoCtrl',
-                size: size
-            });
-            modalInstance.result.then(function () {
-
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-                $rootScope.modalboard={};
-                $rootScope.reply={};
-                $scope.boardList();
-            });
-        };*/
     })
 
 
@@ -269,7 +212,84 @@ angular.module("homeApp",[
     })
 
 
-    .controller("bodyCtrl",function($scope, $http, store, $state, $rootScope) {
+
+    .controller("bodyCtrl",function($scope, $http, store, $state, $rootScope, $interval, $filter) {
+        //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
+        var userObject = store.get('obj');
+
+
+        $scope.alerts = [
+
+        ];
+
+        $scope.addAlert = function(data) {
+            if(data.id == '1') {
+                if (data.status == 0) {
+                    $scope.alerts.push({type: 'success', msg: data.name+'님께서 친구 신청 하셨습니다.'});
+                }
+                else if (data.status == 1)
+                    $scope.alerts.push({type: 'success', msg: data.name+'님께서 친구 승인 하셨습니다.'});
+            }
+            else if(data.id == '2') {
+                $scope.alerts.push({msg: data.name+'님께서 댓글을 남겼습니다.'});
+            }
+            else if(data.id == '3'){
+                $scope.alerts.push({msg: data.name+'님께서 게시물을 페이보릿 하셨습니다.'});
+            }
+        };
+
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
+
+
+
+        $rootScope.checkedTime = null;
+
+        $scope.StartTimer = function () {
+            $scope.Noti = $interval(function () {
+                // alert('noti 불림');
+                if($rootScope.checkedTime != null){
+                    if (store.get('obj') == null) {
+                        $interval.cancel($scope.Noti);
+                    }
+                    // alert('체크타임 있음' + $rootScope.checkTime);
+                    $rootScope.currentTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
+                    $scope.CallNotiApi();
+                    $rootScope.checkedTime = $rootScope.currentTime;
+                }
+                else {
+                    // alert('체크타임 비어있습니다.');
+                    $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
+                }
+            }, 5000);
+        };
+        //Timer stop function.
+        $scope.CallNotiApi = function () {
+            // alert('노티 API 부름');
+            $http({
+                method: 'POST', //방식
+                url: "/user/notification", /* 통신할 URL */
+                data: {
+                    user_id : userObject.user_id,
+                    currentTime : $rootScope.currentTime,
+                    checkedTime : $rootScope.checkedTime
+                },
+                headers: {'Content-Type': 'application/json; charset=utf-8'}
+            })
+                .then(function (response) {
+                    if(response.data != null && response.data != undefined){
+                        $scope.datas = response.data;
+                        for(var i=0;i<$scope.datas.length;i++) {
+                            $scope.addAlert($scope.datas[i]);
+                        }
+
+                    }
+                })
+
+
+        };
+
 
 
         $scope.replylist = function(board) {
@@ -300,9 +320,6 @@ angular.module("homeApp",[
         };
 
 
-        //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
-        var userObject = store.get('obj');
-
 
 
         $scope.showFriendList = function () {
@@ -316,8 +333,11 @@ angular.module("homeApp",[
                     $scope.friends = response.data;
                 });
         };
+
         if (userObject!=null){
-            $scope.showFriendList();}
+            $scope.showFriendList();
+            $scope.StartTimer();
+        }
 
     })
 
@@ -325,7 +345,7 @@ angular.module("homeApp",[
 
 
 
-    .controller("loginCtrl",function($scope, $http, store, $state){
+    .controller("loginCtrl",function($scope, $http, store, $state, $filter){
 
         $scope.login=[{
             login_id :"" ,password :""
@@ -355,9 +375,12 @@ angular.module("homeApp",[
                         if (data.msg != 'fales') {
                             var myInfo = {
                                 login_id: data.msg,
-                                user_id: data.result
+                                user_id: data.result,
+                                login_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss')
                             };
+
                             store.set('obj',myInfo);
+                            $scope.StartTimer();
                             $state.go('main');
                             /* 맞음 */
                         }
@@ -904,26 +927,6 @@ angular.module("homeApp",[
                 .then(function (response) {
                     $scope.Cwords = response.data;
                 });
-            //     [
-            //     {text: "음악", weight: 13},
-            //     {text: "여행", weight: 10.5},
-            //     {text: "영화", weight: 9.4},
-            //     {text: "맛집", weight: 8},
-            //     {text: "악뮤", weight: 6.2},
-            //     {text: "이탈리아", weight: 5},
-            //     {text: "스파이더맨", weight: 5},
-            //     {text: "치킨", weight: 5},
-            //     {text: "발라드", weight: 5},
-            //     {text: "밀라노", weight: 4},
-            //     {text: "액션", weight: 4},
-            //     {text: "치맥", weight: 3},
-            //     {text: "맥주", weight: 3},
-            //     {text: "몰래", weight: 3},
-            //     {text: "대박", weight: 3},
-            //     {text: "충격", weight: 3},
-            //     {text: "감자", weight: 3},
-            //     {text: "드러옴", weight: 3}
-            // ];
 
             $scope.colors = ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976"];
 
@@ -1013,10 +1016,12 @@ angular.module("homeApp",[
 
 
 
-    .controller("indexCtrl",function($scope, $http, store, $state, $uibModal, $rootScope) {
+
+
+    .controller("indexCtrl",function($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
+        var userObject = store.get('obj');
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
-        var userObject = store.get('obj');
 
         $scope.boardList = function () {
             $http({
@@ -1369,4 +1374,3 @@ angular.module("homeApp",[
 
 
     });
-

@@ -17,8 +17,6 @@
     </li>
 </ul>
 
-
-
 <!--업로드 되는 프레임 구성 화면-->
 <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
     <div class="row" ng-controller="ModalDemoCtrl">
@@ -62,7 +60,7 @@
                 </div>
                 <div class="row" style="margin-bottom:10px;">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left">
-                        <img src="storedimg/{{x.user_img}}" class="img-circle" alt="user" width=30%; height=30%;>
+                        <img src="storedimg/{{x.user_img}}" class="img-circle" alt="user" width=30px; height=30px;>
                         <p style="display: inline-block">{{x.name}}</p>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
@@ -98,7 +96,7 @@
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div ng-switch on="!!x.replier">
-                        <div ng-switch-when="true"><img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;>
+                        <div ng-switch-when="true"><img src="img/someone.png" class="img-circle" alt="user" width=30px; height=px;>
                             <p style="display: inline-block">{{x.replier}} : {{x.reply}} (공감: {{x.likes_num}} )</p>
                         </div>
                     </div>

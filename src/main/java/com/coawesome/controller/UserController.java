@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by TeasunKim on 2016-05-17.
@@ -126,6 +127,21 @@ public class UserController {
         }
         System.out.println(find_User);
         return find_User;
+    }
+
+
+    //notification
+    @RequestMapping(method = RequestMethod.POST, value = "/user/notification")
+    public ArrayList<HashMap> Notification(@RequestBody HashMap map)  {
+        System.out.println("try to find to alert: " + map.get("user_id") + "  current " + map.get("currentTime ")
+                + "checkedTime " + map.get("checkedTime"));
+        ArrayList<HashMap> notification = userMapper.notification(map);
+        System.out.println(notification);
+        if(notification == null || notification.isEmpty()){
+            System.out.println("알릴 내용이 없음.");
+            return null;
+        }
+        return notification;
     }
 
 }

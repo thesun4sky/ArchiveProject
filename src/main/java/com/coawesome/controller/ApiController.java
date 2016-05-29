@@ -97,14 +97,7 @@ public class ApiController {
         }
       }
     }
-/*
-    for(int counter = 0; counter < wordsTable.size(); counter++) {
-      ArrayList<HashMap> wordsEmotion = boardMapper.getWordsEmotion(wordsTable);
-      //TODO 단어 감성값 얻어오기
-      boardMapper.updateUserEmotion(wordsValue);
-      //TODO 단어 감성값 사용자 프로필에 적용
-    }
-*/
+
 //////////////////////////////////////////////////////////////////////////////
     return new Result(0, "success");
   }

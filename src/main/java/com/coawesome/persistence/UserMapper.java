@@ -1,12 +1,12 @@
 package com.coawesome.persistence;
 
-import com.coawesome.domain.BoardVO;
 import com.coawesome.domain.ImageVO;
 import com.coawesome.domain.User;
 import com.coawesome.domain.UserResult;
 import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -55,6 +55,29 @@ public interface UserMapper {
   //사용자 검색
   @Select("select * from user where name Like  CONCAT('%', #{name}, '%')")
   ArrayList<UserResult> findUser(@Param("name") String name);
+
+  //사용자 검색
+  @Select("select * from user where name Like  CONCAT('%', #{name}, '%')")
+  ArrayList<HashMap> findNotithings(String id);
+
+
+
+
+
+
+
+
+  //알림
+  @Select("SELECT friend.id, friend.status, user.user_id, user.name, user.user_img, friend.created from friend left outer join user on friend.user_id = user.user_id where friend_id = #{user_id} and #{checkedTime} < friend.created and friend.created < #{currentTime}\n" +
+          "  union\n" +
+          "  SELECT reply.id, myboard.board_id, user.user_id, user.name, user.user_img, reply.created from (SELECT board.board_id, board.user_id FROM board where board.user_id = #{user_id}) myboard inner join reply on myboard.board_id = reply.board_id left outer join user on reply.user_id = user.user_id  where #{checkedTime} < reply.created and reply.created < #{currentTime}\n" +
+          "  union\n" +
+          "  SELECT favorite.id, myboard.board_id, user.user_id, user.name, user.user_img, favorite.created from (SELECT board.board_id, board.user_id FROM board where board.user_id = #{user_id}) myboard inner join favorite on myboard.board_id = favorite.board_id left outer join user on favorite.user_id = user.user_id where #{checkedTime} < favorite.created and favorite.created < #{currentTime}")
+  ArrayList<HashMap> notification(HashMap map);
+
+
+
+
 
 
 }
