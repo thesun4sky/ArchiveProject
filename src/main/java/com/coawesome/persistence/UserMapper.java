@@ -64,9 +64,6 @@ public interface UserMapper {
 
 
 
-
-
-
   //알림
   @Select("SELECT friend.id, friend.status, user.user_id, user.name, user.user_img, friend.created from friend left outer join user on friend.user_id = user.user_id where friend_id = #{user_id} and #{checkedTime} < friend.created and friend.created < #{currentTime}\n" +
           "  union\n" +

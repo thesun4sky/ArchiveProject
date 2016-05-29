@@ -253,20 +253,18 @@ angular.module("homeApp",[
                     if (store.get('obj') == null) {
                         $interval.cancel($scope.Noti);
                     }
-                    // alert('체크타임 있음' + $rootScope.checkTime);
                     $rootScope.currentTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
                     $scope.CallNotiApi();
                     $rootScope.checkedTime = $rootScope.currentTime;
                 }
                 else {
-                    // alert('체크타임 비어있습니다.');
                     $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
                 }
             }, 5000);
         };
+        
         //Timer stop function.
         $scope.CallNotiApi = function () {
-            // alert('노티 API 부름');
             $http({
                 method: 'POST', //방식
                 url: "/user/notification", /* 통신할 URL */

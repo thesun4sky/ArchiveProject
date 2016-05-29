@@ -129,12 +129,9 @@ public class UserController {
         return find_User;
     }
 
-
     //notification
     @RequestMapping(method = RequestMethod.POST, value = "/user/notification")
     public ArrayList<HashMap> Notification(@RequestBody HashMap map)  {
-        System.out.println("try to find to alert: " + map.get("user_id") + "  current " + map.get("currentTime ")
-                + "checkedTime " + map.get("checkedTime"));
         ArrayList<HashMap> notification = userMapper.notification(map);
         System.out.println(notification);
         if(notification == null || notification.isEmpty()){
