@@ -1030,9 +1030,38 @@ angular.module("homeApp",[
                 })
         };
 
+        $scope.folderList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/api/folderlist", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.folders = response.data;
+                })
+        };
+
         $scope.boardList();
+        $scope.folderList();
 
         $scope.filters = {};
+
+        $scope.putInFolder = function (board_id, folder_id) {
+            var folderObject = {
+                board_id : board_id,
+                folder_id : folder_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/putInFolder", /* 통신할 URL */
+                data: folderObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function () {
+                    alert('폴더에 담겼습니다.');
+                })
+        };
 
         $scope.open = function (size, board) {
             $rootScope.modalboard=board;
@@ -1052,7 +1081,6 @@ angular.module("homeApp",[
              });
         };
 
-        $scope.boardList();
 
         $scope.viewAll= function(){
 

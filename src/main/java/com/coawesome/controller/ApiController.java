@@ -221,4 +221,30 @@ public class ApiController {
   }
 
 
+
+
+  //사용자 폴더 목록 보기
+  @RequestMapping(method = RequestMethod.POST, value = "/api/folderlist")
+  public List<HashMap> getFolderList(@RequestBody User user) {
+    System.out.println(user + "'s folder List");
+    int user_id = user.getUser_id();
+    ArrayList<HashMap> folderList = boardMapper.getFolderById(user_id);
+
+    return folderList;
+  }
+
+
+
+  //폴더에 집어넣기
+  @RequestMapping(method = RequestMethod.POST, value = "/api/putInFolder")
+  public Result putInFolder(@RequestBody Folder folder) {
+    System.out.println(folder);
+
+    boardMapper.putInFolder(folder);
+
+    return new Result(0, "success");
+  }
+
+
+
 }

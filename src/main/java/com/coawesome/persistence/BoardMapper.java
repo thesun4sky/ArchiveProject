@@ -103,4 +103,14 @@ ArrayList<HashMap> getBoardById(int user_id);
   //테그 워드 테이블에 단어 추가
   @Insert("INSERT INTO tag_word(tag, word) VALUES(#{tag}, #{word})")
   void addWordToTag(@Param("tag")String tag, @Param("word")String word);
+
+
+  //사용자 폴더목록 불러오기
+  @Select("SELECT * FROM folder WHERE user_id = #{user_id}")
+  ArrayList<HashMap> getFolderById(int user_id);
+
+  //폴더에 집어넣기
+  @Insert("INSERT INTO fboard(board_id, folder_id) VALUES(#{board_id}, #{folder_id})")
+  void putInFolder(Folder folder);
+
 }
