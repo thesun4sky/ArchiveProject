@@ -1146,6 +1146,54 @@ angular.module("homeApp",[
         };
 
 
+        //공감
+        $scope.likeBoard = function (board_id) {
+            $http({
+                method: 'POST', //방식
+                url: "/api/likeBoard", /* 통신할 URL */
+                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('좋아요 실패')
+                    } else {
+                        $scope.boardList();
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+        //공감 취소
+        $scope.dislikeBoard = function (board_id) {
+            var dislikeBoardObject =
+            {
+                user_id: userObject.user_id, //임시로 1번사용자 지정
+                board_id: board_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/dislikeBoard", /* 통신할 URL */
+                data: dislikeBoardObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('좋아요취소 실패')
+                    } else {
+                        $scope.boardList();
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+
         $scope.filters = { };
 
         $scope.menuList = [

@@ -214,6 +214,29 @@ public class ApiController {
   }
 
 
+  //공감
+  @RequestMapping(method = RequestMethod.POST, value = "/api/likeBoard")
+  public Result likeBoard(@RequestBody Like like) {
+    System.out.println(like);
+
+    boardMapper.addToLike(like);
+    boardMapper.likeToBoard(like.getBoard_id());
+
+    return new Result(0, "success");
+  }
+
+  //공감취소
+  @RequestMapping(method = RequestMethod.POST, value = "/api/dislikeBoard")
+  public Result dislikeBoard(@RequestBody Like like) {
+    System.out.println(like);
+
+    boardMapper.deleteFromLike(like);
+    boardMapper.dislikeToBoard(like.getBoard_id());
+
+    return new Result(0, "success");
+  }
+
+
 
 
   //사용자 폴더 목록 보기

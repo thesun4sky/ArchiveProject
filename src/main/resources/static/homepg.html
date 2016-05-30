@@ -72,7 +72,16 @@
                 <div id='action'>
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
-                        <a onclick="">  <span class="glyphicon glyphicon-heart"></span>공감하기</a>
+                        <div ng-init="like=x.likes" >
+                            <div ng-switch on="like">
+                                <div ng-switch-when="0">
+                                    <a ng-click="likeBoard(x.board_id)" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span>공감 {{x.likes_num}}</a>
+                                </div>
+                                <div ng-switch-default>
+                                    <a ng-click="dislikeBoard(x.board_id)" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span>공감취소 {{x.likes_num}}</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                         <a ng-click="open('lg', x)"><span class="glyphicon glyphicon-comment"></span> 댓글달기 {{x.cnt}}</a>
