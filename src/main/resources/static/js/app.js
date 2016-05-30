@@ -225,16 +225,16 @@ angular.module("homeApp",[
         $scope.addAlert = function(data) {
             if(data.id == '1') {
                 if (data.status == 0) {
-                    $scope.alerts.push({type: 'success', msg: data.name+'님께서 친구 신청 하셨습니다.'});
+                    $scope.alerts.push({type: 'info', msg: data.name+'님께서 친구 신청 하셨습니다.'});
                 }
                 else if (data.status == 1)
                     $scope.alerts.push({type: 'success', msg: data.name+'님께서 친구 승인 하셨습니다.'});
             }
             else if(data.id == '2') {
-                $scope.alerts.push({msg: data.name+'님께서 댓글을 남겼습니다.'});
+                $scope.alerts.push({type: 'warning', msg: data.name+'님께서 댓글을 남겼습니다.'});
             }
             else if(data.id == '3'){
-                $scope.alerts.push({msg: data.name+'님께서 게시물을 페이보릿 하셨습니다.'});
+                $scope.alerts.push({type: 'danger', msg: data.name+'님께서 게시물을 페이보릿 하셨습니다.'});
             }
         };
 
@@ -835,11 +835,9 @@ angular.module("homeApp",[
 
     //프로필 페이지 컨트롤러
 
-    .controller('profileCtrl', function($scope,$http,Upload,store,$timeout,$state,$uibModal,$rootScope){
+    .controller('profileCtrl', function($scope,$http,Upload,store,$timeout,$state){
 
         var userObject = store.get('obj');
-
-        $scope.profileList =function(){
 
         $http({
             method: 'POST', //방식
@@ -860,27 +858,8 @@ angular.module("homeApp",[
             .then(function (response) {
                 $scope.Profile = response.data;
             });
-    };
 
-        $scope.profileList();
 
-        $scope.open = function (size, board) {
-            $rootScope.modalboard=board;
-            $scope.replylist($rootScope.modalboard);
-            var modalInstance = $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: 'ModalDemoCtrl',
-                size: size
-            });
-            modalInstance.result.then(function () {
-
-            }, function () {
-                // $log.info('Modal dismissed at: ' + new Date());
-                $rootScope.modalboard={};
-                $rootScope.reply={};
-                $scope.profileList();
-            });
-        };
         $scope.uploadProfile = function(file)  {
 
             file.upload = Upload.upload({
@@ -955,7 +934,7 @@ angular.module("homeApp",[
         };
 
         $scope.tagCloud();
-        
+
         $rootScope.tag_name={};
     })
 
@@ -1156,54 +1135,6 @@ angular.module("homeApp",[
                 .success(function (data, status, headers, config) {
                     if (data.msg == 'false') {
                         alert('페이버릿취소 실패')
-                    } else {
-                        $scope.boardList();
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                    console.log(status);
-                });
-        };
-
-
-        //공감
-        $scope.likeBoard = function (board_id) {
-            $http({
-                method: 'POST', //방식
-                url: "/api/likeBoard", /* 통신할 URL */
-                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'false') {
-                        alert('좋아요 실패')
-                    } else {
-                        $scope.boardList();
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                    console.log(status);
-                });
-        };
-
-        //공감 취소
-        $scope.dislikeBoard = function (board_id) {
-            var dislikeBoardObject =
-            {
-                user_id: userObject.user_id, //임시로 1번사용자 지정
-                board_id: board_id
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/dislikeBoard", /* 통신할 URL */
-                data: dislikeBoardObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'false') {
-                        alert('좋아요취소 실패')
                     } else {
                         $scope.boardList();
                     }

@@ -133,9 +133,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/user/notification")
     public ArrayList<HashMap> Notification(@RequestBody HashMap map)  {
         ArrayList<HashMap> notification = userMapper.notification(map);
-        System.out.println(notification);
         if(notification == null || notification.isEmpty()){
-            System.out.println("알릴 내용이 없음.");
             return null;
         }
         return notification;
