@@ -56,7 +56,6 @@ public class FolderController {
         System.out.println(user + "의 폴더리스트 출력");
         int user_id = user.getUser_id();
         ArrayList<Folder> folderList = folderMapper.getFolderList(user_id);
-
         return folderList;
     }
 

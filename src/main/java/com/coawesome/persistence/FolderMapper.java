@@ -22,7 +22,7 @@ public interface FolderMapper {
   void deleteFboard(Folder folder);
 
   //폴더목록 보기
-  @Select("SELECT * FROM folder WHERE user_id = #{user_id}")
+  @Select("SELECT myfolder.folder_id, myfolder.folder_name, board_image.stored_file_name FROM (SELECT * FROM folder where user_id = #{user_id}) myfolder left outer join fboard on myfolder.folder_id = fboard.folder_id left outer join board_image on fboard.board_id = board_image.board_id group by folder_name")
   ArrayList<Folder> getFolderList(@Param("user_id") int user_id);
 
   //폴더에 게시글 추가

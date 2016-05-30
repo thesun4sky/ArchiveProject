@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-
 /**
  * Created by eastflag on 2016-04-25.
  */
@@ -21,4 +19,5 @@ public class Folder {
     private int user_id;
     private int board_id;
     private String folder_name;
+    private String stored_file_name;
 }
