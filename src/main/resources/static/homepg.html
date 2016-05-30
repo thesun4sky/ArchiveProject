@@ -27,23 +27,23 @@
                <div class="carousel-caption-public_level">
                     <div ng-switch on="x.public_level">
                         <div ng-switch-when="1">
-                            <p class="text-center">전체공개</p>
+                            <p class="text-center">전체 <span class="glyphicon glyphicon-globe"></span></p>
                         </div>
                         <div ng-switch-when="2">
-                            <p class="text-center">ToLine</p>
+                            <p class="text-center">ToLine <span class="glyphicon glyphicon-user"></span></p>
                         </div>
                         <div ng-switch-when="3">
-                            <p class="text-center">나만보기</p>
+                            <p class="text-center">나만보기 <span class="glyphicon glyphicon-cog"></span></p>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-caption-favorite" ng-init="favorite=x.favorite" >
                     <div ng-switch on="favorite">
                         <div ng-switch-when="0">
-                            <button ng-click="favoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star-empty"></span></button>
+                            <button ng-click="favoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%; color: silver"><span class="glyphicon glyphicon-star-empty"></span></button>
                         </div>
                         <div ng-switch-default>
-                            <button ng-click="UnfavoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star"></span></button>
+                            <button ng-click="UnfavoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%; color: lightskyblue"><span class="glyphicon glyphicon-star"></span></button>
                         </div>
                     </div>
                 </div>
