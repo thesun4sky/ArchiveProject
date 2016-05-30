@@ -35,18 +35,17 @@
                     {{x.name}}<br>
                 </label>
                 <label class="pull-right">
-                    <div ng-switch on="x.status">
-                        <div ng-switch-when="0">
+                        <div ng-if="x.updated_time==null">
                             <label style="color: darkred; align: right" >●</label>
                         </div>
-                        <div ng-switch-when="1">
+                        <div ng-if="x.updated_time!=null && x.status==1">
                             <label style="color: mediumseagreen; align: right" >●</label>
                         </div>
-                        <div ng-switch-when="2">
-                            <p class="text-center">Me</p>
-                        </div>
+                </label>
+                <label class="pull-right">
+                    <div ng-if="x.status==2">
+                        <label>Me</label>
                     </div>
-
                 </label>
                 <div class="break"></div>
             </li>

@@ -317,9 +317,6 @@ angular.module("homeApp",[
                 })
         };
 
-
-
-
         $scope.showFriendList = function () {
             $http({
                 method: 'POST', //방식
@@ -330,6 +327,7 @@ angular.module("homeApp",[
                 .then(function (response) {
                     $scope.friends = response.data;
                 });
+
         };
 
         if (userObject!=null){
@@ -1019,7 +1017,7 @@ angular.module("homeApp",[
 
     .controller("indexCtrl",function($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
         var userObject = store.get('obj');
-
+        var timeObject ={}; 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
         $scope.boardList = function () {
@@ -1031,6 +1029,22 @@ angular.module("homeApp",[
             })
                 .then(function (response) {
                     $scope.boards = response.data;
+                })
+        };
+        $scope.updateTime = function() {
+            $scope.theTime = new Date().toLocaleTimeString();
+            timeObject = {
+                updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
+                user_id: store.get('obj').user_id
+            };
+
+            $http({
+                method: 'POST', //방식
+                url: "user/updateTime", /* 통신할 URL */
+                data: timeObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
                 })
         };
 
@@ -1048,6 +1062,7 @@ angular.module("homeApp",[
 
         $scope.boardList();
         $scope.folderList();
+        $scope.updateTime();
 
         $scope.filters = {};
 

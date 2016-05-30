@@ -76,6 +76,7 @@ public class FriendController {
         System.out.println(user.getUser_id());
         int user_id = user.getUser_id();
         ArrayList<UserResult> friends = friendMapper.showFriendsById(user_id);
+
         return friends;
     }
 

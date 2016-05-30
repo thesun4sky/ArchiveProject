@@ -113,7 +113,13 @@ public class UserController {
         System.out.println("Load Profile : " + userProfile);
         return userProfile;
     }
-
+    //시간 업데이트
+    @RequestMapping(method = RequestMethod.POST, value="user/updateTime")
+    public Result updateUserTime(@RequestBody User user){
+        System.out.println("update time :" + user.getUpdated_time());
+        userMapper.updateUserTime(user);
+        return new Result(0, "success");
+    }
 
     //사용자 검색
     @RequestMapping(method = RequestMethod.GET, value = "/user/findUser/{name}")

@@ -50,7 +50,9 @@ public interface UserMapper {
   @Select("Select * from user where user_id=#{user_id}")
   UserResult loadProfile(User user);
 
-
+  //최근 접속 시간 업데이트
+  @Update("UPDATE user SET updated_time=#{updated_time} WHERE user_id=#{user_id}")
+  void updateUserTime(User user);
 
   //사용자 검색
   @Select("select * from user where name Like  CONCAT('%', #{name}, '%')")

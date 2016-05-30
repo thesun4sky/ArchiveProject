@@ -20,4 +20,5 @@ public class User {
     private String email;
     private String user_img;
     private String background_img;
+    private String updated_time;
 }

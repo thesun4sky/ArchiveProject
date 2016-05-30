@@ -24,4 +24,5 @@ public class UserResult {
     private String user_img;
     private String background_img;
     private int status;
+    private String updated_time;
 }

@@ -31,6 +31,18 @@ public interface FriendMapper {
   ArrayList<UserResult> checkFriendRequest(int user_id);
 
   //친구목록 조회
-  @Select("select friend.friend_id, friend.user_id, user.name, user.email, user.sex, user.login_id, user.born, friend.status from friend INNER JOIN user on friend.user_id = user.user_id where friend.friend_id= #{user_id}")
+//  @Select("select friend.friend_id, friend.user_id, user.name, user.email, user.sex, user.login_id, user.born, friend.status " +
+//          "from friend" +
+//          " INNER JOIN user on friend.user_id = user.user_id where friend.friend_id= #{user_id}")
+//  ArrayList<UserResult> showFriendsById(@Param("user_id") int user_id);
+//
+
+  //친구목록 조회
+  @Select("SELECT friend.friend_id, friend.user_id, user.name, user.email, user.sex, user.login_id, user.born, friend.status, userIN.updated_time from friend \n"+
+          "LEFT OUTER JOIN (SELECT userIN.user_id, userIN.updated_time from friend INNER JOIN user as userIN on friend.user_id = userIN.user_id where friend.friend_id= #{user_id} AND userIN.updated_time > now()-300 )\n" +
+          "as userIN on friend.user_id = userIN.user_id\n"+
+              "INNER JOIN user on friend.user_id = user.user_id\n" +
+              "WHERE friend.friend_id= #{user_id}")
   ArrayList<UserResult> showFriendsById(@Param("user_id") int user_id);
+
 }
