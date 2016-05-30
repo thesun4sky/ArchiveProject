@@ -6741,56 +6741,14 @@ button.close {
 }
 
 @media (min-width: 768px) {
-    .navbar-collapse {
-        padding-top: 0px !important;
-        white-space : nowrap;
-    }
-    .navbar-collapse form[role="search"] {
-        width: 60px;
-    }
-    .navbar-collapse form[role="search"] input {
-        font-size: 15pt;
-        opacity: 0;
-        display: none;
-        height: 34px;
-    }
-    .search-default{
-        border:none;
-        background-color: #771107;;
-    }
+
     .important {
          border-color: #771107;;
         border-width: 1px;
          background-color: #771107;;
      }
-    .navbar-collapse form[role="search"].active {
-            -moz-transition: width 0.7s linear;
-            -ms-transition: width 0.7s linear;
-            -webkit-transition: width 0.7s linear;
-            transition: width 0.7s linear;
-            width: 35%;
-        }
 
-    .navbar-collapse form[role="search"].comeback {
-        -moz-transition: width 0.1s linear;
-        -ms-transition: width 0.1s linear;
-        -webkit-transition: width 0.1s linear;
-        transition: width 0.1s linear;
-    }
 
-    .navbar-collapse form[role="search"].active .input-group-btn {
-        width: 1%
-    }
-    .navbar-collapse form[role="search"].active button,
-    .navbar-collapse form[role="search"].active input {
-        display: table-cell;
-        opacity: 1;
-        margin-bottom:-5px;
-    }
-    .navbar-collapse form[role="search"].active input {
-        width: 100%;
-        text-align: right;
-    }
 }
 @media (max-width: 768px) {
     .navbar-collapse form[role="search"] button{

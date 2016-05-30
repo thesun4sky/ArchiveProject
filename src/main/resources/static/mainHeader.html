@@ -1,4 +1,4 @@
-<script src="js/searchform.js"></script>
+<!--<script src="js/searchform.js"></script>-->
 <script>
     $("#homebtn").click(function() {
         $("#foldernav1").removeClass("active");
@@ -34,16 +34,10 @@
                 <li><a ng-click="logout()"><span class="glyphicon glyphicon-user"></span>  Log out</a></li>
             </ul>
             <form ng-controller="findCtrl" class="navbar-form navbar-right hidden-xs" role="search" style="margin-top: 17px;position:absolute;right:10%;">
-                <div class="input-group">
-
-                    <input type="text" class="form-control" placeholder="Search for..." style="border-color :#771107;" ng-model="find_user" ng-keyup="keyHit()">
+                <div class="input-group important ">
+                    <input type="text" class="form-control" style="color:white;border-color :#771107;background-color: #771107;border-bottom: 2px solid;border-bottom-color:white;" ng-model="find_user" ng-keyup="keyHit()">
                     <div class="input-group-btn">
-							<button type="reset" class="btn btn-default" style="border-color :#771107;">
-								<span class="glyphicon glyphicon-remove" style="color:#771107;">
-									<span class="sr-only">Close</span>
-								</span>
-                            </button>
-							<button type="submit" id="srch1" class="btn btn-default search-default" style="background-color: #771107;">
+							<button type="submit" id="srch1" class="btn btn-default search-default" style="background-color: #771107;border:0px solid;">
 								<span id ="span1" class="glyphicon glyphicon-search" style="color: white;border-color: #771107;">
 									<span class="sr-only">Search</span>
 								</span>
@@ -62,9 +56,9 @@
         <div class="row">
             <div class="col-xs-12 hidden-lg hidden-md hidden-sm">
                 <div class="collapse navbar-collapse" id="mynavbar3">
-                    <form class="navbar-form navbar-right" role="search" style="margin-top:-2px; border-top: none">
+                    <form ng-controller="findCtrl" class="navbar-form navbar-right" role="search" style="margin-top:-2px; border-top: none">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for..." style="border-color :#771107;">
+                            <input type="text" class="form-control" placeholder="Search for..." style="border-color :#771107;" ng-model="find_user" ng-keyup="keyHit()">
                                 <span class="input-group-btn">
                                     <button type="reset" class="btn btn-default" style="border-color :#771107;">
                                         <span class="glyphicon glyphicon-remove" style="color: #771107">
@@ -78,6 +72,10 @@
                                     </button>
                                 </span>
                         </div>
+                        <ul class="list-group" ng-show="find_user.length" style="z-index: 1050;background-color: white;width:100%">
+                            <li class="list-group-item" ng-repeat="others in users" ng-model="others.user_id" ng-click="toOthers(others)"><a>{{others.name}}</a></li>
+                            <li class="list-group-item" ng-repeat="found_tag in tags" ng-model="found_tag.tag" ng-click="toTag(found_tag)"><a>{{found_tag.tag}}</a></li>
+                        </ul>
                     </form>
                 </div>
             </div>
