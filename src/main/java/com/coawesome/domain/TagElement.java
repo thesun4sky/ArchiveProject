@@ -20,5 +20,6 @@ public class TagElement {
     private int catagory;
     private String tag;
     private String tag_img;
+    private String stored_file_name;
     private String background_img;
 }

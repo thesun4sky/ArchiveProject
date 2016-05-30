@@ -15,7 +15,8 @@ import java.util.HashMap;
 public interface TagMapper {
 
   //테그 프로필
-  @Select("Select * from tag where tag=#{tag}")
+  @Select("Select * from tag left outer join board on tag.tag = board.tag1 or tag.tag = board.tag2 or tag.tag = board.tag3\n" +
+          "left outer join board_image on board.board_id = board_image.board_id where tag=#{tag} LIMIT 1")
   TagElement loadTagProfile(TagElement tagElement);
 
   //테그 검색

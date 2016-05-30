@@ -902,6 +902,7 @@ angular.module("homeApp",[
         })
             .then(function (response) {
                 $scope.tagProfile = response.data;
+                alert($scope.tagProfile.stored_file_name);
             });
 
         $http({  //TODO 테그된 게시글 가져오기

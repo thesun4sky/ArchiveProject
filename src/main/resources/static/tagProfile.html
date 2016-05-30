@@ -21,13 +21,13 @@
 
         <!--가운데 콘텐츠 화면분할-->
         <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12" style="margin-top:20px;">
-            <div class="bg-1">
+            <div  style="background-image: url('storedimg/background_3.jpg')">
                 <div class="container-fluid text-center">
                     <form name="myForm">
                         <div class="image-upload">
                             <h3>How is it?</h3>
                             <label for="file-input">
-                                <img src="storedimg/{{tagProfile.tag_img}}" class="img-circle" alt="Profile" width="200" height="200">
+                                <img src="storedimg/{{tagProfile.stored_file_name}}" class="img-circle" alt="Profile" width="200" height="200">
                             </label>
                             <h3>{{tagProfile.tag}}</h3>
                             <input type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required
