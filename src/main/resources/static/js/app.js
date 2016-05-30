@@ -835,9 +835,11 @@ angular.module("homeApp",[
 
     //프로필 페이지 컨트롤러
 
-    .controller('profileCtrl', function($scope,$http,Upload,store,$timeout,$state){
+    .controller('profileCtrl', function($scope,$http,Upload,store,$timeout,$state,$uibModal,$rootScope){
 
         var userObject = store.get('obj');
+
+        $scope.profileList =function(){
 
         $http({
             method: 'POST', //방식
@@ -858,8 +860,27 @@ angular.module("homeApp",[
             .then(function (response) {
                 $scope.Profile = response.data;
             });
+    };
 
+        $scope.profileList();
 
+        $scope.open = function (size, board) {
+            $rootScope.modalboard=board;
+            $scope.replylist($rootScope.modalboard);
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalDemoCtrl',
+                size: size
+            });
+            modalInstance.result.then(function () {
+
+            }, function () {
+                // $log.info('Modal dismissed at: ' + new Date());
+                $rootScope.modalboard={};
+                $rootScope.reply={};
+                $scope.profileList();
+            });
+        };
         $scope.uploadProfile = function(file)  {
 
             file.upload = Upload.upload({
