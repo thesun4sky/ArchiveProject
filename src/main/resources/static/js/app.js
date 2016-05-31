@@ -826,7 +826,25 @@ angular.module("homeApp",[
                 })
         };
         $scope.updateTime();
+        $http({
+            method: 'POST', //방식
+            url: "/user/loadProfile", /* 통신할 URL */
+            data: othersObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.Profile = response.data;
+            });
 
+        $http({
+            method: 'POST', //방식
+            url: "/folder/openMyFolder", /* 통신할 URL */
+            data: othersObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.my_boards = response.data;
+            });
         $scope.applyFriend = function(){
             var applyObject ={
                 user_id : store.get('obj').user_id,
