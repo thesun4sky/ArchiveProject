@@ -237,6 +237,10 @@ angular.module("homeApp",[
             else if(data.id == '3'){
                 $scope.alerts.push({type: 'danger', msg: data.name+'님께서 게시물을 페이보릿 하셨습니다.'});
             }
+            else if(data.id == '4'){
+                $scope.alerts.push({type: 'info', msg: data.name+'님께서 게시물을 공감하셨습니다.'});
+            }
+
         };
 
         $scope.closeAlert = function(index) {
@@ -1521,6 +1525,7 @@ angular.module("homeApp",[
                 })
                     .then(function (response) {
                         $scope.folder_boards = response.data;
+                        $scope.myId = userObject.user_id;
                     });
             }
             else{
