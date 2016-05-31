@@ -264,14 +264,10 @@ angular.module("homeApp",[
             else if(data.id == '4'){
                 $scope.alerts.push({type: 'info', msg: data.name+'님께서 게시물을 공감하셨습니다.'});
             }
-
         };
-
         $scope.closeAlert = function(index) {
             $scope.alerts.splice(index, 1);
         };
-
-
 
         $rootScope.checkedTime = null;
 
