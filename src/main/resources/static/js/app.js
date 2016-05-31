@@ -1672,6 +1672,7 @@ angular.module("homeApp",[
                 })
                     .then(function (response) {
                         $scope.folder_boards = response.data;
+                        $scope.myId = false;
                     });
             }
             else if(folder_id == 200){
@@ -1686,6 +1687,7 @@ angular.module("homeApp",[
                 })
                     .then(function (response) {
                         $scope.folder_boards = response.data;
+                        $scope.myId = false;
                     });
             }
             else if(folder_id == 300){
@@ -1700,7 +1702,7 @@ angular.module("homeApp",[
                 })
                     .then(function (response) {
                         $scope.folder_boards = response.data;
-                        $scope.myId = userObject.user_id;
+                        $scope.myId = true; //userObject.user_id;
                     });
             }
             else{
@@ -1717,6 +1719,7 @@ angular.module("homeApp",[
                 })
                     .then(function (response) {
                         $scope.folder_boards = response.data;
+                        $scope.myId = false;
                     });
             }
         }
