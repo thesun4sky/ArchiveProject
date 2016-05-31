@@ -10,7 +10,8 @@ angular.module("homeApp",[
         'angular-storage',
         'ui.bootstrap',
         'angular-jqcloud',
-        'ui.bootstrap.alert'
+        'ui.bootstrap.alert',
+        'angular-confirm'
     ])
     .config(function(storeProvider){
         storeProvider.setStore('sessionStorage');
@@ -218,9 +219,9 @@ angular.module("homeApp",[
         var userObject = store.get('obj');
 
 
-        $scope.alerts = [
 
-        ];
+
+        $scope.alerts = [];
 
         $scope.addAlert = function(data) {
             if(data.id == '1') {
@@ -236,6 +237,10 @@ angular.module("homeApp",[
             else if(data.id == '3'){
                 $scope.alerts.push({type: 'danger', msg: data.name+'님께서 게시물을 페이보릿 하셨습니다.'});
             }
+            else if(data.id == '4'){
+                $scope.alerts.push({type: 'info', msg: data.name+'님께서 게시물을 공감하셨습니다.'});
+            }
+
         };
 
         $scope.closeAlert = function(index) {
@@ -329,6 +334,7 @@ angular.module("homeApp",[
                 });
 
         };
+
 
         if (userObject!=null){
             $scope.showFriendList();
@@ -798,29 +804,10 @@ angular.module("homeApp",[
 
 
 
-    .controller('catagoryCtrl', function($scope,$http, store, $state, $rootScope,$filter){
+    .controller('catagoryCtrl', function($scope,$http, store, $state, $rootScope){
 
-        
+
         var userObject = store.get('obj');
-
-        var timeObject ={};
-        $scope.updateTime = function() {
-            $scope.theTime = new Date().toLocaleTimeString();
-            timeObject = {
-                updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
-                user_id: store.get('obj').user_id
-            };
-
-            $http({
-                method: 'POST', //방식
-                url: "user/updateTime", /* 통신할 URL */
-                data: timeObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function (response) {
-                })
-        };
-        $scope.updateTime();
 
         $scope.colorCode1 = "#" + Math.round(Math.random() * 0xFFFFFF).toString(16);
         $scope.colorCode2 = "#" + Math.round(Math.random() * 0xFFFFFF).toString(16);
@@ -834,13 +821,30 @@ angular.module("homeApp",[
         })
             .then(function(response) {
                 $scope.catagory_boards = response.data;
-                // $scope.getTagElement($scope.catagory_boards);
+                $scope.tagArray= [];
+                for(var i=0;i<$scope.catagory_boards.length;i++) {
+                    $scope.checkPush($scope.catagory_boards.tag1);
+                    $scope.checkPush($scope.catagory_boards.tag2);
+                    $scope.checkPush($scope.catagory_boards.tag3);
+                }
+                $scope.checkPush = function (data) {
+                    for(var j=0; j<$scope.tagArray.length; j++){
+                        if(tagArray[j].tag == data)
+                        {
+                            $scope.tagIsIn = true;
+                        }
+                        else{
+                            $scope.tagIsIn = false;
+                        }
+                    }
+                    if($scope.tagIsIn){
+                        $scope.tagArray.push($scope.catagory_boards.tag1);
+                    }
+                    else{
+                        alert('엘스 떴다.');
+                    }
+                }
 
-
-
-                // for(var i=0; i< response.data.length();i++){
-                // tagObject[i] = response.data.tag1;
-                // }
             });
 
         $scope.view_allCatagory = function(){
@@ -1248,10 +1252,10 @@ angular.module("homeApp",[
                 headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
             })
                 .success(function (data, status, headers, config) {
-                    if(data.msg == 'false') {
-                        alert('친구삭제 실패')
-                    }else{
-                        $scope.tolineList();
+                    if (data.msg == 'false') {
+                        alert('좋아요취소 실패')
+                    } else {
+                        $scope.boardList();
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -1459,7 +1463,6 @@ angular.module("homeApp",[
                 });
         };
 
-
         $scope.filters = { };
 
         $scope.menuList = [
@@ -1638,6 +1641,24 @@ angular.module("homeApp",[
 
         $scope.folders = { };
 
+        $scope.deleteBoard = function(board){
+            alert('삭제됩니다?!');
+            $http({
+                method: 'POST', //방식
+                url: "/api/deleteboard", /* 통신할 URL */
+                data: board,
+                headers: {'Content-Type': 'application/json; charset=utf-8'}
+            })
+                .success(function (data, status, headers, config) {
+                    if(data.msg == 'success') {
+                        alert('게시글 삭제 성공');
+                        $scope.archiveList();
+                    }else{
+                        alert('게시글 삭제 실패');
+                    }
+                })
+        }
+
         $scope.openFolder = function (folder_id) {
             if(folder_id == 100){
                 var openLineFolderObject = {
@@ -1679,6 +1700,7 @@ angular.module("homeApp",[
                 })
                     .then(function (response) {
                         $scope.folder_boards = response.data;
+                        $scope.myId = userObject.user_id;
                     });
             }
             else{

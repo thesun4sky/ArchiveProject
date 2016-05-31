@@ -79,7 +79,7 @@
                             </div>
 
                             <div ng-repeat="r in reply">
-                                <div class="well well-lg"><img src="storedimg/{{r.user_img}}" width=50px; height=50px;/>{{r.name}}  {{r.reply}} {{r.created}}</div>
+                                <div class=""><img src="storedimg/{{r.user_img}}" width=50px; height=50px;/>{{r.name}}  {{r.reply}} {{r.created | date:'medium'}}</div>
                             </div>
                         </div>
                     </div>
