@@ -1408,7 +1408,6 @@ angular.module("homeApp",[
             })
                 .then(function (response) {
                     $scope.Cdata = response.data;
-                    alert($scope.Cdata);
                 });
         };
         $scope.getTagValue();
