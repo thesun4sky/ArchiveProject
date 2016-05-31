@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <nav class="navbar navbar-default navbar-static-top"  >
-    <div ng-controller="loginCtrl" class="container-fluid">
+    <div ng-controller="findCtrl" class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" style="background-color:#771107;border-color: #771107;"  data-toggle="collapse" data-target="#mynavbar" >
             <span class="glyphicon glyphicon-user" style="color:white;"></span>
@@ -25,16 +25,18 @@
                 <span class="caret" style="background-color: #771107;color: white" ></span>
             </button>
 
-            <a id='homebtn' class= "navbar-brand" ui-sref="main" style="float: left;">
+            <a id='homebtn' class="hidden-xs navbar-brand" ui-sref="main" style="float: left;" ng-style="{font-size: logoWidth}">
                 Archive
-                </a><img src="img/logoarchive.png" style="margin-left: -10px; margin-bottom: 20px; width: 35px; height: auto" class="pull-left" >
+                </a><img src="img/logoarchive.png" style="margin-left: -10px; margin-top: 10px; width: 35px; height: auto" class="pull-left" >
+            <center> <a class= "navbar-brand navbar-brand-centered" ui-sref="profile">
+                <p style="font-size: large"><img src="storedimg/{{user_Object.user_img}}" class="img-circle" alt="Profile" width="40px" height="40px">&nbsp;{{user_Object.name}}</p></a></center>
         </div>
 
         <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav navbar-right text-right" style="margin-top: 11px">
                 <li><a ng-click="logout()"><span class="glyphicon glyphicon-user"></span>  Log out</a></li>
             </ul>
-            <form ng-controller="findCtrl" class="navbar-form navbar-right hidden-xs" role="search" style="margin-top: 17px;position:absolute;right:10%;">
+            <form  class="navbar-form navbar-right hidden-xs" role="search" style="margin-top: 17px;position:absolute;right:10%;">
                 <div class="input-group important ">
                     <input type="text" class="form-control" style="color:white;border-color :#771107;background-color: #771107;border-bottom: 2px solid;border-bottom-color:white;" ng-model="find_user" ng-keyup="keyHit()">
                     <div class="input-group-btn">
