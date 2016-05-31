@@ -45,4 +45,8 @@ public interface FriendMapper {
               "WHERE friend.friend_id= #{user_id}")
   ArrayList<UserResult> showFriendsById(@Param("user_id") int user_id);
 
+
+  //친구 여보 확인
+  @Select("SELECT status FROM friend WHERE user_id=#{user_id} AND friend_id=#{friend_id}")
+  String FriendsCheck(Friend friend);
 }

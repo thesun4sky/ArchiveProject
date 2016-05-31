@@ -80,5 +80,11 @@ public class FriendController {
         return friends;
     }
 
+    //친구 확인 여부 API
+    @RequestMapping(method = RequestMethod.POST, value ="/user/checkfriends")
+    public Result FrinedsCheck(@RequestBody Friend friend) {
+        String check = friendMapper.FriendsCheck(friend);
 
+        return new Result(0, check);
+    }
 }

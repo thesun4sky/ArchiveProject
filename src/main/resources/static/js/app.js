@@ -745,10 +745,15 @@ angular.module("homeApp",[
 
 
     .controller("othersCtrl",function($rootScope,$scope,$http, store, $state,$filter) {
+
         $scope.others_id = $rootScope.others_id;
         var othersObject = {
            user_id : $scope.others_id
     };
+        var checkObject={
+            user_id : store.get('obj').user_id,
+            friend_id :$scope.others_id
+        };
         $http({
             method: 'POST', //방식
             url: "/user/loadProfile", /* 통신할 URL */
@@ -758,7 +763,18 @@ angular.module("homeApp",[
             .then(function (response) {
                 $scope.Profile = response.data;
             });
+        //친구여부 확인
+        $http({
+            method: 'POST', //방식
+            url: "/user/checkfriends", /* 통신할 URL */
+            data: checkObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.check = response.data.msg;
+            });
 
+        //친구게시물만 나열하기
         $http({
             method: 'POST', //방식
             url: "/folder/openMyFolder", /* 통신할 URL */
