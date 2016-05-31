@@ -41,20 +41,32 @@
 
             <div class="col-lg-8">
                 <div class="container-fluid" style="margin-top: 3%">
-                    <div class="form-inline pull-right">
+                    <div class="form-inline">
+
                         <div class="form-group" >
+                            <div class="col-lg-3 col-md-3 col-sm-3">
                             <label><span class="glyphicon glyphicon-globe">공개대상</span></label>
                             <select class="form-control" ng-model="p_level" ng-options="x.title for x in openAccess">
-                            </select>
+                            </select></div>
                         </div>
                         <div class="form-group">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
                             <label><span class="glyphicon-bookmark">카테고리</span></label>
                         <select class="form-control" ng-model="c_list" ng-options="x.title for x in catagory">
                         </select>
+                                </div>
                         </div>
-                        <br/>
-                        <br/>
-                        <br/>
+                            <div class="form-group" style="margin:20px 0">
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="margin-left: -5px;margin-right: 5px" >
+                                    <input type="text" class="form-control form-inline" placeholder="첫번째 태그" ng-model="lines.tag1">
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="margin-left: -5px;margin-right: 5px">
+                                    <input type="text" class="form-control form-inline" placeholder="두번째 태그" ng-model="lines.tag2">
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="margin-left: -5px;margin-right: 5px">
+                                    <input type="text" class="form-control form-inline" placeholder="세번째 태그" ng-model="lines.tag3">
+                                </div>
+                            </div>
                         <p style="font-size: large">
                             <span class="glyphicon glyphicon-text-color" aria-hidden="true"></span>
                             단어 테이블
@@ -69,19 +81,7 @@
                 </div>
 
                 <div class="container">
-                    <div class="row">
-                        <div class="form-group" style="margin:20px 0">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -5px;margin-right: 5px" >
-                                <input type="text" class="form-control" placeholder="첫번째 태그" ng-model="lines.tag1">
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -5px;margin-right: 5px">
-                                <input type="text" class="form-control" placeholder="두번째 태그" ng-model="lines.tag2">
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -5px;margin-right: 5px">
-                                <input type="text" class="form-control" placeholder="세번째 태그" ng-model="lines.tag3">
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="form-group" style="margin-top:20px;">
                         <label><span class="glyphicon glyphicon-console">첫번째 줄 위치</span></label>
