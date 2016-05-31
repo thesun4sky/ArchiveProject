@@ -29,7 +29,7 @@
             <li href="#" class="list-group-item title">
                 My Friends
             </li>
-            <li href="#" ng-repeat="x in friends | filter : finduser" class="list-group-item text-left">
+            <li ng-click="toOthers(x)" ng-repeat="x in friends | filter : finduser" class="list-group-item text-left">
                 <img class="img-thumbnail" src="img/someone.png" style="width: 30px; height: 30px">
                 <label class="name">
                     {{x.name}}<br>
