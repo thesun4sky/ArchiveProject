@@ -39,4 +39,6 @@ public class BoardResult {
     private int[] values;
     private String stored_file_name;
     private String user_img;
+    private int likes;
+    private int cnt;
 }

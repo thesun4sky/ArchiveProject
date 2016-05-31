@@ -12,6 +12,32 @@
 <!--화면 분할 시작-->
 <div class="container-fluid" style="margin-bottom: 50px;">
     <div class="row content">
+
+        <div ng-style="{'background-image': 'url(' + back_num + ')'}">
+            <div class="container-fulid text-center">
+                <form name="myForm">
+                    <div class="image-upload">
+                        <h3 style="margin-top: 0px">Who Am I?</h3>
+                        <label for="file-input">
+                            <img src="storedimg/{{Profile.user_img}}"  class="img-circle" alt="나" style="border: 3px solid white" alt="Profile" width="200" height="200">
+                        </label>
+                        <h3>{{Profile.name}}</h3>
+                        <input type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required
+                               ngf-model-invalid="errorFile">
+
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <button class="btn btn-success" ng-show="myForm.$valid" ng-click="uploadProfile(picFile)">Submit</button>
+                                    <span class="progress" ng-show="picFile.progress >= 0">
+                                    <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div></span>
+                                <span ng-show="picFile.result">Upload Successful</span>
+                                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <!--좌측 화면분할-->
         <div class="col-sm-2 col-md-2 col-lg-2 sidenav hidden-xs" >
             <div class="container-fluid " >
@@ -21,32 +47,7 @@
 
         <!--가운데 콘텐츠 화면분할-->
         <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12" style="margin-top:20px;">
-            <div class="bg-1">
-                <div class="container-fulid text-center">
-                    <form name="myForm">
-                    <div class="image-upload">
-                        <h3>Who Am I?</h3>
-                        <label for="file-input">
-                            <img src="storedimg/{{Profile.user_img}}"  class="img-circle" alt="Profile" width="200" height="200">
-                        </label>
-                        <h3>{{Profile.name}}</h3>
-                                        <input type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required
-                                           ngf-model-invalid="errorFile">
 
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" ></label>
-                                    <div class="col-sm-10">
-                                        <button class="btn btn-success" ng-show="myForm.$valid" ng-click="uploadProfile(picFile)">Submit</button>
-                                    <span class="progress" ng-show="picFile.progress >= 0">
-                                    <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div></span>
-                                        <span ng-show="picFile.result">Upload Successful</span>
-                                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-                                    </div>
-                                </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-sm-12" id="radar-chart" ng-controller="RadarCtrl">
                     <div class="panel panel-default">
@@ -60,28 +61,29 @@
             </div>
             <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
                 <div class="row">
+
                     <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12 text-center" ng-repeat="x in my_boards">
                         <div class="thumbnail" style="background-color: white;">
                             <div class="carousel-caption-public_level">
                                 <div ng-switch on="x.public_level">
                                     <div ng-switch-when="1">
-                                        <p class="text-center">전체공개</p>
+                                        <p class="text-center">전체 <span class="glyphicon glyphicon-globe"></span></p>
                                     </div>
                                     <div ng-switch-when="2">
-                                        <p class="text-center">ToLine</p>
+                                        <p class="text-center">ToLine <span class="glyphicon glyphicon-user"></span></p>
                                     </div>
                                     <div ng-switch-when="3">
-                                        <p class="text-center">나만보기</p>
+                                        <p class="text-center">나만보기 <span class="glyphicon glyphicon-cog"></span></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="carousel-caption-favorite" ng-init="favorite=x.favorite" >
+                            <div class="carousel-caption-favorite" ng-init="favorite=x.favorite">
                                 <div ng-switch on="favorite">
                                     <div ng-switch-when="0">
-                                        <button ng-click="favoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star-empty"></span></button>
+                                        <button ng-click="favoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%; color: silver"><span class="glyphicon glyphicon-star-empty"></span></button>
                                     </div>
                                     <div ng-switch-default>
-                                        <button ng-click="UnfavoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star"></span></button>
+                                        <button ng-click="UnfavoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%; color: lightskyblue"><span class="glyphicon glyphicon-star"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +102,7 @@
                             </div>
                             <div class="row" style="margin-bottom:10px;">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left">
-                                    <img src="storedimg/{{x.user_img}}" class="img-circle" alt="user" width=50; height=50;>
+                                    <img src="storedimg/{{x.user_img}}" class="img-circle" alt="user" width=30px; height=30px;>
                                     <p style="display: inline-block">{{x.name}}</p>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
@@ -113,13 +115,29 @@
                             <div id='action'>
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
-                                        <span class="glyphicon glyphicon-heart"></span><a onclick=""> 공감하기</a>
+                                            <div ng-switch on="x.likes">
+                                                <div ng-switch-when="0">
+                                                    <a ng-click="likeBoard(x.board_id)" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span>공감 {{x.likes_num}}</a>
+                                                </div>
+                                                <div ng-switch-default>
+                                                    <a ng-click="dislikeBoard(x.board_id)" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span>공감취소 {{x.likes_num}}</a>
+                                                </div>
+                                            </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
-                                        <span class="glyphicon glyphicon-comment"></span><a ng-click="open('lg', x)"> 댓글달기 {{x.cnt}}</a>
+                                        <a ng-click="open('lg', x)"><span class="glyphicon glyphicon-comment"></span> 댓글달기 {{x.cnt}}</a>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
-                                        <span class="glyphicon glyphicon-bell"></span><a onclick=""> 폴더저장</a>
+                                        <div class="btn-group" uib-dropdown is-open="status.isopen">
+                                            <a id="single-button" type="button" class="btn" uib-dropdown-toggle ng-disabled="disabled">
+                                                <span class="glyphicon glyphicon-bell"></span>폴더저장
+                                            </a>
+                                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                                <div ng-repeat="y in folders">
+                                                    <li role="menuitem"><a style="color: white" ng-click="putInFolder(x.board_id,y.folder_id)">{{y.folder_name}}</a></li>
+                                                </div>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +145,7 @@
 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div ng-switch on="!!x.replier">
-                                <div ng-switch-when="true"><img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;>
+                                <div ng-switch-when="true"><img src="img/someone.png" class="img-circle" alt="user" width=30px; height=px;>
                                     <p style="display: inline-block">{{x.replier}} : {{x.reply}} (공감: {{x.likes_num}} )</p>
                                 </div>
                             </div>
