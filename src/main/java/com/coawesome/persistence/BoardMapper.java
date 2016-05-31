@@ -42,7 +42,7 @@ public interface BoardMapper {
 
 
   //게시판 글 목록 조회( 친구들의 친구공개 게시글, 모든사람의 전체공개 게시글 목록)
-  @Select("SELECT DISTINCT user.name, board.board_id, board.public_level, board.catagory, board.likes_num, board.tag1, tag_1.hit as hit1,  board.tag2, tag_2.hit as hit2, board.tag3, tag_3.hit as hit3,\n" +
+  @Select("SELECT DISTINCT user.name, board.board_id, board.user_id, board.public_level, board.catagory, board.likes_num, board.tag1, tag_1.hit as hit1,  board.tag2, tag_2.hit as hit2, board.tag3, tag_3.hit as hit3,\n" +
           "          board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, IFNULL(favorite.user_id,0) as favorite, " +
           "          IFNULL(likes.user_id,0) as likes, replycnt.cnt, user.user_img FROM board \n" +
           "          INNER JOIN friend on board.user_id = friend.friend_id \n" +
@@ -65,8 +65,22 @@ ArrayList<HashMap> getBoardById(int user_id);
 
 
   //게시글 보기 TODO 디테일 작업전
-  @Select("select * from board where board_id = #{board_id} LIMIT 1")
-  BoardVO findById(@Param("board_id") int board_id);
+//  @Select("select * from board left outer join board_image on board.board_id = board_image.board_id left outer join favorite on board.board_id = favorite.board_id left outer join (SELECT board_id, COUNT(*) as likes_num FROM likes WHERE board_id = #{board_id} group by board_id) WHERE board_id = #{board_id}")
+
+  @Select("SELECT DISTINCT user.name, board.board_id, board.user_id, board.public_level, board.catagory, board.likes_num, board.tag1, tag_1.hit as hit1,  board.tag2, tag_2.hit as hit2, board.tag3, tag_3.hit as hit3,\n" +
+          "          board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, IFNULL(favorite.user_id,0) as favorite, " +
+          "          IFNULL(likes.user_id,0) as likes, replycnt.cnt, user.user_img FROM board \n" +
+          "          INNER JOIN friend on board.user_id = friend.friend_id \n" +
+          "          INNER JOIN board_image on board.board_id = board_image.board_id \n" +
+          "          INNER JOIN user on board.user_id = user.user_id\n" +
+          "          LEFT OUTER JOIN tag as tag_1 on board.tag1 = tag_1.tag\n" +
+          "          LEFT OUTER JOIN tag as tag_2 on board.tag2 = tag_2.tag\n" +
+          "          LEFT OUTER JOIN tag as tag_3 on board.tag3 = tag_3.tag " +
+          "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
+          "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
+          "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
+          "          WHERE board.board_id = #{board_id}")
+  HashMap findById(int board_id);
 
 
   //페이버릿 하기

@@ -44,8 +44,8 @@
                 <div class="row" style="margin-bottom:10px;">
                     <div class="row" style="margin-bottom:10px;">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left">
-                            <img src="storedimg/{{modalboard.user_img}}" class="img-circle" alt="user" width=50; height=50;>
-                            <p style="display: inline-block">{{x.name}}</p>
+                            &nbsp&nbsp<img ng-click="toOthers(modalboard)" src="storedimg/{{modalboard.user_img}}" class="img-circle" alt="user" width=50; height=50;>
+                            <p ng-click="toOthers(modalboard)" style="display: inline-block">{{modalboard.name}}</p>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
                             <p><strong>{{modalboard.tag1}} / {{modalboard.tag2}} / {{modalboard.tag3}}</strong></p>
@@ -57,13 +57,31 @@
                     <div id='action'>
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
-                                <span class="glyphicon glyphicon-heart"></span><a onclick=""> 공감하기</a>
+                                <div ng-init="like=modalboard.likes" >
+                                    <div ng-switch on="like">
+                                        <div ng-switch-when="0">
+                                            <a ng-click="likeBoard(modalboard.board_id)" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span>공감 {{modalboard.likes_num}}</a>
+                                        </div>
+                                        <div ng-switch-default>
+                                            <a ng-click="dislikeBoard(modalboard.board_id)" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span>공감취소 {{modalboard.likes_num}}</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
-                                <span class="glyphicon glyphicon-comment"></span><a ng-click="open('lg', x)"> 댓글달기 {{x.cnt}}</a>
+                                <span class=""></span><a onclick=""></a>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
-                                <span class="glyphicon glyphicon-bell"></span><a onclick=""> 폴더저장</a>
+                                <div class="btn-group" uib-dropdown is-open="status.isopen">
+                                    <a id="single-button" type="button" class="btn" uib-dropdown-toggle ng-disabled="disabled">
+                                        <span class="glyphicon glyphicon-bell"></span>폴더저장
+                                    </a>
+                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                        <div ng-repeat="y in folders">
+                                            <li role="menuitem"><a style="color: white" ng-click="putInFolder(modalboard.board_id,y.folder_id)">{{y.folder_name}}</a></li>
+                                        </div>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -77,7 +95,7 @@
                             </div>
 
                             <div ng-repeat="r in reply">
-                                <img src="storedimg/{{r.user_img}}" width=50px; height=50px;/><a ng-click="toOthers(r)" ng-model="r.user_id">{{r.user_id}}&nbsp{{r.name}}</a> &nbsp&nbsp  {{r.reply}}
+                                <img src="storedimg/{{r.user_img}}" width=50px; height=50px;/><a ng-click="toOthers(r)" ng-model="r.user_id">&nbsp{{r.name}}</a> &nbsp&nbsp  {{r.reply}}
 
                                 <div class="pull-right">{{r.created | date : 'yyyy-MM-dd HH:mm:ss'}}</div>
                             </div>

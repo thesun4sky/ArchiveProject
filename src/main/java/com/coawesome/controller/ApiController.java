@@ -44,6 +44,7 @@ public class ApiController {
 
 
 
+
       //테그 넣기
       if (boardMapper.existTag(board.getTag1()) == board.getTag1()) //테그가 있다면
       {
@@ -152,6 +153,15 @@ public class ApiController {
 
     return boardList;
   }
+
+  //글 한개 최신화 보기
+  @RequestMapping(method = RequestMethod.POST, value = "/api/boardOne")
+  public HashMap getBoardList(@RequestBody BoardVO board) {
+    HashMap boarddata = boardMapper.findById(board.getBoard_id());
+
+    return boarddata;
+  }
+
 
 
   //카테고리별 목록 보기

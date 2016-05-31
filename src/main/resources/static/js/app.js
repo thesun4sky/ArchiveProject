@@ -43,12 +43,175 @@ angular.module("homeApp",[
                 });
         }
 
-
-        $scope.toOthers = function(r){
-            $rootScope.others_id = r.user_id;
-            $state.go("others");
+        $scope.favoriteBoard = function (board_id) {
+            $http({
+                method: 'POST', //방식
+                url: "/api/favoriteBoard", /* 통신할 URL */
+                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('페이버릿 실패')
+                    } else {
+                        $http({
+                            method: 'POST', //방식
+                            url: "/api/boardOne", /* 통신할 URL */
+                            data: {board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                        })
+                            .success(function (data, status, headers, config) {
+                                $rootScope.modalboard = data
+                            })
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
         };
-        
+
+
+        $scope.UnfavoriteBoard = function (board_id) {
+            var UnfavoriteBoardObject =
+            {
+                user_id: userObject.user_id, //임시로 1번사용자 지정
+                board_id: board_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/UnfavoriteBoard", /* 통신할 URL */
+                data: UnfavoriteBoardObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('페이버릿취소 실패')
+                    } else {
+                        $http({
+                            method: 'POST', //방식
+                            url: "/api/boardOne", /* 통신할 URL */
+                            data: {board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                        })
+                            .success(function (data, status, headers, config) {
+                                $rootScope.modalboard = data
+                            })
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+
+        //좋아요
+        $scope.likeBoard = function (board_id) {
+            $http({
+                method: 'POST', //방식
+                url: "/api/likeBoard", /* 통신할 URL */
+                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('좋아요 실패')
+                    } else {
+                        $http({
+                            method: 'POST', //방식
+                            url: "/api/boardOne", /* 통신할 URL */
+                            data: {board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                        })
+                            .success(function (data, status, headers, config) {
+                                $rootScope.modalboard = data
+                            })
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+        //좋아요 취소
+        $scope.dislikeBoard = function (board_id) {
+            var dislikeBoardObject =
+            {
+                user_id: userObject.user_id, //임시로 1번사용자 지정
+                board_id: board_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/dislikeBoard", /* 통신할 URL */
+                data: dislikeBoardObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('좋아요취소 실패')
+                    } else {
+                        $http({
+                            method: 'POST', //방식
+                            url: "/api/boardOne", /* 통신할 URL */
+                            data: {board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                        })
+                            .success(function (data, status, headers, config) {
+                                $rootScope.modalboard = data
+                            })
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
+        };
+
+        $scope.folderList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/api/folderlist", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.folders = response.data;
+                })
+        };
+
+        $scope.folderList();
+
+        $scope.putInFolder = function (board_id, folder_id) {
+            var folderObject = {
+                board_id : board_id,
+                folder_id : folder_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/putInFolder", /* 통신할 URL */
+                data: folderObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function () {
+                    alert('폴더에 담겼습니다.');
+                })
+        };
+
+
         $scope.commitReply = function (msg) {
             var replyObject =
             {
@@ -265,14 +428,10 @@ angular.module("homeApp",[
             else if(data.id == '4'){
                 $scope.alerts.push({type: 'info', msg: data.name+'님께서 게시물을 공감하셨습니다.'});
             }
-
         };
-
         $scope.closeAlert = function(index) {
             $scope.alerts.splice(index, 1);
         };
-
-
 
         $rootScope.checkedTime = null;
 
@@ -770,10 +929,9 @@ angular.module("homeApp",[
 
 
     .controller("othersCtrl",function($rootScope,$scope,$http, store, $state,$filter) {
-        $scope.others_id = $rootScope.others_id;
         var othersObject = {
-           user_id : $scope.others_id
-    };
+           user_id : $rootScope.others_id
+        };
         var checkObject={
             user_id : store.get('obj').user_id,
             friend_id :$scope.others_id
@@ -826,25 +984,30 @@ angular.module("homeApp",[
                 })
         };
         $scope.updateTime();
-        $http({
-            method: 'POST', //방식
-            url: "/user/loadProfile", /* 통신할 URL */
-            data: othersObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function (response) {
-                $scope.Profile = response.data;
-            });
 
-        $http({
-            method: 'POST', //방식
-            url: "/folder/openMyFolder", /* 통신할 URL */
-            data: othersObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function (response) {
-                $scope.my_boards = response.data;
-            });
+        $scope.getOthersInfo = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/loadProfile", /* 통신할 URL */
+                data: othersObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.Profile = response.data;
+                });
+
+            $http({
+                method: 'POST', //방식
+                url: "/folder/openMyFolder", /* 통신할 URL */
+                data: othersObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.my_boards = response.data;
+                });
+
+        }
+
         $scope.applyFriend = function(){
             var applyObject ={
                 user_id : store.get('obj').user_id,
