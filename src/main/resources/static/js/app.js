@@ -185,7 +185,17 @@ angular.module("homeApp",[
                 }
             })
 
-            .state('others', {
+            .state('others1', {
+                url: '/others',
+                templateUrl: 'othersprofile.html',
+                controller: 'othersCtrl',
+                controllerAs: 'others',
+                data: {
+                    requireLogin: true
+                }
+            })
+
+            .state('others2', {
                 url: '/others',
                 templateUrl: 'othersprofile.html',
                 controller: 'othersCtrl',
@@ -224,7 +234,16 @@ angular.module("homeApp",[
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
         var userObject = store.get('obj');
 
-
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
+        };
 
 
         $scope.alerts = [];
@@ -716,7 +735,13 @@ angular.module("homeApp",[
         };
         $scope.toOthers = function(others){
             $rootScope.others_id = others.user_id;
-            $state.go("others");
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
         };
 
         $scope.toTag = function(tags){
@@ -745,7 +770,6 @@ angular.module("homeApp",[
 
 
     .controller("othersCtrl",function($rootScope,$scope,$http, store, $state,$filter) {
-
         $scope.others_id = $rootScope.others_id;
         var othersObject = {
            user_id : $scope.others_id
