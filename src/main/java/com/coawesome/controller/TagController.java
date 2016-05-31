@@ -60,6 +60,30 @@ public class TagController {
         return tagCloudeList;
     }
 
+    //테그 단어 레이더 데이터
+    @RequestMapping(method = RequestMethod.POST, value = "/tag/getTagValue")
+    public int[] getTagValue(@RequestBody TagElement tagElement) {
+        String tag =  tagElement.getTag();
+        System.out.println("get value of tag : " + tag);
+        wordVO tagValue = tagMapper.getTagValue(tag);
+        int[] numbers = new int[10];
+        numbers[0] = tagValue.getPos1();
+        numbers[1] = tagValue.getPos2();
+        numbers[2] = tagValue.getPos3();
+        numbers[3] = tagValue.getPos4();
+        numbers[4] = tagValue.getPos5();
+        numbers[5] = tagValue.getNeg1();
+        numbers[6] = tagValue.getNeg2();
+        numbers[7] = tagValue.getNeg3();
+        numbers[8] = tagValue.getNeg4();
+        numbers[9] = tagValue.getNeg5();
+
+        System.out.println("tag value : " + numbers);
+        return numbers;
+    }
+
+
+
     //테그 게시글 리스트
     @RequestMapping(method = RequestMethod.POST, value = "/tag/openTagFolder")
     public List<HashMap> openTagFolder(@RequestBody TagElement tagElement) {

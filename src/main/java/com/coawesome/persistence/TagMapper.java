@@ -44,4 +44,9 @@ public interface TagMapper {
           "          WHERE (board.user_id != #{user_id}  AND ((friend.user_id = #{user_id} AND friend.status >= 1 AND board.public_level <= 1) OR board.public_level = 0) ) AND ( board.tag1 = #{tag} OR board.tag2 = #{tag} OR board.tag3 = #{tag})")
   ArrayList<HashMap> openTagFolder(TagElement tagElement);
 
+  @Select("SELECT avg(v.pos1) as pos1, avg(v.pos2) as pos2, avg(v.pos3) as pos3, avg(v.pos4) as pos4, avg(v.pos5) as pos5, avg(v.neg1) as neg1, avg(v.neg2) as neg2, avg(v.neg3) as neg3, avg(v.neg4) as neg4, avg(v.neg5) as neg5 FROM board " +
+          "INNER JOIN board_value as v ON board.board_id = v.board_id " +
+          "WHERE board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag} ;")
+  wordVO getTagValue(@Param("tag")String tag);
+
 }

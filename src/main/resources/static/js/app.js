@@ -659,11 +659,9 @@ angular.module("homeApp",[
              var words = $scope.lines.firstLine + " " + $scope.lines.secondLine + " ";
            // var words = $scope.lines.firstLine.concat(" ".concat($scope.lines.secondLine));
             //삭제어
-           res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |나랑 |하는 |들과 |했던 /gi , " ");  //조사
-            res = res.replace(/하 |내 |너 |나 |네 |엔 |앤 |에서 |으로 |한다면 /gi , " ");  //동사 꾸밈어
+           res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |나랑 |하는 |들과 |일 |했던 |한 |내 |너 |나 |네 |엔 |앤 |에서 |으로 |한다면 |입니당 |입니다 |습니당 |습니다 |어요 |지요 |며 |다면 |니 |자 /gi , " ");  //조사  //동사 꾸밈어  //종조사
 
             //대체어
-            res = res.replace(/입니당 |입니다 |습니당 |습니다 |어요 |지요 |며 |다면 |니 |자 /gi , "다 ");  //종조사
             // res = res.replace(/[?]/gi, " 물음표 ");  // ?
             // res = res.replace(/[!]/gi, " 느낌표 ");  // !
             // res = res.replace(/[~]/gi, " 물결 ");  // ~
@@ -1237,6 +1235,20 @@ angular.module("homeApp",[
         };
 
         $scope.tagCloud();
+
+        $scope.getTagValue = function () {
+            $http({  //TODO 테그된 게시글 가져오기
+                method: 'POST', //방식
+                url: "/tag/getTagValue", /* 통신할 URL */
+                data: tagObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.Cdata = response.data;
+                    alert($scope.Cdata);
+                });
+        };
+        $scope.getTagValue();
 
         $rootScope.tag_name={};
 
