@@ -24,7 +24,8 @@ angular.module("homeApp",[
         };
     })
 
-    .controller('ModalDemoCtrl', function (store, $http, $rootScope, $scope, $uibModal, $log) {
+    .controller('ModalDemoCtrl', function (store, $http,$state, $rootScope, $scope, $uibModal, $log) {
+        $rootScope.others_id={};
         var userObject = store.get('obj');
         $scope.board=$rootScope.modalboard;
 
@@ -41,6 +42,12 @@ angular.module("homeApp",[
                 });
         }
 
+
+        $scope.toOthers = function(r){
+            $rootScope.others_id = r.user_id;
+            $state.go("others");
+        };
+        
         $scope.commitReply = function (msg) {
             var replyObject =
             {
@@ -68,7 +75,6 @@ angular.module("homeApp",[
                     console.log(status);
                 });
         };
-
     })
 
 
@@ -708,24 +714,6 @@ angular.module("homeApp",[
         var othersObject = {
            user_id : $scope.others_id
     };
-        var timeObject ={};
-        $scope.updateTime = function() {
-            $scope.theTime = new Date().toLocaleTimeString();
-            timeObject = {
-                updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
-                user_id: store.get('obj').user_id
-            };
-
-            $http({
-                method: 'POST', //방식
-                url: "user/updateTime", /* 통신할 URL */
-                data: timeObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function (response) {
-                })
-        };
-        $scope.updateTime();
         $http({
             method: 'POST', //방식
             url: "/user/loadProfile", /* 통신할 URL */
@@ -745,6 +733,25 @@ angular.module("homeApp",[
             .then(function (response) {
                 $scope.my_boards = response.data;
             });
+        var timeObject ={};
+        $scope.updateTime = function() {
+            $scope.theTime = new Date().toLocaleTimeString();
+            timeObject = {
+                updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
+                user_id: store.get('obj').user_id
+            };
+
+            $http({
+                method: 'POST', //방식
+                url: "user/updateTime", /* 통신할 URL */
+                data: timeObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                })
+        };
+        $scope.updateTime();
+
         $scope.applyFriend = function(){
             var applyObject ={
                 user_id : store.get('obj').user_id,

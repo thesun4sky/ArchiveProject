@@ -16,7 +16,7 @@ public interface BoardMapper {
   void addReply(Reply reply);
 
   //댓글 확인
-  @Select("SELECT user.user_img, user.name, reply.reply, reply.created from reply INNER JOIN user on reply.user_id = user.user_id where board_id = #{board_id}")
+  @Select("SELECT user.user_img, user.name, user.user_id, reply.reply, reply.created from reply INNER JOIN user on reply.user_id = user.user_id where board_id = #{board_id}")
   ArrayList<HashMap> showreplybyId(@Param("board_id") int board_id);
 
   //게시글 등록

@@ -1,7 +1,6 @@
 <div ng-controller="ModalDemoCtrl">
     <script type="text/ng-template" id="modal.html">
         <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
         </div>
 
         <div class="modal-body">
@@ -79,7 +78,9 @@
                             </div>
 
                             <div ng-repeat="r in reply">
-                                <div class="well well-lg"><img src="storedimg/{{r.user_img}}" width=50px; height=50px;/>{{r.name}}  {{r.reply}} {{r.created}}</div>
+                                <img src="storedimg/{{r.user_img}}" width=50px; height=50px;/><a ng-click="toOthers(r)" ng-model="r.user_id">{{r.user_id}}&nbsp{{r.name}}</a> &nbsp&nbsp  {{r.reply}}
+
+                                <div class="pull-right">{{r.created | date : 'yyyy-MM-dd HH:mm:ss'}}</div>
                             </div>
                         </div>
                     </div>
