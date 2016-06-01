@@ -26,9 +26,8 @@ angular.module("homeApp",[
     })
 
     .controller('ModalDemoCtrl', function (store, $http,$state, $rootScope, $scope, $uibModal, $log) {
-        $rootScope.others_id={};
+        // $rootScope.others_id={};
         var userObject = store.get('obj');
-        $scope.board=$rootScope.modalboard;
 
         $scope.replylist = function(board) {
             $http({
@@ -39,7 +38,6 @@ angular.module("homeApp",[
             })
                 .success(function (data, status, headers, config) {
                     $rootScope.reply=data;
-                    $scope.reply=$rootScope.reply;
                 });
         }
 
@@ -194,6 +192,7 @@ angular.module("homeApp",[
         };
 
         $scope.folderList();
+        $scope.replylist($rootScope.modalboard);
 
         $scope.putInFolder = function (board_id, folder_id) {
             var folderObject = {
@@ -392,8 +391,263 @@ angular.module("homeApp",[
     })
 
 
+    .controller("indexCtrl",function($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
+        var userObject = store.get('obj');
+        $scope.logoWidth = window.innerWidth/6;
 
-    .controller("bodyCtrl",function($scope, $http, store, $state, $rootScope, $interval, $filter) {
+        $scope.boardList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlist", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.boards = response.data;
+                })
+        };
+
+        $scope.showFriendList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends",
+                data: userObject,
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.friends = response.data;
+                });
+        };
+
+        $scope.showFriendList();
+
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
+        };
+
+        var timeObject ={};
+        $scope.updateTime = function() {
+            $scope.theTime = new Date().toLocaleTimeString();
+            timeObject = {
+                updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
+                user_id: store.get('obj').user_id
+            };
+
+            $http({
+                method: 'POST', //방식
+                url: "user/updateTime", /* 통신할 URL */
+                data: timeObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                })
+        };
+        $scope.folderList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/api/folderlist", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.folders = response.data;
+                })
+        };
+
+        $scope.boardList();
+        $scope.folderList();
+        $scope.updateTime();
+
+        $scope.filters = {};
+
+        $scope.putInFolder = function (board_id, folder_id) {
+            var folderObject = {
+                board_id : board_id,
+                folder_id : folder_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/putInFolder", /* 통신할 URL */
+                data: folderObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function () {
+                    alert('폴더에 담겼습니다.');
+                })
+        };
+
+
+
+        $scope.open = function (size, board) {
+            $rootScope.modalboard=board;
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalDemoCtrl',
+                size: size
+            });
+            modalInstance.result.then(function () {
+
+            }, function () {
+                // $log.info('Modal dismissed at: ' + new Date());
+                $rootScope.modalboard={};
+                $rootScope.reply={};
+                $scope.boardList();
+            });
+        };
+
+/*          $scope.open = function (size, board) {
+            $rootScope.modalboard=board;
+            $scope.replylist($rootScope.modalboard);
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalDemoCtrl',
+                size: size
+            });
+            modalInstance.result.then(function () {
+
+            }, function () {
+                // $log.info('Modal dismissed at: ' + new Date());
+                $rootScope.modalboard={};
+                $rootScope.reply={};
+                $scope.boardList();
+            });
+        };*/
+
+
+        $scope.viewAll= function(){
+
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardlist", /* 통신할 URL */
+                data: userObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function(response) {
+                    $scope.boards = response.data;
+                    $scope.filters={};
+                });
+        };
+
+        $scope.favoriteBoard = function (board_id) {
+            $http({
+                method: 'POST', //방식
+                url: "/api/favoriteBoard", /* 통신할 URL */
+                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('페이버릿 실패')
+                    } else {
+                        $scope.boardList();
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+
+        $scope.UnfavoriteBoard = function (board_id) {
+            var UnfavoriteBoardObject =
+            {
+                user_id: userObject.user_id, //임시로 1번사용자 지정
+                board_id: board_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/UnfavoriteBoard", /* 통신할 URL */
+                data: UnfavoriteBoardObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('페이버릿취소 실패')
+                    } else {
+                        $scope.boardList();
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+
+        //좋아요
+        $scope.likeBoard = function (board_id) {
+            $http({
+                method: 'POST', //방식
+                url: "/api/likeBoard", /* 통신할 URL */
+                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('좋아요 실패')
+                    } else {
+                        $scope.boardList();
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+        //좋아요 취소
+        $scope.dislikeBoard = function (board_id) {
+            var dislikeBoardObject =
+            {
+                user_id: userObject.user_id, //임시로 1번사용자 지정
+                board_id: board_id
+            };
+            $http({
+                method: 'POST', //방식
+                url: "/api/dislikeBoard", /* 통신할 URL */
+                data: dislikeBoardObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    if (data.msg == 'false') {
+                        alert('좋아요취소 실패')
+                    } else {
+                        $scope.boardList();
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
+                    console.log(status);
+                });
+        };
+
+        $scope.filters = { };
+
+        $scope.menuList = [
+            {catagory: 1, link: "movie", title: "영화", icon1: "glyphicon", icon2: "glyphicon-film"},
+            {catagory: 2, link: "act", title: "연극", icon1: "fa", icon2: "fa-street-view"},
+            {catagory: 3, link: "concert", title: "콘서트", icon1: "fa", icon2: "fa-microphone"},
+            {catagory: 4, link: "drama", title: "드라마", icon1: "fa", icon2: "fa-tv"},
+            {catagory: 5, link: "exhibition", title: "전시회", icon1: "glyphicon", icon2: "glyphicon-blackboard"},
+            {catagory: 6, link: "food", title: "음식", icon1: "glyphicon", icon2: "glyphicon-cutlery"},
+            {catagory: 7, link: "travel", title: "여행", icon1: "glyphicon", icon2: "glyphicon-plane"},
+            {catagory: 8, link: "music", title: "음악", icon1: "glyphicon", icon2: "glyphicon-music"}
+        ];
+
+
+    })
+
+
+
+    /*.controller("bodyCtrl",function($scope, $http, store, $state, $rootScope, $interval, $filter) {
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
         var userObject = store.get('obj');
 
@@ -456,7 +710,7 @@ angular.module("homeApp",[
         $scope.CallNotiApi = function () {
             $http({
                 method: 'POST', //방식
-                url: "/user/notification", /* 통신할 URL */
+                url: "/user/notification", /!* 통신할 URL *!/
                 data: {
                     user_id : userObject.user_id,
                     currentTime : $rootScope.currentTime,
@@ -482,8 +736,8 @@ angular.module("homeApp",[
         $scope.replylist = function(board) {
             $http({
                 method: 'POST', //방식
-                url: "/api/showreply", /* 통신할 URL */
-                data: board, /* 파라메터로 보낼 데이터 */
+                url: "/api/showreply", /!* 통신할 URL *!/
+                data: board, /!* 파라메터로 보낼 데이터 *!/
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .success(function (data, status, headers, config) {
@@ -497,8 +751,8 @@ angular.module("homeApp",[
         $scope.boardList = function () {
             $http({
                 method: 'POST', //방식
-                url: "/api/boardlist", /* 통신할 URL */
-                data: userObject, /* 파라메터로 보낼 데이터 */
+                url: "/api/boardlist", /!* 통신할 URL *!/
+                data: userObject, /!* 파라메터로 보낼 데이터 *!/
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .then(function (response) {
@@ -509,14 +763,13 @@ angular.module("homeApp",[
         $scope.showFriendList = function () {
             $http({
                 method: 'POST', //방식
-                url: "/user/showfriends", /* 통신할 URL */
-                data: userObject, /* 파라메터로 보낼 데이터 */
+                url: "/user/showfriends", /!* 통신할 URL *!/
+                data: userObject, /!* 파라메터로 보낼 데이터 *!/
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .then(function (response) {
                     $scope.friends = response.data;
                 });
-
         };
 
 
@@ -525,13 +778,13 @@ angular.module("homeApp",[
             $scope.StartTimer();
         }
 
-    })
+    })*/
 
 
 
 
 
-    .controller("loginCtrl",function($scope, $http, store, $state, $filter){
+    .controller("loginCtrl",function($scope, $http, store, $state, $filter, $interval){
 
 
         $scope.login=[{
@@ -544,7 +797,22 @@ angular.module("homeApp",[
             $state.go('login');
         };
 
-
+        $scope.StartTimer = function () {
+            $scope.Noti = $interval(function () {
+                // alert('noti 불림');
+                if($rootScope.checkedTime != null){
+                    if (store.get('obj') == null) {
+                        $interval.cancel($scope.Noti);
+                    }
+                    $rootScope.currentTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
+                    $scope.CallNotiApi();
+                    $rootScope.checkedTime = $rootScope.currentTime;
+                }
+                else {
+                    $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
+                }
+            }, 5000);
+        };
 
         $scope.loginPost = function(){
             var loginObject = {
@@ -890,7 +1158,9 @@ angular.module("homeApp",[
                     $scope.tags = response.data; 
                 });
         };
-        $scope.toOthers = function(others){
+
+
+        /*$scope.toOthers = function(others){
             $rootScope.others_id = others.user_id;
             if ($rootScope.othersStatus){
                 $state.go("others1");
@@ -899,7 +1169,7 @@ angular.module("homeApp",[
                 $state.go("others2");
                 $rootScope.othersStatus = true;
             }
-        };
+        };*/
 
         $scope.toTag = function(tags){
             $rootScope.tag_name = tags.tag;
@@ -930,8 +1200,13 @@ angular.module("homeApp",[
         var othersObject = {
            user_id : $rootScope.others_id
         };
+
+        var userObject = store.get('obj')
+
+
+
         var checkObject={
-            user_id : store.get('obj').user_id,
+            user_id : userObject.user_id,
             friend_id :$scope.others_id
         };
         $http({
@@ -983,6 +1258,17 @@ angular.module("homeApp",[
         };
         $scope.updateTime();
 
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
+        };
+
         $scope.getOthersInfo = function () {
             $http({
                 method: 'POST', //방식
@@ -1006,6 +1292,21 @@ angular.module("homeApp",[
 
         }
 
+        $scope.showFriendList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends",
+                data: userObject,
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.friends = response.data;
+                });
+            };
+
+
+        $scope.showFriendList()
+
         $scope.applyFriend = function(){
             var applyObject ={
                 user_id : store.get('obj').user_id,
@@ -1025,7 +1326,6 @@ angular.module("homeApp",[
                     }
                 })
         }
-        $rootScope.others_id={};
     })
 
 
@@ -1087,6 +1387,34 @@ angular.module("homeApp",[
                 });
 
         };
+
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
+        };
+
+
+
+        $scope.showFriendList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends",
+                data: userObject,
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.friends = response.data;
+                });
+        };
+
+
+        $scope.showFriendList()
 
         //클릭시마다 카테고리 변수를 갱신할 변수.
         $scope.filters_catagory={};
@@ -1199,6 +1527,34 @@ angular.module("homeApp",[
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
         };
+
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
+        };
+
+
+
+        $scope.showFriendList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends",
+                data: userObject,
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.friends = response.data;
+                });
+        };
+
+
+        $scope.showFriendList()
 
 
         $scope.folderList = function () {
@@ -1354,6 +1710,34 @@ angular.module("homeApp",[
             user_id : userObject.user_id,
             tag : $scope.tag_name
         };
+
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
+        };
+
+
+
+        $scope.showFriendList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends",
+                data: userObject,
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.friends = response.data;
+                });
+        };
+
+
+        $scope.showFriendList();
 
 
         $http({  //TODO 테그정보 가져오기(사진 등..)
@@ -1576,11 +1960,36 @@ angular.module("homeApp",[
                 headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
             })
                 .then(function(response) {
+                    $scope.tolineList = response.data;
+                });
+        };
+
+        $scope.showFriendList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends",
+                data: userObject,
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
                     $scope.friends = response.data;
                 });
         };
 
+        $scope.showFriendList();
+
         $scope.tolineList();
+
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
+        };
 
         var timeObject ={};
         $scope.updateTime = function() {
@@ -1656,215 +2065,7 @@ angular.module("homeApp",[
 
 
 
-    .controller("indexCtrl",function($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
-        var userObject = store.get('obj');
-        var timeObject ={};
-        $scope.logoWidth = window.innerWidth/6;
 
-        $scope.boardList = function () {
-            $http({
-                method: 'POST', //방식
-                url: "/api/boardlist", /* 통신할 URL */
-                data: userObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function (response) {
-                    $scope.boards = response.data;
-                })
-        };
-        var timeObject ={};
-        $scope.updateTime = function() {
-            $scope.theTime = new Date().toLocaleTimeString();
-            timeObject = {
-                updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
-                user_id: store.get('obj').user_id
-            };
-
-            $http({
-                method: 'POST', //방식
-                url: "user/updateTime", /* 통신할 URL */
-                data: timeObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function (response) {
-                })
-        };
-        $scope.folderList = function () {
-            $http({
-                method: 'POST', //방식
-                url: "/api/folderlist", /* 통신할 URL */
-                data: userObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function (response) {
-                    $scope.folders = response.data;
-                })
-        };
-
-        $scope.boardList();
-        $scope.folderList();
-        $scope.updateTime();
-
-        $scope.filters = {};
-
-        $scope.putInFolder = function (board_id, folder_id) {
-            var folderObject = {
-                board_id : board_id,
-                folder_id : folder_id
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/putInFolder", /* 통신할 URL */
-                data: folderObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function () {
-                    alert('폴더에 담겼습니다.');
-                })
-        };
-
-        $scope.open = function (size, board) {
-            $rootScope.modalboard=board;
-            $scope.replylist($rootScope.modalboard);
-            var modalInstance = $uibModal.open({
-                templateUrl: 'modal.html',
-                 controller: 'ModalDemoCtrl',
-                 size: size
-            });
-            modalInstance.result.then(function () {
-
-            }, function () {
-                 // $log.info('Modal dismissed at: ' + new Date());
-                 $rootScope.modalboard={};
-                 $rootScope.reply={};
-                 $scope.boardList();
-             });
-        };
-
-
-        $scope.viewAll= function(){
-
-            $http({
-                method: 'POST', //방식
-                url: "/api/boardlist", /* 통신할 URL */
-                data: userObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function(response) {
-                    $scope.boards = response.data;
-                    $scope.filters={};
-                });
-        };
-
-        $scope.favoriteBoard = function (board_id) {
-            $http({
-                method: 'POST', //방식
-                url: "/api/favoriteBoard", /* 통신할 URL */
-                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'false') {
-                        alert('페이버릿 실패')
-                    } else {
-                        $scope.boardList();
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                    console.log(status);
-                });
-        };
-
-
-        $scope.UnfavoriteBoard = function (board_id) {
-            var UnfavoriteBoardObject =
-            {
-                user_id: userObject.user_id, //임시로 1번사용자 지정
-                board_id: board_id
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/UnfavoriteBoard", /* 통신할 URL */
-                data: UnfavoriteBoardObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'false') {
-                        alert('페이버릿취소 실패')
-                    } else {
-                        $scope.boardList();
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                    console.log(status);
-                });
-        };
-
-
-        //좋아요
-        $scope.likeBoard = function (board_id) {
-            $http({
-                method: 'POST', //방식
-                url: "/api/likeBoard", /* 통신할 URL */
-                data: {user_id: userObject.user_id, board_id: board_id}, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'false') {
-                        alert('좋아요 실패')
-                    } else {
-                        $scope.boardList();
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                    console.log(status);
-                });
-        };
-
-        //좋아요 취소
-        $scope.dislikeBoard = function (board_id) {
-            var dislikeBoardObject =
-            {
-                user_id: userObject.user_id, //임시로 1번사용자 지정
-                board_id: board_id
-            };
-            $http({
-                method: 'POST', //방식
-                url: "/api/dislikeBoard", /* 통신할 URL */
-                data: dislikeBoardObject, /* 파라메터로 보낼 데이터 */
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    if (data.msg == 'false') {
-                        alert('좋아요취소 실패')
-                    } else {
-                        $scope.boardList();
-                    }
-                })
-                .error(function (data, status, headers, config) {
-                    /* 서버와의 연결이 정상적이지 않을 때 처리 */
-                    console.log(status);
-                });
-        };
-
-        $scope.filters = { };
-
-        $scope.menuList = [
-            {catagory: 1, link: "movie", title: "영화", icon1: "glyphicon", icon2: "glyphicon-film"},
-            {catagory: 2, link: "act", title: "연극", icon1: "fa", icon2: "fa-street-view"},
-            {catagory: 3, link: "concert", title: "콘서트", icon1: "fa", icon2: "fa-microphone"},
-            {catagory: 4, link: "drama", title: "드라마", icon1: "fa", icon2: "fa-tv"},
-            {catagory: 5, link: "exhibition", title: "전시회", icon1: "glyphicon", icon2: "glyphicon-blackboard"},
-            {catagory: 6, link: "food", title: "음식", icon1: "glyphicon", icon2: "glyphicon-cutlery"},
-            {catagory: 7, link: "travel", title: "여행", icon1: "glyphicon", icon2: "glyphicon-plane"},
-            {catagory: 8, link: "music", title: "음악", icon1: "glyphicon", icon2: "glyphicon-music"}
-        ];
-
-
-    })
 
     .controller("ArchiveCtrl",function($scope, $http, store, $state, $uibModal, $rootScope,$filter) {
 
@@ -1886,6 +2087,34 @@ angular.module("homeApp",[
                     $scope.folders = response.data;
                 })
         };
+
+        $scope.toOthers = function(others){
+            $rootScope.others_id = others.user_id;
+            if ($rootScope.othersStatus){
+                $state.go("others1");
+                $rootScope.othersStatus = false;
+            }else{
+                $state.go("others2");
+                $rootScope.othersStatus = true;
+            }
+        };
+
+
+
+        $scope.showFriendList = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/showfriends",
+                data: userObject,
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.friends = response.data;
+                });
+        };
+
+
+        $scope.showFriendList()
 
         var timeObject ={};
         $scope.updateTime = function() {

@@ -1,10 +1,10 @@
 package com.coawesome.persistence;
 
-import com.coawesome.domain.*;
+import com.coawesome.domain.Friend;
+import com.coawesome.domain.UserResult;
 import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -38,7 +38,7 @@ public interface FriendMapper {
 //
 
   //친구목록 조회
-  @Select("SELECT friend.friend_id, friend.user_id, user.name, user.email, user.sex, user.login_id, user.born, friend.status, userIN.updated_time from friend \n"+
+  @Select("SELECT friend.friend_id, friend.user_id, user.name, user.email, user.user_img, user.sex, user.login_id, user.born, friend.status, userIN.updated_time from friend \n"+
           "LEFT OUTER JOIN (SELECT userIN.user_id, userIN.updated_time from friend INNER JOIN user as userIN on friend.user_id = userIN.user_id where friend.friend_id= #{user_id} AND userIN.updated_time > now()-300 )\n" +
           "as userIN on friend.user_id = userIN.user_id\n"+
               "INNER JOIN user on friend.user_id = user.user_id\n" +

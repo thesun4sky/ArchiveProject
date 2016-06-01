@@ -30,7 +30,7 @@
                 My Friends
             </li>
             <li ng-click="toOthers(x)" ng-repeat="x in friends | filter : finduser" class="list-group-item text-left">
-                <img class="img-thumbnail" src="img/someone.png" style="width: 30px; height: 30px">
+                <img class="img-thumbnail" src="storedimg/{{x.user_img}}" style="width: 30px; height: 30px">
                 <label class="name">
                     {{x.name}}<br>
                 </label>
