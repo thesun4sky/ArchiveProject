@@ -11,7 +11,9 @@ angular.module("homeApp",[
         'ui.bootstrap',
         'angular-jqcloud',
         'ui.bootstrap.alert',
-        'angular-confirm'
+        'angular-confirm',
+         'duScroll'
+
     ])
     .config(function(storeProvider){
         storeProvider.setStore('sessionStorage');
@@ -238,6 +240,77 @@ angular.module("homeApp",[
                 });
         };
     })
+
+    .controller('scroll', function($scope, $document){
+            $scope.toTheTop = function() {
+            $document.scrollTopAnimated(0, 5000).then(function() {
+                console && console.log('You just scrolled to the top!');
+            });
+        }
+        var section3 = angular.element(document.getElementById('section-3'));
+        $scope.toSection3 = function() {
+            $document.scrollToElementAnimated(section3);
+        }
+    }
+    ).value('duScrollOffset', 30)
+
+ .controller('CarouselDemoCtrl', function ($scope) {
+    $scope.myInterval = 5000;
+    $scope.noWrapSlides = false;
+    $scope.active = 0;
+    var slides = $scope.slides = [];
+    var currIndex = 0;
+
+    $scope.addSlide = function() {
+        var newWidth = 600 + slides.length + 1;
+        slides.push({
+            image: 'http://lorempixel.com/' + newWidth + '/300',
+            text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
+            id: currIndex++
+        });
+    };
+
+    $scope.randomize = function() {
+        var indexes = generateIndexesArray();
+        assignNewIndexesToSlides(indexes);
+    };
+
+    for (var i = 0; i < 4; i++) {
+        $scope.addSlide();
+    }
+
+    // Randomize logic below
+
+    function assignNewIndexesToSlides(indexes) {
+        for (var i = 0, l = slides.length; i < l; i++) {
+            slides[i].id = indexes.pop();
+        }
+    }
+
+    function generateIndexesArray() {
+        var indexes = [];
+        for (var i = 0; i < currIndex; ++i) {
+            indexes[i] = i;
+        }
+        return shuffle(indexes);
+    }
+
+    // http://stackoverflow.com/questions/962802#962890
+    function shuffle(array) {
+        var tmp, current, top = array.length;
+
+        if (top) {
+            while (--top) {
+                current = Math.floor(Math.random() * (top + 1));
+                tmp = array[current];
+                array[current] = array[top];
+                array[top] = tmp;
+            }
+        }
+
+        return array;
+    }
+})
 
 
     .run(function ($rootScope, $state, store) {
