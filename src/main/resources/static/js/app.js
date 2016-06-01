@@ -25,8 +25,7 @@ angular.module("homeApp",[
         };
     })
 
-    .controller('ModalDemoCtrl', function (store, $http,$state, $rootScope, $scope, $uibModal, $log) {
-        // $rootScope.others_id={};
+    .controller('ModalDemoCtrl', function (store, $http,$state, $rootScope, $scope) {
         var userObject = store.get('obj');
 
         $scope.replylist = function(board) {
@@ -1196,49 +1195,74 @@ angular.module("homeApp",[
     })
 
 
-    .controller("othersCtrl",function($rootScope,$scope,$http, store, $state,$filter) {
+    .controller("othersCtrl",function($rootScope,$scope,$http, store, $state,$filter, $uibModal) {
         var othersObject = {
            user_id : $rootScope.others_id
         };
 
         var userObject = store.get('obj')
 
+        $scope.open = function (size, board) {
+            $rootScope.modalboard=board;
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalDemoCtrl',
+                size: size
+            });
+            modalInstance.result.then(function () {
 
+            }, function () {
+                // $log.info('Modal dismissed at: ' + new Date());
+                $rootScope.modalboard={};
+                $rootScope.reply={};
+                $scope.getOthersData();
+            });
+        };
 
         var checkObject={
             user_id : userObject.user_id,
             friend_id :$scope.others_id
         };
-        $http({
-            method: 'POST', //방식
-            url: "/user/loadProfile", /* 통신할 URL */
-            data: othersObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function (response) {
-                $scope.Profile = response.data;
-            });
-        //친구여부 확인
-        $http({
-            method: 'POST', //방식
-            url: "/user/checkfriends", /* 통신할 URL */
-            data: checkObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function (response) {
-                $scope.check = response.data.msg;
-            });
 
-        //친구게시물만 나열하기
-        $http({
-            method: 'POST', //방식
-            url: "/folder/openMyFolder", /* 통신할 URL */
-            data: othersObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function (response) {
-                $scope.my_boards = response.data;
-            });
+        $scope.getOthersData=function () {
+
+            $http({
+                method: 'POST', //방식
+                url: "/user/loadProfile", /* 통신할 URL */
+                data: othersObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.Profile = response.data;
+                });
+            //친구여부 확인
+            $http({
+                method: 'POST', //방식
+                url: "/user/checkfriends", /* 통신할 URL */
+                data: checkObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.check = response.data.msg;
+                });
+
+            //친구게시물만 나열하기
+            $http({
+                method: 'POST', //방식
+                url: "/folder/openMyFolder", /* 통신할 URL */
+                data: othersObject, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $scope.my_boards = response.data;
+                });
+        }
+
+
+
+        $scope.getOthersData();
+
+
         var timeObject ={};
         $scope.updateTime = function() {
             $scope.theTime = new Date().toLocaleTimeString();
@@ -1457,21 +1481,27 @@ angular.module("homeApp",[
 
     //프로필 페이지 컨트롤러
 
-    .controller('profileCtrl', function($scope,$http,Upload,store, $rootScope, $uibModal,$timeout,$state,$filter){
+    .controller('profileCtrl', function($scope,$http,Upload,store, $rootScope, $uibModal,$timeout,$state,$filter,$rootScope){
 
         var userObject = store.get('obj');
         $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.PNG';
 
 
-        $http({
-            method: 'POST', //방식
-            url: "/user/loadProfile", /* 통신할 URL */
-            data: userObject, /* 파라메터로 보낼 데이터 */
-            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-        })
-            .then(function (response) {
-                $scope.Profile = response.data;
-            });
+        $scope.getProfileData=function () {
+            $http({
+                method: 'POST',
+                url: "/user/loadProfile",
+                data: userObject,
+                headers: {'Content-Type': 'application/json; charset=utf-8'}
+            })
+                .then(function (response) {
+                    $scope.Profile = response.data;
+                });
+        }
+
+        $scope.getProfileData();
+
+
         $scope.openMyFolder = function () {
             $http({
                 method: 'POST', //방식
@@ -1482,6 +1512,23 @@ angular.module("homeApp",[
                 .then(function (response) {
                     $scope.my_boards = response.data;
                 });
+        };
+
+        $scope.open = function (size, board) {
+            $rootScope.modalboard=board;
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalDemoCtrl',
+                size: size
+            });
+            modalInstance.result.then(function () {
+
+            }, function () {
+                // $log.info('Modal dismissed at: ' + new Date());
+                $rootScope.modalboard={};
+                $rootScope.reply={};
+                $scope.getProfileData();
+            });
         };
 
 
@@ -1585,25 +1632,6 @@ angular.module("homeApp",[
                     alert('폴더에 담겼습니다.');
                 })
         };
-
-        $scope.open = function (size, board) {
-            $rootScope.modalboard=board;
-            $scope.replylist($rootScope.modalboard);
-            var modalInstance = $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: 'ModalDemoCtrl',
-                size: size
-            });
-            modalInstance.result.then(function () {
-
-            }, function () {
-                // $log.info('Modal dismissed at: ' + new Date());
-                $rootScope.modalboard={};
-                $rootScope.reply={};
-                $scope.openMyFolder();
-            });
-        };
-
 
         $scope.favoriteBoard = function (board_id) {
             $http({
@@ -1722,6 +1750,23 @@ angular.module("homeApp",[
             }
         };
 
+        $scope.open = function (size, board) {
+            $rootScope.modalboard=board;
+            var modalInstance = $uibModal.open({
+                templateUrl: 'modal.html',
+                controller: 'ModalDemoCtrl',
+                size: size
+            });
+            modalInstance.result.then(function () {
+
+            }, function () {
+                // $log.info('Modal dismissed at: ' + new Date());
+                $rootScope.modalboard={};
+                $rootScope.reply={};
+                $scope.tagBoardList();
+            });
+        };
+
 
 
         $scope.showFriendList = function () {
@@ -1740,6 +1785,10 @@ angular.module("homeApp",[
         $scope.showFriendList();
 
 
+        $scope.getTagData=function () {
+
+        }
+
         $http({  //TODO 테그정보 가져오기(사진 등..)
             method: 'POST', //방식
             url: "/tag/loadTagProfile", /* 통신할 URL */
@@ -1749,6 +1798,7 @@ angular.module("homeApp",[
             .then(function (response) {
                 $scope.tagProfile = response.data;
             });
+
         $scope.tagBoardList = function () {
             $http({  //TODO 테그된 게시글 가져오기
                 method: 'POST', //방식
@@ -1826,24 +1876,6 @@ angular.module("homeApp",[
                 .then(function () {
                     alert('폴더에 담겼습니다.');
                 })
-        };
-
-        $scope.open = function (size, board) {
-            $rootScope.modalboard=board;
-            $scope.replylist($rootScope.modalboard);
-            var modalInstance = $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: 'ModalDemoCtrl',
-                size: size
-            });
-            modalInstance.result.then(function () {
-
-            }, function () {
-                // $log.info('Modal dismissed at: ' + new Date());
-                $rootScope.modalboard={};
-                $rootScope.reply={};
-                $scope.tagBoardList();
-            });
         };
 
 
@@ -2185,7 +2217,6 @@ angular.module("homeApp",[
 
         $scope.open = function (size, board) {
             $rootScope.modalboard=board;
-            $scope.replylist($rootScope.modalboard);
             var modalInstance = $uibModal.open({
                 templateUrl: 'modal.html',
                 controller: 'ModalDemoCtrl',
