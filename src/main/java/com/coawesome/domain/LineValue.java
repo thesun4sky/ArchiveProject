@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CloudVO {
-    private String text;
-    private int weight;
+public class LineValue {
+    private int period;
+    private int positive;
+    private int negative;
 }

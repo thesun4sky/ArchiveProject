@@ -2,8 +2,23 @@
     <script type="text/ng-template" id="modal.html">
 
 
-        <div class="modal-body">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="modal-body" style="padding: 0px;">
             <div class="thumbnail" style="background-color: white;">
+                <div class="row" style=" position: relative;">
+                <div class="carousel-caption-favorite" ng-init="favorite=modalboard.favorite" >
+                    <div ng-switch on="favorite">
+                        <div ng-switch-when="0">
+                            <button ng-click="favoriteBoard(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star-empty"></span></button>
+                        </div>
+                        <div ng-switch-default>
+                            <button ng-click="UnfavoriteBoard(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star"></span></button>
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <div class="carousel-caption-public_level">
                     <div ng-switch on="modalboard.public_level">
                         <div ng-switch-when="1">
@@ -17,18 +32,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-caption-favorite" ng-init="favorite=modalboard.favorite" >
-                    <div ng-switch on="favorite">
-                        <div ng-switch-when="0">
-                            <button ng-click="favoriteBoard(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star-empty"></span></button>
-                        </div>
-                        <div ng-switch-default>
-                            <button ng-click="UnfavoriteBoard(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star"></span></button>
-                        </div>
-                    </div>
-                </div>
 
-                <img src="storedimg/{{modalboard.stored_file_name}}" alt="images" style="width:100%; height:300px;">
+
+
+                <img src="storedimg/{{modalboard.stored_file_name}}" alt="images" style="width:100%; height:60%;">
                 <div class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div>
                         <p>&nbsp<span class="pull-right">{{modalboard.created | date:'medium'}}</span></p>
@@ -40,6 +47,7 @@
                     <div>
                         <center><p class="example" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{'bottom' : (modalboard.line2_y) * 11 +'%'}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{modalboard.line2}}</p></center>
                     </div>
+                </div>
                 </div>
                 <div class="row" style="margin-bottom:10px;">
                     <div class="row" style="margin-bottom:10px;">
@@ -106,7 +114,7 @@
                 </div>
             </div>
         </div>
-
+</div>
     </script>
 
 </div>

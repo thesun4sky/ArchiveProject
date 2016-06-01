@@ -51,13 +51,10 @@ public class TagController {
     public List<CloudVO> getTagWords(@RequestBody TagElement tagElement) {
         String tag =  tagElement.getTag();
         System.out.println("get word list of tag : " + tag);
-        ArrayList<String> tagWordList = tagMapper.getTagWords(tag);
-        ArrayList<CloudVO> tagCloudeList = new ArrayList<>();
-        for(int i=0; i<tagWordList.size(); i++)
-            tagCloudeList.add(new CloudVO(tagWordList.get(i),8));
+        ArrayList<CloudVO> tagWordList = tagMapper.getTagWords(tag);
 
         System.out.println("tag word list : " + tagWordList);
-        return tagCloudeList;
+        return tagWordList;
     }
 
     //테그 단어 레이더 데이터
@@ -82,6 +79,29 @@ public class TagController {
         return numbers;
     }
 
+
+    //테그 단어 라인 데이터
+    @RequestMapping(method = RequestMethod.POST, value = "/tag/getLineValue")
+    public int[][] getLineValue(@RequestBody TagElement tagElement) {
+        String tag =  tagElement.getTag();
+        System.out.println("get line value of tag : " + tag);
+        ArrayList<LineValue> lineValue = tagMapper.getLineValue(tag);
+        int[][] numbers = new int[2][7];
+
+        for(int i=0; i<7; i++){
+            if(lineValue.get(i).getPositive() == 0) {
+                numbers[0][6-i] = lineValue.get(i+1).getPositive();  //이번주를 마지막에 넣기위해 6에서 빼줌
+                numbers[1][6-i] = lineValue.get(i+1).getNegative();
+            }
+            else{
+                numbers[0][6-i] = lineValue.get(i).getPositive();
+                numbers[1][6-i] = lineValue.get(i).getNegative();
+            }
+        }
+
+        System.out.println("tag line value : " + numbers);
+        return numbers;
+    }
 
 
     //테그 게시글 리스트

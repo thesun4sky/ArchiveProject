@@ -40,20 +40,50 @@
 
         <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12" style="margin-top:20px;">
             <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12"><center><div class="panel-heading"><h3 style="font: large bold">테그 분석</h3></div></center></div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-sm-6" id="radar-chart" ng-controller="RadarCtrl">
                     <center> <jqcloud words="Cwords"  width="500" height="350"  colors="{{colors}}" delay="10" steps="7" font-size="{from:0.09, to:0.04}"></jqcloud></center>
 
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-sm-6" ng-controller="RadarCtrl">
                 <div class="panel panel-default">
-                        <div class="panel-heading">Radar Chart</div>
                         <div class="panel-body">
                             <canvas id="area" class="chart chart-radar" chart-data="[Cdata]"
-                                    chart-labels="labels" chart-click="onClick" chart-colours=""></canvas>
+                                    chart-labels="labels" chart-click="RadarOnClick" chart-colours="colours">
+                            </canvas>
                         </div>
                     </div>
                 </div>
+                <!--<script type="text/javascript">-->
+                    <!--var canvas=document.getElementById('area');-->
+                    <!--var cvas=canvas.getContext('2d');-->
+                    <!--cvas.fillStyle='#803690';-->
+                    <!--cvas.beginPath();-->
+                    <!--cvas.moveTo(500,10);-->
+
+                    <!--cvas.lineTo(350,150);-->
+                    <!--cvas.lineTo(430,350);-->
+                    <!--cvas.lineTo(570,350);-->
+                    <!--cvas.lineTo(650,150);-->
+
+                    <!--cvas.closePath();-->
+                    <!--cvas.fill();-->
+                <!--</script>-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-sm-12" ng-controller="ChartCtrl">
+                    <button class="btn btn-default" ng-click="chart_view = 1"><span class="glyphicon glyphicon-random"></span></button>
+                    <button class="btn btn-default" ng-click="chart_view = 2"><span class="glyphicon glyphicon-stats"></span></button>
+                    <div ng-show="chart_view == 1">
+                    <canvas id="line" class="chart chart-line" chart-data="Ldata"
+                            chart-labels="line_labels" chart-legend="true" chart-series="series"
+                            chart-click="LineOnClick" height="60" chart-colours="colours">
+                    </canvas></div>
+                    <div ng-show="chart_view == 2">
+                    <canvas id="bar" class="chart chart-bar"
+                            chart-data="Ldata" chart-labels="line_labels" chart-series="series" height="60" chart-series="series" chart-colours="colours">
+                    </canvas></div>
                 </div>
+                </div>
+            <hr>
             <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
                 <div class="row">
                     <div class="col-lg-6 text-center" ng-repeat="x in my_tagBoards">
