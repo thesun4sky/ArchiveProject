@@ -2,16 +2,16 @@
 
 
 
-<ul class="nav nav-pills">
+<ul class="nav nav-pills" resize style="margin-top:20px">
     <li class="active">
         <a data-toggle="tab" ng-click="viewAll()">
-            <span class="glyphicon glyphicon-th-large"  style="display: block;font-size: 50px;"></span>
+            <span class="glyphicon glyphicon-th-large"  style="display: block;" ng-style="{'font-size' : windowWidth/40}"></span>
             <p>전체보기</p>
         </a>
     </li>
     <li ng-repeat="menu in menuList" >
         <a data-toggle="tab" ng-model="menu.catagory" ng-click="filters.catagory=menu.catagory">
-            <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;font-size: 50px;"></span>
+            <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;" ng-style="{'font-size' : windowWidth/40}"></span>
             <p>{{menu.title}}</p>
         </a>
     </li>
@@ -115,4 +115,3 @@
             </div>
         </div>
     </div>
-</div>

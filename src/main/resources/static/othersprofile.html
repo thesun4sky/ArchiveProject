@@ -21,7 +21,7 @@
                             <img src="storedimg/{{Profile.user_img}}"  class="img-circle" alt="나" style="border: 3px solid white" alt="Profile" width="200" height="200">
                         </label>
                         <h3>{{Profile.name}}</h3>
-                        <input type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required
+                        <input disabled type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required
                                ngf-model-invalid="errorFile">
 
                         <div class="form-group">
