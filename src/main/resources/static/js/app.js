@@ -399,6 +399,16 @@ angular.module("homeApp",[
                 }
             })
 
+            .state('login1', {
+                url: '/',
+                templateUrl: 'login.html',
+                controller: 'loginCtrl',
+                controllerAs: 'loginCtrl',
+                data: {
+                    requireLogin: false
+                }
+            })
+
             .state('main', {
                 url: '/main',
                 templateUrl: 'main.html',
@@ -513,7 +523,10 @@ angular.module("homeApp",[
                     if(response.data != null && response.data != undefined){
                         $scope.alertData = response.data;
                         for(var i=0;i<$scope.alertData.length;i++) {
-                            $scope.convAlert($scope.alertData[i]);
+                            
+                            $scope.alertData[i].msg = '님께서 친구 신청 하셨습니다.'
+                            
+                            // $scope.convAlert($scope.alertData[i]);
                         }
                     }
                 })
@@ -982,6 +995,7 @@ angular.module("homeApp",[
             }
             else{
 
+            
             $http({
                 method: 'POST', //방식
                 url: "/user/join", /* 통신할 URL */
@@ -992,7 +1006,7 @@ angular.module("homeApp",[
                     if(data){
                         if (data.msg == 'success') {
                             // alert(data.msg)
-                            $state.go('/');
+                            $state.go('login1');
                             /* 맞음 */
                         }
                         else {
@@ -1188,7 +1202,7 @@ angular.module("homeApp",[
             file.upload.then(function (response) {
                 $timeout(function () {
                     file.result = response.data;
-                    $state.go('main');
+                    $state.go('main2');
                 });
             }, function (response) {
                 if (response.status > 0){
