@@ -415,6 +415,16 @@ angular.module("homeApp",[
                 }
             })
 
+            .state('login2', {
+                url: '/',
+                templateUrl: 'login.html',
+                controller: 'loginCtrl',
+                controllerAs: 'loginCtrl',
+                data: {
+                    requireLogin: false
+                }
+            })
+
             .state('main', {
                 url: '/main',
                 templateUrl: 'main.html',
@@ -895,6 +905,9 @@ angular.module("homeApp",[
         }
 
         $scope.joinPost = function(){
+
+            
+
             var joinObject = {
                 login_id : $scope.join.login_id,
                 password : $scope.join.password,
@@ -918,6 +931,8 @@ angular.module("homeApp",[
             }
             else{
 
+                $scope.isDisabled = true;
+
             $http({
                 method: 'POST', //방식
                 url: "/user/join", /* 통신할 URL */
@@ -928,7 +943,7 @@ angular.module("homeApp",[
                     if(data){
                         if (data.msg == 'success') {
                             // alert(data.msg)
-                            $state.go('/');
+                            $state.go('login2');
                             /* 맞음 */
                         }
                         else {
@@ -1176,7 +1191,6 @@ angular.module("homeApp",[
                     }
                     $rootScope.currentTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
                     $scope.CallNotiApi();
-
                 }
                 else {
                     $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
@@ -1202,7 +1216,9 @@ angular.module("homeApp",[
                         for(var i=0;i<$scope.datas.length;i++) {
                             $scope.addAlert($scope.datas[i]);
                         }
+                        if($scope.datas.length>0){
                         $rootScope.checkedTime = $rootScope.currentTime
+                        }
                     }
                 })
         };

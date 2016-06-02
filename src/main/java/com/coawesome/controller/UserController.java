@@ -196,7 +196,7 @@ public class UserController {
     public ArrayList<HashMap> Notification(@RequestBody HashMap map)  {
         System.out.println("checkedTime : " + map.get("checkedTime") + "currentTime : " + map.get("currentTime"));
         ArrayList<HashMap> notification = userMapper.notification(map);
-//        System.out.println("알람 나올 것들: " + notification);
+        System.out.println("알람 나올 것들: " + notification);
         if(notification == null || notification.isEmpty()){
             return null;
         }
