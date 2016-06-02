@@ -540,6 +540,13 @@ angular.module("homeApp",[
 
         $scope.alertThings = [];
 
+
+        $scope.toggleDropdown = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.status.isopen = !$scope.status.isopen;
+        };
+        
         $scope.convAlert = function(data) {
             if(data.id == '1') {
                 if (data.status == 0) {
