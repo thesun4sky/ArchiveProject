@@ -47,6 +47,6 @@ public interface FriendMapper {
 
 
   //친구 여보 확인
-  @Select("SELECT status FROM friend WHERE user_id=#{user_id} AND friend_id=#{friend_id}")
+  @Select("SELECT status FROM friend WHERE (user_id=#{user_id} AND friend_id=#{friend_id}) OR (user_id=#{friend_id} AND friend_id=#{user_id}) LIMIT 1")
   String FriendsCheck(Friend friend);
 }

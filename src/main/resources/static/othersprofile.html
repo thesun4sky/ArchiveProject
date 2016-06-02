@@ -35,14 +35,11 @@
                         </div>
                         </div>
                     </form>
-                    <a ng-show="check!=0 && check!=2" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>
-                </div>
                     </div>
-                </form>
-                <a ng-show="check!=1" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>
+                <a ng-show="check==null" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>
+                <a ng-show="check==0"><center><p class="fa fa-user-plus"></p><b style="color: white;"> 친구신청 승낙을 기다리고 있습니다.</b></center></a>
 
             </div>
-        </div>
 
 
         <!--좌측 화면분할-->
