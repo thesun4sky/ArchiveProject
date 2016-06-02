@@ -399,6 +399,16 @@ angular.module("homeApp",[
                 }
             })
 
+            .state('login1', {
+                url: '/',
+                templateUrl: 'login.html',
+                controller: 'loginCtrl',
+                controllerAs: 'loginCtrl',
+                data: {
+                    requireLogin: false
+                }
+            })
+
             .state('main', {
                 url: '/main',
                 templateUrl: 'main.html',
@@ -513,7 +523,10 @@ angular.module("homeApp",[
                     if(response.data != null && response.data != undefined){
                         $scope.alertData = response.data;
                         for(var i=0;i<$scope.alertData.length;i++) {
-                            $scope.convAlert($scope.alertData[i]);
+                            
+                            $scope.alertData[i].msg = '님께서 친구 신청 하셨습니다.'
+                            
+                            // $scope.convAlert($scope.alertData[i]);
                         }
                     }
                 })
@@ -982,6 +995,7 @@ angular.module("homeApp",[
             }
             else{
 
+            
             $http({
                 method: 'POST', //방식
                 url: "/user/join", /* 통신할 URL */
@@ -992,7 +1006,7 @@ angular.module("homeApp",[
                     if(data){
                         if (data.msg == 'success') {
                             // alert(data.msg)
-                            $state.go('/');
+                            $state.go('login1');
                             /* 맞음 */
                         }
                         else {
@@ -1153,7 +1167,7 @@ angular.module("homeApp",[
              var words = $scope.lines.firstLine + " " + $scope.lines.secondLine + " ";
            // var words = $scope.lines.firstLine.concat(" ".concat($scope.lines.secondLine));
             //삭제어
-           res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |나랑 |하는 |들과 |일 |했던 |한 |내 |너 |나 |네 |엔 |앤 |에서 |으로 |한다면 |입니당 |입니다 |습니당 |습니다 |어요 |지요 |며 |다면 |니 |자 /gi , " ");  //조사  //동사 꾸밈어  //종조사
+           res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |나랑 |하는 |들과 |일 |했던 |한 |내 |너 |나 |네 |하니까 |엔 |앤 |에서 |으로 |이면 |하게 |하는 |으로 |한다 |한다면 |입니당 |입니다 |습니당 |습니다 |어요 |지요 |며 |다면 |니 |자 /gi , " ");  //조사  //동사 꾸밈어  //종조사
 
             //대체어
             // res = res.replace(/[?]/gi, " 물음표 ");  // ?
@@ -1188,7 +1202,7 @@ angular.module("homeApp",[
             file.upload.then(function (response) {
                 $timeout(function () {
                     file.result = response.data;
-                    $state.go('main');
+                    $state.go('main2');
                 });
             }, function (response) {
                 if (response.status > 0){
