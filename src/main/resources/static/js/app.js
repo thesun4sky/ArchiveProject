@@ -1114,6 +1114,8 @@ angular.module("homeApp",[
             {id :7 , title :"여행"},
             {id :8 , title :"음악"}
         ];
+        $scope.p_level = $scope.openAccess[0];
+        $scope.c_list = $scope.catagory[0];
 
 
 
