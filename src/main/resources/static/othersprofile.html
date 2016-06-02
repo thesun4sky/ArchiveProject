@@ -12,6 +12,37 @@
 <!--화면 분할 시작-->
 <div class="container-fluid" style="margin-bottom: 50px;">
     <div class="row content">
+        <div ng-style="{'background-image': 'url(' + back_num + ')'}">
+            <div class="container-fulid text-center">
+                <form name="myForm">
+                    <div class="image-upload">
+                        <h3 style="margin-top: 0px">Who Am I?</h3>
+                        <label for="file-input">
+                            <img src="storedimg/{{Profile.user_img}}"  class="img-circle" alt="나" style="border: 3px solid white" alt="Profile" width="200" height="200">
+                        </label>
+                        <h3>{{Profile.name}}</h3>
+                        <input type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required
+                               ngf-model-invalid="errorFile">
+
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <button class="btn btn-success" ng-show="myForm.$valid" ng-click="uploadProfile(picFile)">Submit</button>
+                                    <span class="progress" ng-show="picFile.progress >= 0">
+                                    <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div></span>
+                                <span ng-show="picFile.result">Upload Successful</span>
+                                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                            </div>
+                        </div>
+                    </form>
+                    <a ng-show="check!=0 && check!=2" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>
+                </div>
+                    </div>
+                    <a ng-show="!check" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()" style="z-index: 20"><p class="fa fa-user-plus" >친구신청</p></a>
+                </form>
+            </div>
+        </div>
+
+
         <!--좌측 화면분할-->
         <div class="col-sm-2 col-md-2 col-lg-2 sidenav hidden-xs" >
             <div class="container-fluid " >
@@ -21,30 +52,31 @@
 
         <!--가운데 콘텐츠 화면분할-->
         <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12" style="margin-top:20px;">
-            <div class="bg-1">
-                <div class="container-fluid text-center">
-                    <form name="myForm">
-                        <div class="image-upload">
-                            <h3>Who Am I?</h3>
-                            <label for="file-input">
-                                <img src="storedimg/{{Profile.user_img}}" class="img-circle" alt="Profile" width="200" height="200">
-                            </label>
-                            <h3>{{Profile.name}}</h3>
-                            <input type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required
-                                   ngf-model-invalid="errorFile">
-                        </div>
-                    </form>
-                    <a ng-show="check!=0 && check!=2" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>
-                </div>
-            </div>
+            <!--<div class="bg-1">-->
+                <!--<div class="container-fluid text-center">-->
+                    <!--<form name="myForm">-->
+                        <!--<div class="image-upload">-->
+                            <!--<h3>Who Am I?</h3>-->
+                            <!--<label for="file-input">-->
+                                <!--<img src="storedimg/{{Profile.user_img}}" class="img-circle" alt="Profile" width="200" height="200">-->
+                            <!--</label>-->
+                            <!--<h3>{{Profile.name}}</h3>-->
+                            <!--<input type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required-->
+                                   <!--ngf-model-invalid="errorFile">-->
+                        <!--</div>-->
+                    <!--</form>-->
+                    <!--<a ng-show="!check" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-sm-12" id="radar-chart" ng-controller="RadarCtrl">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Radar Chart</div>
-                        <div class="panel-body">
-                            <canvas id="area" class="chart chart-radar" chart-data="data"
-                                    chart-labels="labels" chart-click="onClick"></canvas>
-                        </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-sm-12" id="radar-chart">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-sm-6">
+                        <center> <jqcloud words="Cwords"  width="500" height="350"  colors="{{colors}}" delay="10" steps="7" font-size="{from:0.09, to:0.04}"></jqcloud></center>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-sm-6">
+                        <canvas id="polar-area" class="chart chart-polar-area"
+                                chart-data="Cdata" chart-labels="category_labels">
+                        </canvas>
                     </div>
                 </div>
             </div>
