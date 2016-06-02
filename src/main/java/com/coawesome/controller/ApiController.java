@@ -156,10 +156,9 @@ public class ApiController {
 
   //글 한개 최신화 보기
   @RequestMapping(method = RequestMethod.POST, value = "/api/boardOne")
-  public HashMap getBoardList(@RequestBody BoardVO board) {
-    HashMap boarddata = boardMapper.findById(board.getBoard_id());
-
-    return boarddata;
+  public HashMap getBoardList(@RequestBody HashMap board) {
+    HashMap aBoard = boardMapper.findById(board);
+    return aBoard;
   }
 
 
