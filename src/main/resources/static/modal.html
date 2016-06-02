@@ -68,10 +68,10 @@
                                 <div ng-init="like=modalboard.likes" >
                                     <div ng-switch on="like">
                                         <div ng-switch-when="0">
-                                            <a ng-click="likeBoard(modalboard.board_id)" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span>공감 {{modalboard.likes_num}}</a>
+                                            <a ng-click="likeBoard(modalboard.board_id); like = 1" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span>공감 {{modalboard.likes_num}}</a>
                                         </div>
                                         <div ng-switch-default>
-                                            <a ng-click="dislikeBoard(modalboard.board_id)" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span>공감취소 {{modalboard.likes_num}}</a>
+                                            <a ng-click="dislikeBoard(modalboard.board_id); like = 0" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span>공감취소 {{modalboard.likes_num}}</a>
                                         </div>
                                     </div>
                                 </div>

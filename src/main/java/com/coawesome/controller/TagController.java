@@ -116,4 +116,14 @@ public class TagController {
 
 
 
+    //추천 테그 리스트
+    @RequestMapping(method = RequestMethod.POST, value = "/tag/loadRecommandTag")
+    public TagElement loadRecommandTag(@RequestBody TagElement category) {
+        System.out.println("Recommand tag of category : " + category);
+        TagElement tagList = tagMapper.loadRecommandTag(category.getCatagory());
+        System.out.println("Recommanded tag : " + tagList);
+        return tagList;
+    }
+
+
 }

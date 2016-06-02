@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Catagory {
+    private int friend_id;
     private int catagory;
     private int cnt;
 }

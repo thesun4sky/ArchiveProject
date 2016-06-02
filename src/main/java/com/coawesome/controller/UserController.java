@@ -203,4 +203,12 @@ public class UserController {
         return notification;
     }
 
+    //친구 추천(내친구가아니고, 나의 카테고리 최대항목과 같은 게시글을 많이 가지고있는 유저)
+    @RequestMapping(method = RequestMethod.POST, value = "/user/findCategoryFriend")
+    public UserResult findCategoryFriend(@RequestBody User user) {
+        UserResult RecomandedFriend = userMapper.findCategoryFriend(user);
+        System.out.println("recomand friend : " + RecomandedFriend);
+        return RecomandedFriend;
+    }
+
 }

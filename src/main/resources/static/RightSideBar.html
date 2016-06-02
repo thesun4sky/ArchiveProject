@@ -3,13 +3,13 @@
     <br/><br/>
 
 
-    <div ng-controller="alertCtrl">
+     <div ng-controller="alertCtrl">
         <script type="text/ng-template" id="alert.html">
             <div class="alert" style="background-color:#fa39c3;color:white" role="alert">
                 <div ng-transclude></div>
             </div>
         </script>
-        <p>알람이 뜨는 공간!</p>
+        <!--<p>알람이 뜨는 공간!</p>-->
         <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
     </div>
 

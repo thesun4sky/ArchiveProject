@@ -72,7 +72,17 @@ public interface UserMapper {
   ArrayList<HashMap> findNotithings(String id);
 
 
-
+  //친구 추천(내친구가아니고, 나의 카테고리 최대항목과 같은 게시글을 많이 가지고있는 유저)
+  @Select("SELECT * FROM user\n" +
+          "LEFT OUTER JOIN (SELECT friend.user_id from friend \n" +
+          "          LEFT OUTER JOIN (SELECT userIN.user_id, userIN.updated_time from friend INNER JOIN user as userIN on friend.user_id = userIN.user_id where friend.friend_id= #{user_id} AND userIN.updated_time > now()-300 )\n" +
+          "          as userIN on friend.user_id = userIN.user_id\n" +
+          "              INNER JOIN user on friend.user_id = user.user_id\n" +
+          "              WHERE friend.friend_id= #{user_id}) as myFriend ON myFriend.user_id = user.user_id\n" +
+          "INNER JOIN board ON board.user_id = user.user_id\n" +
+          "LEFT OUTER JOIN (SELECT catagory, COUNT(*) as cnt from board WHERE user_id = #{user_id} GROUP BY catagory ORDER BY cnt DESC LIMIT 1) as myCategory ON myCategory.catagory = board.catagory\n" +
+          "WHERE myFriend.user_id IS NULL AND user.user_id != #{user_id}  LIMIT 1")
+  UserResult findCategoryFriend(User user);
 
 
 

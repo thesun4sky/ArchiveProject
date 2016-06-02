@@ -22,4 +22,6 @@ public class TagElement {
     private String tag_img;
     private String stored_file_name;
     private String background_img;
+    private int positive;
+    private int negative;
 }
