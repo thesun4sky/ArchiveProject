@@ -15,7 +15,7 @@ public interface UserMapper {
   //회원가입
   @Insert("INSERT INTO user(login_id, password, name, sex, born, email) VALUES(#{login_id}, #{password}, #{name}, #{sex}, #{born}, #{email})")
   void addUser(User user);
-  @Select("select user_id from user where login_id = #{login_id}")
+  @Select("select user_id from user where login_id = #{login_id} LIMIT 1")
   int getUserid(User user);
   @Insert("INSERT INTO friend(user_id, friend_id, status) VALUES(#{user_id}, #{user_id}, 2)")
   void initFriend(User user);

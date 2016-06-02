@@ -1245,19 +1245,21 @@ angular.module("homeApp",[
         };
 
         $rootScope.checkedTime = null;
-
         $scope.StartTimer = function () {
             $scope.Noti = $interval(function () {
-                if($rootScope.checkedTime != null){
-                    if (store.get('obj') == null) {
-                        $interval.cancel($scope.Noti);
-                    }
-                    $rootScope.currentTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
-                    $scope.CallNotiApi();
+                if($rootScope.StartTimer_exist == null) {
 
-                }
-                else {
-                    $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
+                    if ($rootScope.checkedTime != null) {
+                        if (store.get('obj') == null) {
+                            $interval.cancel($scope.Noti);
+                        }
+                        $rootScope.currentTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
+                        $scope.CallNotiApi();
+                        $rootScope.StartTimer_exist = true;
+                    }
+                    else {
+                        $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
+                    }
                 }
             }, 5000);
         };
@@ -2369,7 +2371,7 @@ angular.module("homeApp",[
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
         var userObject = store.get('obj');
-        $scope.tolineList = function () {
+        $scope.toline_init = function () {
             $http({
                 method: 'POST', //방식
                 url: "/user/showfriends", /* 통신할 URL */
@@ -2395,7 +2397,7 @@ angular.module("homeApp",[
 
         $scope.showFriendList();
 
-        $scope.tolineList();
+        $scope.toline_init();
 
         $scope.toOthers = function(others){
             $rootScope.others_id = others.user_id;
@@ -2443,7 +2445,7 @@ angular.module("homeApp",[
                     if(data.msg == 'false') {
                         alert('친구승낙 실패')
                     }else{
-                        $scope.tolineList();
+                        $scope.toline_init();
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -2466,9 +2468,9 @@ angular.module("homeApp",[
             })
                 .success(function (data, status, headers, config) {
                     if (data.msg == 'false') {
-                        alert('좋아요취소 실패')
+                        alert('친구신청 거절 실패')
                     } else {
-                        $scope.boardList();
+                        $scope.toline_init();
                     }
                 })
                 .error(function (data, status, headers, config) {
