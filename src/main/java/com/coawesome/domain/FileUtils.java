@@ -13,7 +13,7 @@ import java.util.*;
 
 @Component("fileUtils")
 public class FileUtils {
-    private static final String filePath = "/build/resources/main/static/storedimg/";
+    private static final String filePath = "/home/centos/ArchiveProject/build/resources/main/static/storedimg/";
     //TODO 상단 디렉토리명 바꾸기
 
     public static String getRandomString(){
