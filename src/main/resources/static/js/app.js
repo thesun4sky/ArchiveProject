@@ -546,7 +546,7 @@ angular.module("homeApp",[
             $event.stopPropagation();
             $scope.status.isopen = !$scope.status.isopen;
         };
-        
+
         $scope.convAlert = function(data) {
             if(data.id == '1') {
                 if (data.status == 0) {
@@ -1365,6 +1365,7 @@ angular.module("homeApp",[
             })
                 .then(function (response) {
                     $scope.check = response.data.msg;
+                 
                 });
 
             //친구게시물만 나열하기

@@ -33,12 +33,9 @@
                                 <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
                             </div>
                         </div>
-                    </form>
-                    <a ng-show="check!=0 && check!=2" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>
-                </div>
                     </div>
-                    <a ng-show="!check" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()" style="z-index: 20"><p class="fa fa-user-plus" >친구신청</p></a>
-                </form>
+                    </form>
+                    <a ng-show="check==null" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>
             </div>
         </div>
 

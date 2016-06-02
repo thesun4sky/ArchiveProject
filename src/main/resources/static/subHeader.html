@@ -50,11 +50,11 @@
             <ul class="nav navbar-nav navbar-right secondnav" ng-controller="subHeaderCtrl"  >
                 <li><a ui-sref="profile"><i class="fa fa-user"></i></a></li>
                 <li><a ui-sref="toline"><span class="glyphicon glyphicon-magnet"></span></a></li>
-                <li><a ng-click="toggleDropdown($event)" class="btn" type="button" id="single-button" uib-dropdown-toggle> <i class="fa fa-bell"></i></a></li>
-                <div style="width: 100px;"  uib-dropdown is-open="status.isopen" >
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                <li><a ng-click="toggleDropdown($event)" class="btn" type="button" id="single-button" uib-dropdown-toggle><i class="fa fa-bell pull-left"></i></a></li>
+                <div  uib-dropdown is-open="status.isopen" style="background-color: white;color: white;">
+                    <ul uib-dropdown-menu role="menu" aria-labelledby="single-button" style="z-index: 3;background-color: white;width:300px;margin-top:35px;">
                         <div ng-repeat="a in alertThings">
-                            <li role="menuitem"><a style="color: white" ng-click="">{{a.msg}}</a></li>
+                            <li class="list-group-item list-group-item-info text-center" style="margin-bottom:5px;"><a ng-click="" >{{a.msg}}</a></li>
                         </div>
                     </ul>
                 </div>
