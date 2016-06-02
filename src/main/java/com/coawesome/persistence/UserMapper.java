@@ -1,8 +1,6 @@
 package com.coawesome.persistence;
 
-import com.coawesome.domain.ImageVO;
-import com.coawesome.domain.User;
-import com.coawesome.domain.UserResult;
+import com.coawesome.domain.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
@@ -50,6 +48,17 @@ public interface UserMapper {
   @Select("Select * from user where user_id=#{user_id}")
   UserResult loadProfile(User user);
 
+  //유저 클라우드 단어 가져오기
+  @Select("SELECT tag as text, count(*)*8 as weight FROM (SELECT tag1 as tag FROM board WHERE user_id = #{user_id} UNION\n" +
+          "SELECT tag2 as tag FROM board WHERE user_id = #{user_id} UNION SELECT tag3 as tag FROM board WHERE user_id = #{user_id}) as tags\n" +
+          "GROUP BY tag")
+  ArrayList<CloudVO> getUserWords(User user);
+
+  //유저 카테고리 값 가져오기
+  @Select("SELECT catagory, COUNT(*) as cnt FROM board WHERE user_id = #{user_id} GROUP BY catagory")
+  ArrayList<Catagory> getUserValueByCategory(User user);
+
+
   //최근 접속 시간 업데이트
   @Update("UPDATE user SET updated_time=#{updated_time} WHERE user_id=#{user_id}")
   void updateUserTime(User user);
@@ -61,6 +70,8 @@ public interface UserMapper {
   //사용자 검색
   @Select("select * from user where name Like  CONCAT('%', #{name}, '%')")
   ArrayList<HashMap> findNotithings(String id);
+
+
 
 
 

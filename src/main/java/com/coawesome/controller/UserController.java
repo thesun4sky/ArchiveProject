@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -113,6 +114,43 @@ public class UserController {
         System.out.println("Load Profile : " + userProfile);
         return userProfile;
     }
+
+
+
+
+    //유저 클라우드 단어 불러오기
+    @RequestMapping(method = RequestMethod.POST, value = "/user/getUserWords")
+    public ArrayList<CloudVO> getUserWords(@RequestBody User user) {
+
+        ArrayList<CloudVO> userWords = userMapper.getUserWords(user);
+        System.out.println("get user tags : " + userWords);
+        return userWords;
+    }
+
+
+
+
+
+    //유저 카테고리 값 가져오기
+    @RequestMapping(method = RequestMethod.POST, value = "/user/getUserValue")
+    public int[] getUserValue(@RequestBody User user) {
+        String userid =  user.getLogin_id();
+        System.out.println("get value of tag : " + userid);
+        int[] numbers = {0,0,0,0,0,0,0,0 };
+        ArrayList<Catagory> UserCatagory = new ArrayList<>();
+        UserCatagory = userMapper.getUserValueByCategory(user);
+        int size = UserCatagory.size();
+        for(int i=0, j=0; i < 8 ; i++){
+            if(UserCatagory.get(j).getCatagory()-1 == i) {
+                numbers[i] = UserCatagory.get(j).getCnt();
+                if(j < size-1) j++;
+            }
+        }
+        System.out.println("user category value : " + numbers);
+        return numbers;
+    }
+
+
     //시간 업데이트
     @RequestMapping(method = RequestMethod.POST, value="user/updateTime")
     public Result updateUserTime(@RequestBody User user){
