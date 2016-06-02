@@ -33,6 +33,7 @@
                                 <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
                             </div>
                         </div>
+                        </div>
                     </form>
                     <a ng-show="check!=0 && check!=2" class="btn btn-lg btn-primary pull-right" ng-click="applyFriend()"><i class="fa fa-user-plus" >친구신청</i></a>
                 </div>
@@ -46,9 +47,7 @@
 
         <!--좌측 화면분할-->
         <div class="col-sm-2 col-md-2 col-lg-2 sidenav hidden-xs" >
-            <div class="container-fluid " >
-                <p></p>
-            </div>
+            <div ng-include="'LeftSideBar.html'"></div>
         </div>
 
         <!--가운데 콘텐츠 화면분할-->
