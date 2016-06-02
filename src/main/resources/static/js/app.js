@@ -512,6 +512,58 @@ angular.module("homeApp",[
     })
 
 
+    .controller("subHeaderCtrl",function(store, $scope, $rootScope, $http, $filter){
+        var userObject = store.get('obj');
+        $scope.getAlertData = function () {
+            $http({
+                method: 'POST', //방식
+                url: "/user/fullAlert", /* 통신할 URL */
+                data: {
+                    user_id : userObject.user_id,
+                    currentTime : $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
+                    checkedTime : userObject.updated_time
+                }, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    if(response.data != null && response.data != undefined){
+                        $scope.alertData = response.data;
+                        for(var i=0;i<$scope.alertData.length;i++) {
+                            $scope.convAlert($scope.alertData[i]);
+                        }
+                    }
+                })
+        };
+        $scope.getAlertData();
+
+
+        $scope.alertThings = [];
+
+        $scope.convAlert = function(data) {
+            if(data.id == '1') {
+                if (data.status == 0) {
+                    $scope.alertThings.push({type: 'info', msg: data.name+'님께서 친구 신청 하셨습니다.'});
+                }
+                else if (data.status == 1)
+                    $scope.alertThings.push({type: 'success', msg: data.name+'님께서 친구 승인 하셨습니다.'});
+            }
+            else if(data.id == '2') {
+                $scope.alertThings.push({type: 'warning', msg: data.name+'님께서 댓글을 남겼습니다.'});
+            }
+            else if(data.id == '3'){
+                $scope.alertThings.push({type: 'danger', msg: data.name+'님께서 게시물을 페이보릿 하셨습니다.'});
+            }
+            else if(data.id == '4'){
+                $scope.alertThings.push({type: 'info', msg: data.name+'님께서 게시물을 공감하셨습니다.'});
+            }
+        };
+        $scope.closeAlert = function(index) {
+            $scope.alertThings.splice(index, 1);
+        };
+
+    })
+
+
     .controller("indexCtrl",function($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
         var userObject = store.get('obj');
         $scope.logoWidth = window.innerWidth/6;
@@ -750,142 +802,6 @@ angular.module("homeApp",[
 
 
 
-    /*.controller("bodyCtrl",function($scope, $http, store, $state, $rootScope, $interval, $filter) {
-        //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
-        var userObject = store.get('obj');
-
-        $scope.toOthers = function(others){
-            $rootScope.others_id = others.user_id;
-            if ($rootScope.othersStatus){
-                $state.go("others1");
-                $rootScope.othersStatus = false;
-            }else{
-                $state.go("others2");
-                $rootScope.othersStatus = true;
-            }
-        };
-
-
-        $scope.alerts = [];
-
-        $scope.addAlert = function(data) {
-            if(data.id == '1') {
-                if (data.status == 0) {
-                    $scope.alerts.push({type: 'info', msg: data.name+'님께서 친구 신청 하셨습니다.'});
-                }
-                else if (data.status == 1)
-                    $scope.alerts.push({type: 'success', msg: data.name+'님께서 친구 승인 하셨습니다.'});
-            }
-            else if(data.id == '2') {
-                $scope.alerts.push({type: 'warning', msg: data.name+'님께서 댓글을 남겼습니다.'});
-            }
-            else if(data.id == '3'){
-                $scope.alerts.push({type: 'danger', msg: data.name+'님께서 게시물을 페이보릿 하셨습니다.'});
-            }
-            else if(data.id == '4'){
-                $scope.alerts.push({type: 'info', msg: data.name+'님께서 게시물을 공감하셨습니다.'});
-            }
-        };
-        $scope.closeAlert = function(index) {
-            $scope.alerts.splice(index, 1);
-        };
-
-        $rootScope.checkedTime = null;
-
-        $scope.StartTimer = function () {
-            $scope.Noti = $interval(function () {
-                // alert('noti 불림');
-                if($rootScope.checkedTime != null){
-                    if (store.get('obj') == null) {
-                        $interval.cancel($scope.Noti);
-                    }
-                    $rootScope.currentTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
-                    $scope.CallNotiApi();
-                    $rootScope.checkedTime = $rootScope.currentTime;
-                }
-                else {
-                    $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
-                }
-            }, 5000);
-        };
-        
-        //Timer stop function.
-        $scope.CallNotiApi = function () {
-            $http({
-                method: 'POST', //방식
-                url: "/user/notification", /!* 통신할 URL *!/
-                data: {
-                    user_id : userObject.user_id,
-                    currentTime : $rootScope.currentTime,
-                    checkedTime : $rootScope.checkedTime
-                },
-                headers: {'Content-Type': 'application/json; charset=utf-8'}
-            })
-                .then(function (response) {
-                    if(response.data != null && response.data != undefined){
-                        $scope.datas = response.data;
-                        for(var i=0;i<$scope.datas.length;i++) {
-                            $scope.addAlert($scope.datas[i]);
-                        }
-
-                    }
-                })
-
-
-        };
-
-
-
-        $scope.replylist = function(board) {
-            $http({
-                method: 'POST', //방식
-                url: "/api/showreply", /!* 통신할 URL *!/
-                data: board, /!* 파라메터로 보낼 데이터 *!/
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .success(function (data, status, headers, config) {
-                    $rootScope.reply=data;
-                    $scope.reply=$rootScope.reply;
-                 });
-          }
-
-
-
-        $scope.boardList = function () {
-            $http({
-                method: 'POST', //방식
-                url: "/api/boardlist", /!* 통신할 URL *!/
-                data: userObject, /!* 파라메터로 보낼 데이터 *!/
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function (response) {
-                    $scope.boards = response.data;
-                })
-        };
-
-        $scope.showFriendList = function () {
-            $http({
-                method: 'POST', //방식
-                url: "/user/showfriends", /!* 통신할 URL *!/
-                data: userObject, /!* 파라메터로 보낼 데이터 *!/
-                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-            })
-                .then(function (response) {
-                    $scope.friends = response.data;
-                });
-        };
-
-
-        if (userObject!=null){
-            $scope.showFriendList();
-            $scope.StartTimer();
-        }
-
-    })*/
-
-
-
-
 
     .controller("loginCtrl",function($scope, $http, store, $state, $filter, $interval, $rootScope){
 
@@ -899,25 +815,6 @@ angular.module("homeApp",[
             store.set('obj',null);
             $state.go('login');
         };
-
-
-
-       /* $scope.StartTimer = function () {
-            $scope.Noti = $interval(function () {
-                // alert('noti 불림');
-                if($rootScope.checkedTime != null){
-                    if (store.get('obj') == null) {
-                        $interval.cancel($scope.Noti);
-                    }
-                    $rootScope.currentTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
-                    $scope.CallNotiApi();
-                    $rootScope.checkedTime = $rootScope.currentTime;
-                }
-                else {
-                    $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
-                }
-            }, 5000);
-        };*/
 
         $scope.loginPost = function(){
             var loginObject = {
@@ -936,11 +833,12 @@ angular.module("homeApp",[
                             var myInfo = {
                                 login_id: data.msg,
                                 user_id: data.result,
-                                login_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss')
+                                login_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
+                                updated_time : data.updated_time
                             };
 
                             store.set('obj',myInfo);
-                            // $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
+                            $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
                             $state.go('main');
                             /* 맞음 */
                         }
@@ -1242,7 +1140,7 @@ angular.module("homeApp",[
 
     .controller("alertCtrl", function ($rootScope,$scope,$http, store, $state, $interval, $filter) {
 
-        var userObject = store.get('obj')
+        var userObject = store.get('obj');
 
         $scope.alerts = [];
 
@@ -1339,18 +1237,6 @@ angular.module("homeApp",[
                     $scope.tags = response.data; 
                 });
         };
-
-
-        /*$scope.toOthers = function(others){
-            $rootScope.others_id = others.user_id;
-            if ($rootScope.othersStatus){
-                $state.go("others1");
-                $rootScope.othersStatus = false;
-            }else{
-                $state.go("others2");
-                $rootScope.othersStatus = true;
-            }
-        };*/
 
         $scope.toTag = function(tags){
             $rootScope.tag_name = tags.tag;

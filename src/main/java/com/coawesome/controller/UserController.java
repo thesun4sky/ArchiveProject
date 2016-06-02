@@ -82,7 +82,7 @@ public class UserController {
 
     //로그인
     @RequestMapping(method = RequestMethod.POST, value = "/user/login")
-    public Result Login(@RequestBody User user) {
+    public LoginResult Login(@RequestBody User user) {
         System.out.println("try to login user: " + user);
 
         User userInfo = userMapper.Login(user);
@@ -90,10 +90,28 @@ public class UserController {
         String user_pw = userInfo.getPassword();
         System.out.println(user_pw + " : " +  user.getPassword());
         if(!user_pw.equals(input_password)) {
-            return new Result(0, "fales");
+            return new LoginResult(0, "fales", "");
         }
-        return new Result(userInfo.getUser_id(), userInfo.getName());
+        return new LoginResult(userInfo.getUser_id(), userInfo.getName(), userInfo.getUpdated_time());
     }
+
+    //updatedTime 기준 알람 받기
+    @RequestMapping(method = RequestMethod.POST, value = "/user/fullAlert")
+    public ArrayList<HashMap> alert(@RequestBody HashMap map)  {
+        System.out.println("checkedTime : " + map.get("checkedTime") + "currentTime : " + map.get("currentTime"));
+        ArrayList<HashMap> notification = userMapper.notification(map);
+//        System.out.println("알람 나올 것들: " + notification);
+        if(notification == null || notification.isEmpty()){
+            return null;
+        }
+        return notification;
+    }
+
+
+
+
+
+
     //프로필사진등록
     @RequestMapping(method = RequestMethod.POST, value = "/user/insertUserImage")
     public Result insertUserImage(@RequestParam("file") MultipartFile file, User user) throws Exception {
@@ -178,7 +196,7 @@ public class UserController {
     public ArrayList<HashMap> Notification(@RequestBody HashMap map)  {
         System.out.println("checkedTime : " + map.get("checkedTime") + "currentTime : " + map.get("currentTime"));
         ArrayList<HashMap> notification = userMapper.notification(map);
-        System.out.println("알람 나올 것들: " + notification);
+//        System.out.println("알람 나올 것들: " + notification);
         if(notification == null || notification.isEmpty()){
             return null;
         }
