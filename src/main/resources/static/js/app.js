@@ -2522,7 +2522,7 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('좋아요 실패')
                     } else {
-                        $scope.openMyFolder();
+                        $scope.openFolder($rootScope.folder);
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -2548,7 +2548,7 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('좋아요취소 실패')
                     } else {
-                        $scope.openMyFolder();
+                        $scope.openFolder($rootScope.folder);
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -2569,7 +2569,7 @@ angular.module("homeApp",[
                         alert('페이버릿 실패')
                     } else {
                         alert('페이버릿 성공');
-                        $scope.archiveList();
+                        $scope.openFolder($rootScope.folder);
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -2596,7 +2596,7 @@ angular.module("homeApp",[
                         alert('페이버릿취소 실패')
                     } else {
                         alert('페이버릿취소 성공');
-                        $scope.archiveList();
+                        $scope.openFolder($rootScope.folder);
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -2618,7 +2618,7 @@ angular.module("homeApp",[
                 // $log.info('Modal dismissed at: ' + new Date());
                 $rootScope.modalboard={};
                 $rootScope.reply={};
-                $scope.archiveList();
+                $scope.openFolder($rootScope.folder);
             });
         };
 
@@ -2695,8 +2695,9 @@ angular.module("homeApp",[
                     }
                 })
         }
-
+        $rootScope.folder = ""
         $scope.openFolder = function (folder_id) {
+            $rootScope.folder = folder_id;
             if(folder_id == 100){
                 var openLineFolderObject = {
                     user_id: userObject.user_id
