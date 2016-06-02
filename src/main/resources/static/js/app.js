@@ -1167,7 +1167,7 @@ angular.module("homeApp",[
              var words = $scope.lines.firstLine + " " + $scope.lines.secondLine + " ";
            // var words = $scope.lines.firstLine.concat(" ".concat($scope.lines.secondLine));
             //삭제어
-           res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |나랑 |하는 |들과 |일 |했던 |한 |내 |너 |나 |네 |엔 |앤 |에서 |으로 |한다면 |입니당 |입니다 |습니당 |습니다 |어요 |지요 |며 |다면 |니 |자 /gi , " ");  //조사  //동사 꾸밈어  //종조사
+           res = words.replace(/은 |는 |이 |이고 |가 |의 |을 |를 |야 |나랑 |하는 |들과 |일 |했던 |한 |내 |너 |나 |네 |하니까 |엔 |앤 |에서 |으로 |이면 |하게 |하는 |으로 |한다 |한다면 |입니당 |입니다 |습니당 |습니다 |어요 |지요 |며 |다면 |니 |자 /gi , " ");  //조사  //동사 꾸밈어  //종조사
 
             //대체어
             // res = res.replace(/[?]/gi, " 물음표 ");  // ?
