@@ -11,7 +11,8 @@ angular.module("homeApp",[
         'ui.bootstrap',
         'angular-jqcloud',
         'ui.bootstrap.alert',
-        'angular-confirm'
+        'angular-confirm',
+        'duScroll'
     ])
     .config(function(storeProvider){
         storeProvider.setStore('sessionStorage');
