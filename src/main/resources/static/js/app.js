@@ -523,10 +523,8 @@ angular.module("homeApp",[
                     if(response.data != null && response.data != undefined){
                         $scope.alertData = response.data;
                         for(var i=0;i<$scope.alertData.length;i++) {
-                            
-                            $scope.alertData[i].msg = '님께서 친구 신청 하셨습니다.'
-                            
-                            // $scope.convAlert($scope.alertData[i]);
+
+                            $scope.convAlert($scope.alertData[i]);
                         }
                     }
                 })
@@ -1249,21 +1247,18 @@ angular.module("homeApp",[
         $rootScope.checkedTime = null;
         $scope.StartTimer = function () {
             $scope.Noti = $interval(function () {
-                if($rootScope.StartTimer_exist == null) {
-
                     if ($rootScope.checkedTime != null) {
                         if (store.get('obj') == null) {
                             $interval.cancel($scope.Noti);
                         }
                         $rootScope.currentTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
                         $scope.CallNotiApi();
-                        $rootScope.StartTimer_exist = true;
                     }
                     else {
                         $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
                     }
-                }
-            }, 5000);
+
+            }, 10000);
         };
 
         //Timer stop function.
