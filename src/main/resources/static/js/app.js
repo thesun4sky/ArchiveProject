@@ -62,6 +62,21 @@ angular.module("homeApp",[
                 });
         }
 
+        $scope.modalrefresh=function (board_id) {
+            $http({
+                method: 'POST', //방식
+                url: "/api/boardOne", /* 통신할 URL */
+                data: {board_id: board_id, user_id : userObject.user_id}, /* 파라메터로 보낼 데이터 */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .then(function (response) {
+                    $rootScope.modalboard = response.data;
+                })
+        }
+
+
+
+
         $scope.favoriteBoard = function (board_id) {
             $http({
                 method: 'POST', //방식
@@ -73,15 +88,7 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('페이버릿 실패')
                     } else {
-                        $http({
-                            method: 'POST', //방식
-                            url: "/api/boardOne", /* 통신할 URL */
-                            data: {board_id: board_id}, /* 파라메터로 보낼 데이터 */
-                            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-                        })
-                            .success(function (data, status, headers, config) {
-                                $rootScope.modalboard = data
-                            })
+                        $scope.modalrefresh(board_id)
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -107,15 +114,7 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('페이버릿취소 실패')
                     } else {
-                        $http({
-                            method: 'POST', //방식
-                            url: "/api/boardOne", /* 통신할 URL */
-                            data: {board_id: board_id}, /* 파라메터로 보낼 데이터 */
-                            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-                        })
-                            .success(function (data, status, headers, config) {
-                                $rootScope.modalboard = data
-                            })
+                        $scope.modalrefresh(board_id)
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -137,15 +136,7 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('좋아요 실패')
                     } else {
-                        $http({
-                            method: 'POST', //방식
-                            url: "/api/boardOne", /* 통신할 URL */
-                            data: {board_id: board_id}, /* 파라메터로 보낼 데이터 */
-                            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-                        })
-                            .success(function (data, status, headers, config) {
-                                $rootScope.modalboard = data
-                            })
+                        $scope.modalrefresh(board_id)
                     }
                 })
                 .error(function (data, status, headers, config) {
@@ -171,15 +162,7 @@ angular.module("homeApp",[
                     if (data.msg == 'false') {
                         alert('좋아요취소 실패')
                     } else {
-                        $http({
-                            method: 'POST', //방식
-                            url: "/api/boardOne", /* 통신할 URL */
-                            data: {board_id: board_id}, /* 파라메터로 보낼 데이터 */
-                            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
-                        })
-                            .success(function (data, status, headers, config) {
-                                $rootScope.modalboard = data
-                            })
+                        $scope.modalrefresh(board_id)
                     }
                 })
                 .error(function (data, status, headers, config) {
