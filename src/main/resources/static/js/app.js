@@ -2363,7 +2363,7 @@ angular.module("homeApp",[
 
 
 
-    .controller("tolineCtrl",function($scope, $http, store, $state,$filter){
+    .controller("tolineCtrl",function($scope,  $rootScope, $http, store, $state,$filter){
 
         //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
