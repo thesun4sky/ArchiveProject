@@ -74,28 +74,85 @@ public class FolderController {
 
     //폴더 열기
     @RequestMapping(method = RequestMethod.POST, value = "/folder/openFolder")
-    public List<HashMap> openFolder(@RequestBody Folder folder) {
+    public List<BoardResult> openFolder(@RequestBody Folder folder) {
         int folder_id =  folder.getFolder_id();
         System.out.println("open folder : " + folder_id);
-        ArrayList<HashMap> boardList = folderMapper.openFolder(folder);
+        ArrayList<BoardResult> boardList = folderMapper.openFolder(folder);
+        int[][] numbers = new int[1000][10];
+        for(int x=0; x < boardList.size(); x++){
+            wordVO values = folderMapper.getValues( boardList.get(x).getBoard_id() );
+            System.out.println("insert values" + values);
+            if(values != null) {
+                numbers[x][0] = values.getPos1();
+                numbers[x][1] = values.getPos2();
+                numbers[x][2] = values.getPos3();
+                numbers[x][3] = values.getPos4();
+                numbers[x][4] = values.getPos5();
+                numbers[x][5] = values.getNeg1();
+                numbers[x][6] = values.getNeg2();
+                numbers[x][7] = values.getNeg3();
+                numbers[x][8] = values.getNeg4();
+                numbers[x][9] = values.getNeg5();
+                boardList.get(x).setValues(numbers[x]);   //게시글 별로 단어 테이블 주입
+            }
+            System.out.println("insert values in for 문" + boardList.get(x));
+        }
         return boardList;
     }
 
     //친구(라인)폴더 열기
     @RequestMapping(method = RequestMethod.POST, value = "/folder/openLineFolder")
-    public List<HashMap> openLineFolder(@RequestBody User user) {
+    public List<BoardResult> openLineFolder(@RequestBody User user) {
         int user_id =  user.getUser_id();
         System.out.println("open friends folder of : " + user_id);
-        ArrayList<HashMap> boardList = folderMapper.openLineFolder(user);
+        ArrayList<BoardResult> boardList = folderMapper.openLineFolder(user);
+        int[][] numbers = new int[1000][10];
+        for(int x=0; x < boardList.size(); x++){
+            wordVO values = folderMapper.getValues( boardList.get(x).getBoard_id() );
+            System.out.println("insert values" + values);
+            if(values != null) {
+                numbers[x][0] = values.getPos1();
+                numbers[x][1] = values.getPos2();
+                numbers[x][2] = values.getPos3();
+                numbers[x][3] = values.getPos4();
+                numbers[x][4] = values.getPos5();
+                numbers[x][5] = values.getNeg1();
+                numbers[x][6] = values.getNeg2();
+                numbers[x][7] = values.getNeg3();
+                numbers[x][8] = values.getNeg4();
+                numbers[x][9] = values.getNeg5();
+                boardList.get(x).setValues(numbers[x]);   //게시글 별로 단어 테이블 주입
+            }
+            System.out.println("insert values in for 문" + boardList.get(x));
+        }
         return boardList;
     }
 
     //페이버릿폴더 열기
     @RequestMapping(method = RequestMethod.POST, value = "/folder/openFavoriteFolder")
-    public List<HashMap> openFavoriteFolder(@RequestBody User user) {
+    public List<BoardResult> openFavoriteFolder(@RequestBody User user) {
         int user_id =  user.getUser_id();
         System.out.println("open favorite folder of : " + user_id);
-        ArrayList<HashMap> boardList = folderMapper.openFavoriteFolder(user);
+        ArrayList<BoardResult> boardList = folderMapper.openFavoriteFolder(user);
+        int[][] numbers = new int[1000][10];
+        for(int x=0; x < boardList.size(); x++){
+            wordVO values = folderMapper.getValues( boardList.get(x).getBoard_id() );
+            System.out.println("insert values" + values);
+            if(values != null) {
+                numbers[x][0] = values.getPos1();
+                numbers[x][1] = values.getPos2();
+                numbers[x][2] = values.getPos3();
+                numbers[x][3] = values.getPos4();
+                numbers[x][4] = values.getPos5();
+                numbers[x][5] = values.getNeg1();
+                numbers[x][6] = values.getNeg2();
+                numbers[x][7] = values.getNeg3();
+                numbers[x][8] = values.getNeg4();
+                numbers[x][9] = values.getNeg5();
+                boardList.get(x).setValues(numbers[x]);   //게시글 별로 단어 테이블 주입
+            }
+            System.out.println("insert values in for 문" + boardList.get(x));
+        }
         return boardList;
     }
 
@@ -104,9 +161,9 @@ public class FolderController {
     @RequestMapping(method = RequestMethod.POST, value = "/folder/openMyFolder")
     public List<BoardResult> openMyFolder(@RequestBody User user) {
         int user_id =  user.getUser_id();
-        int[][] numbers = new int[1000][10];
         System.out.println("open my folder of : " + user_id);
         ArrayList<BoardResult> boardList = folderMapper.openMyFolder(user);
+        int[][] numbers = new int[1000][10];
         for(int x=0; x < boardList.size(); x++){
             wordVO values = folderMapper.getValues( boardList.get(x).getBoard_id() );
             System.out.println("insert values" + values);

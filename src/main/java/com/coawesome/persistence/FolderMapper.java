@@ -44,7 +44,7 @@ public interface FolderMapper {
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
           "LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "WHERE fboard.folder_id = #{folder_id}")
-  ArrayList<HashMap> openFolder(Folder folder);
+  ArrayList<BoardResult> openFolder(Folder folder);
 
   //친구(라인)폴더 열기
   @Select("SELECT DISTINCT user.name, board.board_id, user.user_id, user.user_img, board.public_level, board.catagory, board.likes_num, board.tag1, tag_1.hit as hit1,  board.tag2, tag_2.hit as hit2, board.tag3, tag_3.hit as hit3,\n" +
@@ -60,7 +60,7 @@ public interface FolderMapper {
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
           "WHERE friend.user_id = #{user_id}")
-  ArrayList<HashMap> openLineFolder(User user);
+  ArrayList<BoardResult> openLineFolder(User user);
 
   //페이버릿폴더 열기
   @Select("SELECT DISTINCT user.name, board.board_id, user.user_id, user.user_img, board.public_level, board.catagory, board.likes_num, board.tag1, tag_1.hit as hit1,  board.tag2, tag_2.hit as hit2, board.tag3, tag_3.hit as hit3,\n" +
@@ -76,7 +76,7 @@ public interface FolderMapper {
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
           "WHERE favorite.user_id = #{user_id}")
-  ArrayList<HashMap> openFavoriteFolder(User user);
+  ArrayList<BoardResult> openFavoriteFolder(User user);
 
   //내폴더 열기
   @Select("SELECT DISTINCT user.name, board.board_id, user.user_id, user.user_img, board.public_level, board.catagory, board.likes_num, board.tag1, tag_1.hit as hit1,  board.tag2, tag_2.hit as hit2, board.tag3, tag_3.hit as hit3,\n" +
@@ -94,7 +94,7 @@ public interface FolderMapper {
           "          WHERE board.user_id = #{user_id}")
   ArrayList<BoardResult> openMyFolder(User user);
 
-  @Select("SELECT * FROM board_value WHERE board_id = #{board_id}")
+  @Select("SELECT * FROM board_value WHERE board_id = #{board_id} LIMIT 1")
   wordVO getValues(@Param("board_id") int board_id);
 
 }
