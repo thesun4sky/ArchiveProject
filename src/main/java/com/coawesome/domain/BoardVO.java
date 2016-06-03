@@ -37,5 +37,5 @@ public class BoardVO {
     private ArrayList<Reply> list;
     private int catagory;
     private ArrayList<String> words;
-    private ArrayList<HashMap> values;
+//    private ArrayList<HashMap> values;
 }

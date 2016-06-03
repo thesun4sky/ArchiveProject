@@ -112,12 +112,9 @@ public class ApiController {
     String FileName = boardMapper.getFileName(boardId);
     System.out.println("fileName: " + FileName);
     boolean isDeleted = fileUtils.deleteFile(FileName);
-    if(isDeleted)
-      {
         System.out.println("isDeleted: " + isDeleted);
         boardMapper.deleteBoardImage(boardId); // 잘 만들어진 DB경우 한번에 지워질듯
         boardMapper.deleteBoard(boardId);
-      }
     return new Result(0, "success");
   }
 
