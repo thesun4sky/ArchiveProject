@@ -6918,3 +6918,16 @@ button.close {
   text-decoration: none;
 }
 
+@media (max-width: 768px)
+{
+  #mobilewidth .thumbnail{
+    width:100%;
+  }
+}
+
+@media (min-width: 768px)
+{
+  #mobilewidth .thumbnail{
+    width:50%;
+  }
+}
