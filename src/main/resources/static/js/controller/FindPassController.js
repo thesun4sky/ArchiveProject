@@ -1,9 +1,9 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller("findPASSCtrl",function($scope, $http){
 
+
+var __FindPassCtrl = function ($scope, $http) {
     $scope.findPASS=[{
         login_id :"", email :""
     }];
@@ -32,4 +32,5 @@ angular.module("homeApp")
                 console.log(status);
             });
     };
-})
+};
+

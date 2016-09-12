@@ -1,8 +1,8 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller("indexCtrl",function($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
+
+var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
     var userObject = store.get('obj');
     $scope.logoWidth = window.innerWidth/6;
 
@@ -270,7 +270,5 @@ angular.module("homeApp")
         {catagory: 7, link: "travel", title: "여행", icon1: "glyphicon", icon2: "glyphicon-plane"},
         {catagory: 8, link: "music", title: "음악", icon1: "glyphicon", icon2: "glyphicon-music"}
     ];
-
-
-})
+};
 

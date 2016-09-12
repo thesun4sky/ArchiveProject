@@ -3,8 +3,8 @@
  */
 
 //테그 프로필페이지 컨트롤러
-angular.module("homeApp")
-    .controller("tagCtrl",function($rootScope,$scope,$http, store, $uibModal, $state) {
+
+var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $state) {
     $scope.chart_view = 1;
 
     var userObject = store.get('obj');
@@ -263,5 +263,4 @@ angular.module("homeApp")
                 console.log(status);
             });
     };
-
-})
+};

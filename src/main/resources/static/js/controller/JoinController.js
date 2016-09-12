@@ -1,8 +1,9 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller("joinCtrl",function($scope, $http, $state){
+
+
+var __JoinCtrl = function ($scope, $http, $state) {
     var checkedId = "";
     $scope.join=[{
         login_id :"" ,password :"", passwordck :"", name :"", sex :"", born1 :"", born2 :"", born3 :"", email:""
@@ -91,4 +92,4 @@ angular.module("homeApp")
                     });
             };
         }}
-})
+};

@@ -1,9 +1,8 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller("findCtrl",function($rootScope,$scope,$http, store, $state){
 
+var __FindCtrl =  function ($rootScope,$scope,$http, store, $state) {
     $scope.find_user = "";
 
 
@@ -48,4 +47,4 @@ angular.module("homeApp")
         .then(function(response) {
             $scope.user_Object = response.data;
         });
-})
+};

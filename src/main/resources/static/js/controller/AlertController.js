@@ -1,9 +1,10 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller("alertCtrl", function ($rootScope,$scope,$http, store, $state, $interval, $filter) {
 
+
+
+var __AlertCtrl = function ($rootScope,$scope,$http, store, $state, $interval, $filter) {
     var userObject = store.get('obj');
 
     $scope.alerts = [];
@@ -72,4 +73,5 @@ angular.module("homeApp")
 
     $scope.StartTimer();
 
-})
+};
+

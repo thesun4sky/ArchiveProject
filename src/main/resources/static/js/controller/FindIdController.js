@@ -1,9 +1,8 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller("findIDCtrl",function($scope, $http){
 
+var __FindIdCtrl = function ($scope, $http) {
     $scope.findID=[{
         name :"", born1 :"", born2 :"", born3 :""
     }];
@@ -32,4 +31,5 @@ angular.module("homeApp")
                 console.log(status);
             });
     };
-})
+};
+

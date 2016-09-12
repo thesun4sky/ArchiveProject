@@ -2,8 +2,8 @@
  * Created by TeasunKim on 2016-09-12.
  */
 
-angular.module("homeApp")
-.controller("othersCtrl",function($rootScope,$scope,$http, store, $state,$filter, $uibModal) {
+
+var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $uibModal) {
     var othersObject = {
         user_id : $rootScope.others_id
     };
@@ -338,5 +338,5 @@ angular.module("homeApp")
                 alert('폴더에 담겼습니다.');
             })
     };
+};
 
-})

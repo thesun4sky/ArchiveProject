@@ -1,10 +1,9 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller('catagoryCtrl', function($scope,$http, store, $state, $rootScope){
 
 
+var __CategoryCtrl = function ($scope,$http, store, $state, $rootScope) {
     var userObject = store.get('obj');
 
     $scope.colorCode1 = "#" + Math.round(Math.random() * 0xFFFFFF).toString(16);
@@ -125,4 +124,4 @@ angular.module("homeApp")
         $rootScope.tag_name = tags;
         $state.go("tag");
     }
-})
+};

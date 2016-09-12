@@ -1,9 +1,9 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller("leftSideBarCtrl",function($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter){
 
+
+var __LeftSidebarCtrl = function ($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
     $scope.category_labels = ['영화를', '연극을', '콘서트를', '드라마를', '전시회를', '음식을', '여행을', '음악을'];
     var userObject = store.get('obj');
 
@@ -38,4 +38,4 @@ angular.module("homeApp")
         $state.go("tag");
     };
 
-})
+};

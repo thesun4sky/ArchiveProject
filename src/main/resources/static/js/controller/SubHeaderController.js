@@ -1,8 +1,8 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller("subHeaderCtrl",function(store, $scope, $rootScope, $http, $filter){
+
+var __SubHeaderCtrl = function (store, $scope, $rootScope, $http, $filter) {
     var userObject = store.get('obj');
     $scope.getAlertData = function () {
         $http({
@@ -58,5 +58,4 @@ angular.module("homeApp")
     $scope.closeAlert = function(index) {
         $scope.alertThings.splice(index, 1);
     };
-
-})
+};

@@ -1,8 +1,8 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-.controller("uploadCtrl", function($scope, $log, Upload, $timeout, store, $state) {
+
+var __UploadCtrl = function ($scope, $log, Upload, $timeout, store, $state) {
     var userObject = store.get('obj');
     var res="";
     $scope.openAccess = [
@@ -121,4 +121,4 @@ angular.module("homeApp")
             file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
     };
-})
+};

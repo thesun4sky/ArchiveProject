@@ -1,10 +1,9 @@
 /**
  * Created by TeasunKim on 2016-09-12.
  */
-angular.module("homeApp")
-    .controller("loginCtrl",function($scope, $http, store, $state, $filter, $interval, $rootScope){
 
 
+var __LoginCtrl = function ($scope, $http, store, $state, $filter, $interval, $rootScope) {
     $scope.login=[{
         login_id :"" ,password :""
     }];
@@ -67,5 +66,5 @@ angular.module("homeApp")
                 console.log(status);
             });
     };
+};
 
-})
