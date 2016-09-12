@@ -1,5 +1,6 @@
 package com.coawesome;
 
+import com.coawesome.socket.ChatServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,5 +10,7 @@ public class ArchiveProjectApplication {
 	public static void main(String[] args)
 	{
 		SpringApplication.run(ArchiveProjectApplication.class, args);
+
+		new ChatServer().start();
 	}
 }

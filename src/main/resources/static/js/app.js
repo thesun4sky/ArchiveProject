@@ -12,7 +12,8 @@ angular.module("homeApp",[
         'angular-jqcloud',
         'ui.bootstrap.alert',
         'angular-confirm',
-        'duScroll'
+        'duScroll',
+        'ui.bootstrap.demo'
     ])
     .config(function(storeProvider){
         storeProvider.setStore('sessionStorage');
@@ -887,8 +888,20 @@ angular.module("homeApp",[
 
 
         $scope.logout = function(){
-            store.set('obj',null);
-            $state.go('login');
+
+            $http({
+                method: 'POST', //방식
+                url: "/user/logOut", /* 통신할 URL */
+                headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+            })
+                .success(function (data, status, headers, config) {
+                    alert("logout success");
+                    store.set('obj',null);
+                    $state.go('login');
+                })
+                .error(function () {
+                    alert("logout error");
+                });
         };
 
         $scope.loginPost = function(){
@@ -1839,9 +1852,6 @@ angular.module("homeApp",[
                     $scope.Cwords = response.data;
                 });
             $scope.colors = ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#5CD1E5", "#FFA7A7"];
-
-
-
             $scope.update = function() {
                 $scope.Cwords.splice(-5);
             };

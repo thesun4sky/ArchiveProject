@@ -2,6 +2,7 @@ package com.coawesome.controller;
 
 import com.coawesome.domain.*;
 import com.coawesome.persistence.UserMapper;
+import com.coawesome.socket.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,7 +93,17 @@ public class UserController {
         if(!user_pw.equals(input_password)) {
             return new LoginResult(0, "fales", "");
         }
-        return new LoginResult(userInfo.getUser_id(), userInfo.getName(), userInfo.getUpdated_time());
+        else{
+            new ChatClient().start(userInfo.getUser_id());
+            return new LoginResult(userInfo.getUser_id(), userInfo.getName(), userInfo.getUpdated_time());
+        }
+    }
+
+    //로그아웃
+    @RequestMapping(method = RequestMethod.POST, value = "/user/logOut")
+    public void LogOut() {
+        System.out.printf("로그아웃 동작");
+        System.exit(0);
     }
 
     //updatedTime 기준 알람 받기

@@ -47,6 +47,7 @@ public class FolderController {
         folderMapper.deleteFboard(folder);
 
         return new Result(0, "success");
+
     }
 
 
