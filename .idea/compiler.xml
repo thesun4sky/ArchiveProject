@@ -23,6 +23,8 @@
       <module name="ARCHIV_test" target="1.8" />
       <module name="ArchiveProject_main" target="1.8" />
       <module name="ArchiveProject_test" target="1.8" />
+      <module name="ArchiveProject_version2_main" target="1.8" />
+      <module name="ArchiveProject_version2_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
