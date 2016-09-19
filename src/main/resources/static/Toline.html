@@ -27,7 +27,7 @@
                 <li href="#" class="list-group-item title">
                     연결고리
                 </li>
-                <li href="#" ng-repeat="f in tolineList | filter : finduser" class="list-group-item text-left">
+                <li ng-click="toOthers(f)" ng-repeat="f in tolineList | filter : finduser" class="list-group-item text-left">
                     <img class="img-thumbnail" src="storedimg/{{f.user_img}}">
                     <label class="name">
                         {{f.name}}<br>

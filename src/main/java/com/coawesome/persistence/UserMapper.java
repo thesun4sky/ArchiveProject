@@ -51,7 +51,7 @@ public interface UserMapper {
   //유저 클라우드 단어 가져오기
   @Select("SELECT tag as text, count(*)*8 as weight FROM (SELECT tag1 as tag FROM board WHERE user_id = #{user_id} UNION\n" +
           "SELECT tag2 as tag FROM board WHERE user_id = #{user_id} UNION SELECT tag3 as tag FROM board WHERE user_id = #{user_id}) as tags\n" +
-          "GROUP BY tag")
+          "GROUP BY tag LIMIT 25")
   ArrayList<CloudVO> getUserWords(User user);
 
   //유저 카테고리 값 가져오기
@@ -81,7 +81,7 @@ public interface UserMapper {
           "              WHERE friend.friend_id= #{user_id}) as myFriend ON myFriend.user_id = user.user_id\n" +
           "INNER JOIN board ON board.user_id = user.user_id\n" +
           "LEFT OUTER JOIN (SELECT catagory, COUNT(*) as cnt from board WHERE user_id = #{user_id} GROUP BY catagory ORDER BY cnt DESC LIMIT 1) as myCategory ON myCategory.catagory = board.catagory\n" +
-          "WHERE myFriend.user_id IS NULL AND user.user_id != #{user_id}  LIMIT 1")
+          "WHERE myFriend.user_id IS NULL AND user.friend_id != #{user_id}  LIMIT 1")
   UserResult findCategoryFriend(User user);
 
 
