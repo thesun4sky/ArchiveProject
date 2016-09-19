@@ -2,13 +2,11 @@ package com.coawesome.controller;
 
 import com.coawesome.domain.*;
 import com.coawesome.persistence.UserMapper;
-import com.coawesome.socket.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -94,7 +92,7 @@ public class UserController {
             return new LoginResult(0, "fales", "");
         }
         else{
-            new ChatClient().start(userInfo.getUser_id());
+//            new ChatClient().start(userInfo.getUser_id());
             return new LoginResult(userInfo.getUser_id(), userInfo.getName(), userInfo.getUpdated_time());
         }
     }

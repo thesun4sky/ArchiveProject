@@ -33,6 +33,7 @@ dependencies {
   compile("javax.mail:mail:1.4")
 	runtime("mysql:mysql-connector-java")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile("org.json:json:20141113")
 }
 
 
