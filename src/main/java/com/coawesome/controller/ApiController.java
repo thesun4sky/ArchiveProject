@@ -11,9 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -183,6 +190,57 @@ public class ApiController {
         }
         return board;
     }
+
+
+    //네이버 API테스트
+    @RequestMapping(method = RequestMethod.POST, value = "/api/naverTrans")
+    public Result naverTrans(@RequestBody TransVO trans) throws IOException {
+        System.out.println("trans: " + trans.getText_trans());
+
+
+        //TODO 네이버 기계번역API를 서버단에서 호출
+        StringBuilder sj = new StringBuilder();
+        Map<String,String> arguments = new HashMap<>();
+        for(Map.Entry<String,String> entry : arguments.entrySet()) {
+            sj.append(URLEncoder.encode(entry.getKey(), "UTF-8") + "=" + URLEncoder.encode(entry.getValue(), "UTF-8") + "&");
+        }
+        byte[] out = sj.toString().getBytes();
+
+        String rawData = "source=ko, target=en, text="+"안녕하세요.";
+        String type = "application/x-www-form-urlencoded";
+        String client_id = "WYtueaQWm4bbvmwPEn6R";
+        String client_secret = "yXj4Gj6oPL";
+        arguments.put("source", "ko");
+        arguments.put("target", "en");
+        arguments.put("text", "한글");
+
+        String encodedData = URLEncoder.encode( rawData );
+        URL u = new URL("https://openapi.naver.com/v1/language/translate");
+        HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty( "Content-Type", type );
+        conn.setRequestProperty( "X-Naver-Client-Id", client_id );
+        conn.setRequestProperty( "X-Naver-Client-Secret", client_secret );
+//        conn.setRequestProperty( "Content-Length", String.valueOf(encodedData.length()));
+        conn.connect();
+        try
+        {
+            OutputStream os = conn.getOutputStream();
+            os.write(out);
+        }
+        catch (Exception e)
+        {
+
+        }
+//        OutputStream os = conn.getOutputStream();
+//        os.write(encodedData.getBytes());
+        System.out.println(out.toString());
+
+        return new Result(0, trans.getText_trans());
+    }
+
+
 
     //게시판 글 삭제하기
     @RequestMapping(method = RequestMethod.DELETE, value = "/api/board/{board_id}")

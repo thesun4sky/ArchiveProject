@@ -79,7 +79,7 @@ ArrayList<HashMap> getBoardById(int user_id);
           "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
-          "          WHERE board.board_id = #{board_id} and user.user_id = #{user_id}")
+          "          WHERE board.board_id = #{board_id} and user.user_id = #{user_id} LIMIT 1")
   HashMap findById(HashMap map);
 
 
