@@ -187,6 +187,17 @@ public class FolderController {
         return boardList;
     }
 
+    //친구 프로필페이지 게시글 목록
+    @RequestMapping(method = RequestMethod.POST, value = "/folder/openFriendProfileBoards")
+    public List<BoardResult> openFriendProfileBoards(@RequestBody User user) {
+        int user_id =  user.getUser_id();
+        System.out.println("open my folder of : " + user_id);
+        ArrayList<BoardResult> boardList = folderMapper.openFriendProfileBoards(user);
+
+        System.out.println("insert values" + boardList);
+        return boardList;
+    }
+
 
 
 

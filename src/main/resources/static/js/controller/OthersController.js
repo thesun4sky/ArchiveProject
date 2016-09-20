@@ -197,7 +197,7 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
         //친구게시물만 나열하기
         $http({
             method: 'POST', //방식
-            url: "/folder/openMyFolder", /* 통신할 URL */
+            url: "/folder/openFriendProfileBoards", /* 통신할 URL */
             data: othersObject, /* 파라메터로 보낼 데이터 */
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })

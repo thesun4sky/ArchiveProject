@@ -94,6 +94,23 @@ public interface FolderMapper {
           "          WHERE board.user_id = #{user_id}")
   ArrayList<BoardResult> openMyFolder(User user);
 
+
+  //친구프로필 게시글 목록
+  @Select("SELECT DISTINCT user.name, board.board_id, user.user_id, user.user_img, board.public_level, board.catagory, board.likes_num, board.tag1, tag_1.hit as hit1,  board.tag2, tag_2.hit as hit2, board.tag3, tag_3.hit as hit3,\n" +
+          "          board.line1_x, board.line1_y,board.line1, board.line2, board.line2_x, board.line2_y, board.created, board_image.stored_file_name, board.favorite_num, IFNULL(favorite.user_id,0) as favorite, " +
+          "          IFNULL(likes.user_id,0) as likes, replycnt.cnt, user.user_img FROM board \n" +
+          "          INNER JOIN friend on board.user_id = friend.friend_id \n" +
+          "          INNER JOIN board_image on board.board_id = board_image.board_id \n" +
+          "          INNER JOIN user on board.user_id = user.user_id\n" +
+          "          LEFT OUTER JOIN tag as tag_1 on board.tag1 = tag_1.tag\n" +
+          "          LEFT OUTER JOIN tag as tag_2 on board.tag2 = tag_2.tag\n" +
+          "          LEFT OUTER JOIN tag as tag_3 on board.tag3 = tag_3.tag " +
+          "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
+          "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
+          "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
+          "          WHERE board.user_id = #{user_id}")
+  ArrayList<BoardResult> openFriendProfileBoards(User user);
+
   @Select("SELECT * FROM board_value WHERE board_id = #{board_id} LIMIT 1")
   wordVO getValues(@Param("board_id") int board_id);
 
