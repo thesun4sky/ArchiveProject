@@ -2,7 +2,7 @@ package com.coawesome.restTeamplate;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.json.JSONObject;
+import org.g;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -45,10 +45,10 @@ public class PostTest {
                 return null;
             }
         };
-        JSONObject json = parser.parse(resultStr).getAsJsonObject();  //TODO JsonObject 인식이 안됩니다.
+        JsonObject json = parser.parse(resultStr).getAsJsonObject();
 
         if (json.get("count").getAsInt() > 0) {
-            JSONObject object = json.get("results").getAsJsonArray().get(0).getAsJsonObject(); //첫번째 json 객체
+            JsonObject object = json.get("results").getAsJsonArray().get(0).getAsJsonObject(); //첫번째 json 객체
             String post = object.get("postcode5").getAsString();
             System.out.println("post code:" + post);
         }
