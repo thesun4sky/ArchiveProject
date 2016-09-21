@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12 text-center" ng-repeat="x in boards | filter : filters">
             <div class="thumbnail" style="background-color: white;">
-               <div class="carousel-caption-public_level">
+               <div class="carousel-caption-public_level"style="padding-right: 10px">
                     <div ng-switch on="x.public_level">
                         <div ng-switch-when="1">
                             <p class="text-center">전체 <span class="glyphicon glyphicon-globe"></span></p>
@@ -40,10 +40,10 @@
                 <div class="carousel-caption-favorite" ng-init="favorite=x.favorite">
                     <div ng-switch on="favorite">
                         <div ng-switch-when="0">
-                            <button ng-click="favoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%; color: silver"><span class="glyphicon glyphicon-star-empty"></span></button>
+                            <button ng-click="favoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%; color: silver;padding-left: 70%"><span class="glyphicon glyphicon-star-empty"></span></button>
                         </div>
                         <div ng-switch-default>
-                            <button ng-click="UnfavoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%; color: lightskyblue"><span class="glyphicon glyphicon-star"></span></button>
+                            <button ng-click="UnfavoriteBoard(x.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%; color: lightskyblue;padding-left: 70%"><span class="glyphicon glyphicon-star"></span></button>
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                                 </a>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <div ng-repeat="y in folders">
-                                    <li role="menuitem"><a style="color: white" ng-click="putInFolder(x.board_id,y.folder_id)">{{y.folder_name}}</a></li>
+                                    <li role="menuitem"><a style="color: black" ng-click="putInFolder(x.board_id,y.folder_id)">{{y.folder_name}}</a></li>
                                 </div>
                             </ul>
                         </div>
