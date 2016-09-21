@@ -216,6 +216,9 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/user/findCategoryFriend")
     public UserResult findCategoryFriend(@RequestBody User user) {
         UserResult RecomandedFriend = userMapper.findCategoryFriend(user);
+        if(RecomandedFriend == null){
+            RecomandedFriend = userMapper.findAnyFriend(user);
+        }
         System.out.println("recomand friend : " + RecomandedFriend);
         return RecomandedFriend;
     }

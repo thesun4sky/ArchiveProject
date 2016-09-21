@@ -12,7 +12,7 @@ public class ArchiveProjectApplication {
 		/*  TODO 에러 수정
 		Error Report
 
-1.회원가입 처음하면 친구추천도 추천테그가 안뜸
+1.회원가입 처음하면 친구추천도 추천테그가 안뜸 -- 태선 해결
 
 2.회원가입 처음하면 내 프로필갔을때 아무것도 안보임
 
