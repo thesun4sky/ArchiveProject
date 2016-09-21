@@ -193,35 +193,39 @@
                         </div>
                     </div>
                 </div>
+                <div class="item" ng-repeat="x in boards">
+                                <img src="storedimg/{{x.stored_file_name}}" alt="images" style="width:100%;height:100%">
+                    <div class="carousel-caption" style="right: 0; left: 0;">
+                        <div>
+                            <p>&nbsp   <span class="pull-right">{{x.created | date:'medium'}}</span></p>
+                            <h1 class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{bottom: ((x.line1_y) * 11 +4) +'%', left :-{{x.line1.length+4}}+'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">"</h1>
+                        </div>
+                        <div>
+                            <p class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{'bottom' : (x.line1_y) * 11 +'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.4);border: none; color :white;font-weight: bolder;font-size:38px;width:100%;left:0;">{{x.line1}}</p>
+                        </div>
+                        <div>
+                            <p class="example" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{'bottom' : (x.line2_y) * 11 +'%'}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.4);border: none; color :white;font-weight: bolder;font-size:38px;width:100%;left:0;">{{x.line2}}</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
                 <!--두번째 아이템-->
-                <div class="item">
-                    <img src="img/item2.jpg" data-color="firebrick" alt="Second Image">
-                    <div class="carousel-caption">
-                        <form>
-                            <div class="form-group">
-                                <input type="text" class="form-control text-center input-lg" placeholder="Pick me Pick me Pick me Pick me up">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control text-center input-lg" placeholder="Pick me Pick me Pick me Pick me up">
-                            </div>
-                        </form>
-                        <h3>Second Image</h3>
-                    </div>
-                </div>
-                <!--세번째 아이템-->
-                <div class="item">
-                    <img src="img/item3.jpg" data-color="violet" alt="Third Image">
-                    <div class="carousel-caption">
-                        <h3>Third Image</h3>
-                    </div>
-                </div>
-                <!--네번째 아이템-->
-                <div class="item">
-                    <img src="img/item4.jpg" data-color="lightgreen" alt="Fourth Image">
-                    <div class="carousel-caption">
-                        <h3>Fourth Image</h3>
-                    </div>
-                </div>
+                <!--<div class="item">-->
+                    <!--<img src="img/item2.jpg" data-color="firebrick" alt="Second Image">-->
+                    <!--<div class="carousel-caption">-->
+                        <!--<form>-->
+                            <!--<div class="form-group">-->
+                                <!--<input type="text" class="form-control text-center input-lg" placeholder="Pick me Pick me Pick me Pick me up">-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<input type="text" class="form-control text-center input-lg" placeholder="Pick me Pick me Pick me Pick me up">-->
+                            <!--</div>-->
+                        <!--</form>-->
+                        <!--<h3>Second Image</h3>-->
+                    <!--</div>-->
+                <!--</div>-->
+
             </div>
 
             <!-- Controls -->

@@ -58,6 +58,14 @@ public interface BoardMapper {
          // "LEFT OUTER JOIN (SELECT favorite.board_id as board_id, CASE favorite.board_id WHEN board.board_id THEN'1' ELSE '0' END as favorite FROM favorite INNER JOIN board ON board.board_id = favorite.board_id WHERE favorite.user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id  " +
 ArrayList<HashMap> getBoardById(int user_id);
 
+  //로그인 화면 모든 게시물 보기
+  @Select("select * from board INNER JOIN board_image ON board.board_id = board_image.board_id INNER JOIN user on board.user_id = user.user_id \n" +
+          "WHERE board.public_level=1 ORDER BY RAND() LIMIT 3")
+  // "LEFT OUTER JOIN (SELECT favorite.board_id as board_id, CASE favorite.board_id WHEN board.board_id THEN'1' ELSE '0' END as favorite FROM favorite INNER JOIN board ON board.board_id = favorite.board_id WHERE favorite.user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id  " +
+  ArrayList<HashMap> getAllBoard();
+
+
+
   //카테고리별 목록 조회
   @Select("select * from board INNER JOIN board_image ON board.board_id = board_image.board_id INNER JOIN user on board.user_id = user.user_id WHERE catagory = #{catagory} AND board.public_level = 0")
   ArrayList<HashMap> getBoardByCatagory(@Param("catagory") int catagory);
