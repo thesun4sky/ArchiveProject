@@ -10,7 +10,7 @@
 <div ng-include="'subHeader.html'"></div>
 
 <!--화면 분할 시작-->
-<div class="container-fluid" style="margin-bottom: 50px;">
+<div class="container-fluid" style="margin-bottom: 50px;  background-color: #E9EBEE">
     <div class="row content">
 
         <!--가운데 콘텐츠 화면분할-->
@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12"><center><div class="panel-heading"><h3 style="font: large bold">테그 분석</h3></div></center></div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-sm-6" id="radar-chart" ng-controller="RadarCtrl">
-                    <center> <jqcloud words="Cwords"  width="500" height="350"  colors="{{colors}}" delay="10" steps="7" font-size="{from:0.09, to:0.04}"></jqcloud></center>
+                    <center> <jqcloud style="width:100%" words="Cwords"  width="500" height="350"  colors="{{colors}}" delay="10" steps="7" font-size="{from:0.09, to:0.04}"></jqcloud></center>
 
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-sm-6" ng-controller="RadarCtrl">

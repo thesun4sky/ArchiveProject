@@ -66,7 +66,10 @@
 
 
         /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-        .row.content {height: 450px}
+        .row.content {height: 450px;
+            margin-bottom: 50px;
+            background-color: #E9EBEE;
+        }
 
         footer {
             background-color: #555;
@@ -80,7 +83,8 @@
                 height: auto;
                 padding: 15px;
             }
-            .row.content {height:auto;}
+            .row.content {height:auto;
+                background-color: #E9EBEE;}
         }
     </style>
 
@@ -142,7 +146,7 @@
 
 
     <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
-<body ui-view ng-controller="alertCtrl">
+<body ui-view ng-controller="alertCtrl" style=" background-color: #E9EBEE">
 </body>
 
 <script src="angular-jqcloud.js"></script>

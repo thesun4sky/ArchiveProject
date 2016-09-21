@@ -6,9 +6,9 @@
 var __CategoryCtrl = function ($scope,$http, store, $state, $rootScope) {
     var userObject = store.get('obj');
 
-    $scope.colorCode1 = "#" + Math.round(Math.random() * 0xFFFFFF).toString(16);
-    $scope.colorCode2 = "#" + Math.round(Math.random() * 0xFFFFFF).toString(16);
-    $scope.colorCode3 = "#" + Math.round(Math.random() * 0xFFFFFF).toString(16);
+    $scope.colorCode1 = "#" + Math.round((Math.random() * 0xFFFFFF) + 0x222222).toString(16);
+    $scope.colorCode2 = "#" + Math.round((Math.random() * 0xFFFFFF) + 0x222222).toString(16);
+    $scope.colorCode3 = "#" + Math.round((Math.random() * 0xFFFFFF) + 0x222222).toString(16);
 
     $http({
         method: 'POST', //방식

@@ -6,13 +6,13 @@
     <li class="active">
         <a data-toggle="tab" ng-click="viewAll()">
             <span class="glyphicon glyphicon-th-large"  style="display: block;" ng-style="{'font-size' : windowWidth/40}"></span>
-            <p>전체보기</p>
+            <!--<p>전체보기</p>-->
         </a>
     </li>
     <li ng-repeat="menu in menuList" >
         <a data-toggle="tab" ng-model="menu.catagory" ng-click="filters.catagory=menu.catagory">
             <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;" ng-style="{'font-size' : windowWidth/40}"></span>
-            <p>{{menu.title}}</p>
+            <!--<p>{{menu.title}}</p>-->
         </a>
     </li>
 </ul>
@@ -60,7 +60,7 @@
                         <p class="example" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{'bottom' : (x.line2_y) * 11 +'%'}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.4);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{x.line2}}</p>
                     </div>
                 </div>
-                <div class="row" style="margin-bottom:10px;">
+                <div class="row" style="margin-bottom:10px; padding-left: 10px">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left">
                         <img src="storedimg/{{x.user_img}}" class="img-circle" alt="user" width=30px; height=30px;>
                         <p style="display: inline-block">{{x.name}}</p>
