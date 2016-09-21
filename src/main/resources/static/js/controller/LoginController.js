@@ -9,6 +9,17 @@ var __LoginCtrl = function ($scope, $http, store, $state, $filter, $interval, $r
     }];
 
 
+    $scope.AllBoard = function () {
+        $http({
+            method: 'GET', //방식
+            url :"/api/Allboardlist",
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function (response) {
+                $scope.boards = response.data;
+            })
+    };
+    $scope.AllBoard();
     $scope.logout = function(){
 
         $http({

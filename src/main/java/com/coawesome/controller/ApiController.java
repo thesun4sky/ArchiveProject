@@ -35,7 +35,6 @@ public class ApiController {
 
     @Resource(name = "fileUtils")
     private FileUtils fileUtils;
-
     @RequestMapping("/hello")
     public String Hello() {
         return "Hello test";
@@ -155,6 +154,14 @@ public class ApiController {
 
         return boardList;
     }
+
+    //로그인 화면 모든 글 목록 보기
+    @RequestMapping(method = RequestMethod.GET, value = "/api/Allboardlist")
+    public List<HashMap> getAllBoardList() {
+        ArrayList<HashMap> boardList = boardMapper.getAllBoard();
+        return boardList;
+    }
+
 
     //글 한개 최신화 보기
     @RequestMapping(method = RequestMethod.POST, value = "/api/boardOne")
