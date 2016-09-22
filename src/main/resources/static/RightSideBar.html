@@ -33,28 +33,42 @@
             <li href="#" class="list-group-item title">
                 My Friends
             </li>
-                <li ng-click="toOthers(x)" ng-repeat="x in friends | filter : finduser"
-                    class="list-group-item text-left">
-                    <img class="img-thumbnail" src="storedimg/{{x.user_img}}" style="width: 30px; height: 30px">
-                    <label class="name">
-                        {{x.name}}<br> </label>
+            <li ng-click="openChatting(x.user_id, x.name)" ng-repeat="x in friends | filter : finduser"
+                class="list-group-item text-left">
+                <img class="img-thumbnail" ng-click="toOthers(x)" src="storedimg/{{x.user_img}}"
+                     style="width: 30px; height: 30px">
+                <label class="name" ng-click="toOthers(x)">
+                    {{x.name}}<br> </label>
 
-                    <label class="pull-right">
-                        <div ng-if="x.updated_time==null">
-                            <label style="color: darkred; align: right">●</label>
-                        </div>
-                        <div ng-if="x.updated_time!=null && x.status==1">
-                            <label style="color: mediumseagreen; align: right">●</label>
-                        </div>
-                    </label>
-                    <label class="pull-right">
-                        <div ng-if="x.status==2">
-                            <label>Me</label>
-                        </div>
-                    </label>
-                    <div class="break"></div>
-                </li>
+                <label class="pull-right">
+                    <div ng-if="x.updated_time==null">
+                        <label style="color: darkred; align: right">●</label>
+                    </div>
+                    <div ng-if="x.updated_time!=null && x.status==1">
+                        <label style="color: mediumseagreen; align: right">●</label>
+                    </div>
+                </label>
+                <label class="pull-right">
+                    <div ng-if="x.status==2">
+                        <label>Me</label>
+                    </div>
+                </label>
+                <div class="break"></div>
+            </li>
         </ul>
     </div>
 
+    <div ng-show="chatIsOpen" style="border:solid #080808 2px; position: fixed; bottom: 100px; right: 100px; z-index: 10">
+        <div style="background-color: white; height: 30px; width:300px ;border: solid #080808 1px;">
+            {{chatfriendName}} <a ng-click="closeChatting()">대화 종료</a>
+        </div>
+        <div id="message"
+             style="background-color:#F5F5F5; width:300px; height:200px; OVERFLOW-Y:auto; word-wrap: break-word">
+        </div>
+        <div style="background-color: white; height: 30px; width:300px ;border: solid #080808 1px;">
+            <div id="chatInput">
+                <input type='text' id='txtChat' name="txtChat">
+            </div>
+        </div>
+    </div>
 </div>
