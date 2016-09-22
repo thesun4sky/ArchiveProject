@@ -1,15 +1,20 @@
 package com.coawesome.restTeamplate;
 
+import com.google.gson.JsonObject;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.g;
-import org.springframework.boot.json.JsonParser;
+import com.google.gson.JsonParser;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -21,38 +26,21 @@ public class PostTest {
     @Test
     public void PostTest() {
         RestTemplate restTemplate = new RestTemplate();
+        String url = "https://openapi.naver.com/v1/language/translate";
 
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-        UriComponents uriComponents;
-        String baseUrl = "https://api.poesis.kr/post/search.php";
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.set("Content-Type", "application/x-www-form-urlencoded");
+        requestHeaders.set("X-Naver-Client-Id", "WYtueaQWm4bbvmwPEn6R");
+        requestHeaders.set("X-Naver-Client-Secret", "yXj4Gj6oPL");
 
-        params.add("q", "경기도 부천시 원미구 상동 부흥로 71");
-        params.add("v", "3.0.0-korea.r.center");
-        params.add("ref", "localhost");
+        MultiValueMap<String, String> postParameters = new LinkedMultiValueMap<String, String>();
+        postParameters.add("source", "ko");
+        postParameters.add("target", "en");
+        postParameters.add("text", "안녕하세요. 반갑습니다. 저는 학생 입니다.");
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(postParameters, requestHeaders);
 
-        uriComponents = UriComponentsBuilder.fromHttpUrl(baseUrl).queryParams(params).build();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST , requestEntity, String.class);
 
-        String resultStr = restTemplate.getForObject(uriComponents.toString(), String.class);
-
-        JsonParser parser = new JsonParser() {
-            @Override
-            public Map<String, Object> parseMap(String json) {
-                return null;
-            }
-
-            @Override
-            public List<Object> parseList(String json) {
-                return null;
-            }
-        };
-        JsonObject json = parser.parse(resultStr).getAsJsonObject();
-
-        if (json.get("count").getAsInt() > 0) {
-            JsonObject object = json.get("results").getAsJsonArray().get(0).getAsJsonObject(); //첫번째 json 객체
-            String post = object.get("postcode5").getAsString();
-            System.out.println("post code:" + post);
-        }
-
-        //System.out.println("result:" + resultStr);
+        System.out.println("result:" + responseEntity);
     }
 }

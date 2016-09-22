@@ -203,6 +203,8 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
         })
             .then(function (response) {
                 $scope.my_boards = response.data;
+                if(response.data == "")
+                    $scope.fail_message = true;
             });
     }
 

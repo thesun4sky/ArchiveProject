@@ -85,6 +85,9 @@ var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $sta
         })
             .then(function (response) {
                 $scope.my_tagBoards = response.data;
+                if(response.data == "")
+                    $scope.fail_message = true;
+
             });
     };
 
