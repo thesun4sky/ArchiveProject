@@ -6732,7 +6732,6 @@ button.close {
 }
 .navbar-collapse form[role="search"] input {
     font-size: 14pt;
-    font-style: italic;
     color: rgb(160, 160, 160);
     box-shadow: none;
 }
