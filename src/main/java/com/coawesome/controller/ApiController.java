@@ -128,7 +128,7 @@ public class ApiController {
         MultiValueMap<String, String> postParameters = new LinkedMultiValueMap<String, String>();
         postParameters.add("source", "ko");
         postParameters.add("target", "en");
-        postParameters.add("text", board.getLine1() + " " + board.getLine2());
+        postParameters.add("text", board.getLine1() + ". " + board.getLine2());
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(postParameters, requestHeaders);
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST , requestEntity, String.class);

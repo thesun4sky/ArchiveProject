@@ -13,6 +13,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+import com.coawesome.domain.wordVO;
 
 import java.net.URI;
 import java.util.List;
@@ -25,6 +26,8 @@ public class PostTest {
     @Ignore
     @Test
     public void PostTest() {
+        wordVO wordsValue = new wordVO();
+
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://openapi.naver.com/v1/language/translate";
 
@@ -63,6 +66,7 @@ public class PostTest {
 
         ResponseEntity<String> responseEntityE = restTemplateE.exchange(url, HttpMethod.POST , requestEntityE, String.class);
 
+
         String resultE = responseEntityE.toString();
 
         in_text = resultE.indexOf("anger")+9;
@@ -91,16 +95,27 @@ public class PostTest {
         double joy_double = Double.parseDouble(joy);
         int pos2 = (int)(joy_double * 100);
         int pos4 = (int)(joy_double * 100);
-        int pos5 = (int)(joy_double * 100);   //joy = 반전, 박진감, 웃음, 통쾌
+        int pos5 = (int)(joy_double * 100);   //joy = 박진감, 웃음, 통쾌
 
         in_text = resultE.indexOf("sadness")+11;
-        out_text = 8 + in_text;
+        out_text = 5 + in_text;
         String sadness = resultE.substring(in_text,out_text);
         double sad_double = Double.parseDouble(sadness);
         int pos3 = (int)(sad_double * 100);
-        int pos1 = (int)(sad_double * 100);   //sadness = 만족
+        int pos1 = (int)(sad_double * 100);   //sadness = 반전, 만족
 
-        System.out.println("result:" + resultE);
-        System.out.println("result_value:" + pos1 + " "  + pos2 + " "  +pos3 + " "  +pos4 + " "  +pos5 + " "  + neg1 + " "  + neg2 +  " "  +neg3 + " "  + neg4 +  " "  +neg5);
+        wordsValue.setPos1(pos1);
+        wordsValue.setPos2(pos2);
+        wordsValue.setPos3(pos3);
+        wordsValue.setPos4(pos4);
+        wordsValue.setPos5(pos5);
+        wordsValue.setNeg1(neg1);
+        wordsValue.setNeg2(neg2);
+        wordsValue.setNeg3(neg3);
+        wordsValue.setNeg4(neg4);
+        wordsValue.setNeg5(neg5);
+
+//        System.out.println("Emotion API result : "+ pos1 + " "  + pos2 + " "  +pos3 + " "  +pos4 + " "  +pos5 + " "  + neg1 + " "  + neg2 +  " "  +neg3 + " "  + neg4 +  " "  +neg5);
+        System.out.println(wordsValue);
     }
 }
