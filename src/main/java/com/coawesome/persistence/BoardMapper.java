@@ -40,6 +40,10 @@ public interface BoardMapper {
           " neg1=neg1+#{neg1}/#{word_num}, neg2=neg2+#{neg2}/#{word_num}, neg3=neg3+#{neg3}/#{word_num}, neg4=neg4+#{neg4}/#{word_num}, neg5=neg5+#{neg5}/#{word_num} WHERE board_id = #{board_id}")
   void updateValue(wordVO wordsValue);
 
+  //2차 단어 API 감정값 적용
+  @Update("UPDATE board_value SET pos1=pos1+#{pos1}, pos2=pos2+#{pos2}, pos3=pos3+#{pos3}, pos4=pos4+#{pos4}, pos5=pos5+#{pos5}, " +
+          " neg1=neg1+#{neg1}, neg2=neg2+#{neg2}, neg3=neg3+#{neg3}, neg4=neg4+#{neg4}, neg5=neg5+#{neg5} WHERE board_id = #{board_id}")
+  void updateAPIValue(wordVO wordsValue);
 
   //게시판 글 목록 조회( 친구들의 친구공개 게시글, 모든사람의 전체공개 게시글 목록)
   @Select("SELECT DISTINCT user.name, board.board_id, board.user_id, board.public_level, board.catagory, board.likes_num, board.tag1, tag_1.hit as hit1,  board.tag2, tag_2.hit as hit2, board.tag3, tag_3.hit as hit3,\n" +

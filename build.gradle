@@ -33,7 +33,9 @@ dependencies {
   compile("javax.mail:mail:1.4")
 	runtime("mysql:mysql-connector-java")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	compile ('com.google.code.gson:gson:2.2.4')
+	compile ('com.google.code.gson:gson:2.2.4')   //API호출용
+	compile ('com.ibm.watson.developer_cloud:java-sdk:3.0.0-RC1') //알치마이 감정 분석API
+
 }
 
 eclipse {
