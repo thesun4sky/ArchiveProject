@@ -185,7 +185,7 @@ public class ApiController {
         int pos5 = (int)(joy_double * 100);   //joy = 박진감, 웃음, 통쾌
 
         in_text = resultE.indexOf("sadness")+11;
-        out_text = 8 + in_text;
+        out_text = 5 + in_text;
         String sadness = resultE.substring(in_text,out_text);
         double sad_double = Double.parseDouble(sadness);
         int pos3 = (int)(sad_double * 100);
