@@ -31,6 +31,8 @@ public interface UserMapper {
   //비밀전호 찾기
   @Select("select password from user where login_id = #{login_id} and email = #{email}")
   String findPASS(User user);
+  @Select("select Email from user where login_id = #{login_id} and email = #{email}")
+  String findEmail(User user);
 
 
   //로그인
