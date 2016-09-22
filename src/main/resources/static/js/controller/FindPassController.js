@@ -3,11 +3,10 @@
  */
 
 
-var __FindPassCtrl = function ($scope, $http) {
+var __FindPassCtrl = function ($scope, $http,$state) {
     $scope.findPASS=[{
         login_id :"", email :""
     }];
-
     $scope.findPASSPost = function(){
         var findPASSObject = {
             login_id : $scope.findPASS.login_id,
@@ -23,8 +22,19 @@ var __FindPassCtrl = function ($scope, $http) {
                 if(data.msg == 'false') {
                     alert('해당하는 비밀번호가 없습니다.')
                 }else{
-                    alert('비밀번호는 '+ data.msg + '입니다.');
-                    window.location.href = 'main.html';
+                    var sendPassobject = {
+                        password : data.msg,
+                        email : $scope.findPASS.email
+                    };
+                    alert('메일로 비밀번호가 전송되었습니다.')
+                    $state.go("login1");
+                    $http({
+                        method: 'POST', //방식
+                        url: "/user/sendEmail", /* 통신할 URL */
+                        data: sendPassobject, /* 파라메터로 보낼 데이터 */
+                        headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+                    })
+                        
                 }
             })
             .error(function (data, status, headers, config) {

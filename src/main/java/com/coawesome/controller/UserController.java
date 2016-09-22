@@ -1,5 +1,7 @@
 package com.coawesome.controller;
 
+
+import com.coawesome.config.SendSimpleMail;
 import com.coawesome.domain.*;
 import com.coawesome.persistence.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -69,15 +72,32 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/user/findPASS")
     public Result findPASS(@RequestBody User user) {
         System.out.println("try to find pass: " + user);
-
         String found_pass = userMapper.findPASS(user);
-        if(found_pass == null){
+        if (found_pass == null) {
             System.out.println("해당하는 password 없음");
             return new Result(0, "false");
+        } else {
+            System.out.println(found_pass);
+            return new Result(0, found_pass);
         }
-        System.out.println(found_pass);
-        return new Result(0, found_pass);
     }
+
+
+    //비밀번호 보내기
+    @RequestMapping(method = RequestMethod.POST, value = "/user/sendEmail")
+    public Result sendEmail(@RequestBody User user) throws MessagingException {
+        String Email = user.getEmail();
+        String found_pass = user.getPassword();
+
+
+            SendSimpleMail mail = new SendSimpleMail();
+            mail.sendmail(found_pass, Email);
+
+            return new Result(0,"success");
+        }
+
+
+
 
     //로그인
     @RequestMapping(method = RequestMethod.POST, value = "/user/login")

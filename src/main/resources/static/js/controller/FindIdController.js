@@ -2,7 +2,7 @@
  * Created by TeasunKim on 2016-09-12.
  */
 
-var __FindIdCtrl = function ($scope, $http) {
+var __FindIdCtrl = function ($scope, $http,$state) {
     $scope.findID=[{
         name :"", born1 :"", born2 :"", born3 :""
     }];
@@ -23,7 +23,7 @@ var __FindIdCtrl = function ($scope, $http) {
                     alert('해당하는 아이디가 없습니다.')
                 }else{
                     alert('아이디는 '+ data.msg + '입니다.');
-                    window.location.href = 'main.html';
+                    $state.go('login1');
                 }
             })
             .error(function (data, status, headers, config) {
