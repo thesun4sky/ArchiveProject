@@ -191,20 +191,22 @@ public class ApiController {
         int pos3 = (int)(sad_double * 100);
         int pos1 = (int)(sad_double * 100);   //sadness = 반전, 만족
 
-        wordsValue.setPos1(pos1);
-        wordsValue.setPos2(pos2);
-        wordsValue.setPos3(pos3);
-        wordsValue.setPos4(pos4);
-        wordsValue.setPos5(pos5);
-        wordsValue.setNeg1(neg1);
-        wordsValue.setNeg2(neg2);
-        wordsValue.setNeg3(neg3);
-        wordsValue.setNeg4(neg4);
-        wordsValue.setNeg5(neg5);
+        wordVO wordsValue2 = new wordVO();
+        wordsValue2.setBoard_id(storedBoardId);
+        wordsValue2.setPos1(pos1);
+        wordsValue2.setPos2(pos2);
+        wordsValue2.setPos3(pos3);
+        wordsValue2.setPos4(pos4);
+        wordsValue2.setPos5(pos5);
+        wordsValue2.setNeg1(neg1);
+        wordsValue2.setNeg2(neg2);
+        wordsValue2.setNeg3(neg3);
+        wordsValue2.setNeg4(neg4);
+        wordsValue2.setNeg5(neg5);
 
         System.out.println("Emotion API result : "+ pos1 + " "  + pos2 + " "  +pos3 + " "  +pos4 + " "  +pos5 + " "  + neg1 + " "  + neg2 +  " "  +neg3 + " "  + neg4 +  " "  +neg5);
 
-        boardMapper.updateAPIValue(wordsValue);   //2차 API 단어 감정값 적용
+        boardMapper.updateAPIValue(wordsValue2);   //2차 API 단어 감정값 적용
 
 /////////////////////////////////////////////////////////////////////////////
 
