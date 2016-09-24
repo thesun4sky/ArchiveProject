@@ -43,7 +43,7 @@ public interface FolderMapper {
 //          "LEFT OUTER JOIN (SELECT user.name as replier, reply.reply, reply.likes_num, reply.board_id FROM reply INNER JOIN user ON reply.user_id = user.user_id where (reply.user_id, reply.reply_id) IN (select user_id, min(reply_id) from reply)) as reply on board.board_id = reply.board_id\n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
           "LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
-          "WHERE fboard.folder_id = #{folder_id}")
+          "WHERE fboard.folder_id = #{folder_id}  ORDER BY board.board_id DESC")
   ArrayList<BoardResult> openFolder(Folder folder);
 
   //친구(라인)폴더 열기
@@ -59,7 +59,7 @@ public interface FolderMapper {
           "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
-          "WHERE friend.user_id = #{user_id}")
+          "WHERE friend.user_id = #{user_id}  ORDER BY board.board_id DESC")
   ArrayList<BoardResult> openLineFolder(User user);
 
   //페이버릿폴더 열기
@@ -75,7 +75,7 @@ public interface FolderMapper {
           "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
-          "WHERE favorite.user_id = #{user_id}")
+          "WHERE favorite.user_id = #{user_id}  ORDER BY board.board_id DESC")
   ArrayList<BoardResult> openFavoriteFolder(User user);
 
   //내폴더 열기
@@ -91,7 +91,7 @@ public interface FolderMapper {
           "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
-          "          WHERE board.user_id = #{user_id}")
+          "          WHERE board.user_id = #{user_id} ORDER BY board.board_id DESC")
   ArrayList<BoardResult> openMyFolder(User user);
 
 
@@ -108,7 +108,7 @@ public interface FolderMapper {
           "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
-          "          WHERE board.user_id = #{user_id}")
+          "          WHERE board.user_id = #{user_id} ORDER BY board.board_id DESC")
   ArrayList<BoardResult> openFriendProfileBoards(User user);
 
   @Select("SELECT * FROM board_value WHERE board_id = #{board_id} LIMIT 1")
