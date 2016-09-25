@@ -3,8 +3,8 @@
  */
 
 var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
-    // var socket = io.connect('ws://52.79.170.80:7777');
-    var socket = io.connect('ws://localhost:3000');
+    var socket = io.connect('ws://52.79.170.80:7777');
+    // var socket = io.connect('ws://localhost:3000');
     var userObject = store.get('obj');
     $scope.logoWidth = window.innerWidth/6;
     $scope.chatIsOpen = false;

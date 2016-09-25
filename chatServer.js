@@ -8,7 +8,8 @@ app.get("/", function(req, res){
 });
 //http 서버 생성
 var server = require('http').createServer(app);
-server.listen(3000);
+server.listen(7777);
+// server.listen(3000);
 //서버 소켓 생성
 var io = require('socket.io').listen(server);
 //소켓 Connection 이벤트 함수
