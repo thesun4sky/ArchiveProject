@@ -24,10 +24,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by eastflag on 2016-04-25.
@@ -48,6 +45,20 @@ public class ApiController {
     }
 
 
+@RequestMapping(method = RequestMethod.POST, value = "/api/test")
+public Result testTag(@RequestBody BoardVO board) throws Exception{
+    String result;
+    if (Objects.equals(boardMapper.existTag(board.getTag1()), board.getTag1())) //테그가 있다면
+    {
+        System.out.println(board.getTag1() + "is exist" + board + " " + boardMapper.existTag(board.getTag1()));
+        result = "테그 존재";
+    } else {                          //테그가 없다면
+        System.out.println(board.getTag1() + "is not exist");
+        result = "테그 없음, 추가";
+    }
+    return new Result(0,result);
+}
+
 //게시판 생성 API
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/board")
@@ -62,7 +73,7 @@ public class ApiController {
 
 
         //테그 넣기
-        if (boardMapper.existTag(board.getTag1()) == board.getTag1()) //테그가 있다면
+        if (Objects.equals(boardMapper.existTag(board.getTag1()), board.getTag1())) //테그가 있다면
         {
             System.out.println(board.getTag1() + "is exist");
             boardMapper.updateTag(board.getTag1()); //히트 +1
@@ -71,7 +82,7 @@ public class ApiController {
             boardMapper.insertTag(board.getTag1()); //테그 삽입
         }
 
-        if (boardMapper.existTag(board.getTag2()) == board.getTag2()) //테그가 있다면
+        if (Objects.equals(boardMapper.existTag(board.getTag2()), board.getTag2())) //테그가 있다면
         {
             System.out.println(board.getTag2() + "is exist");
             boardMapper.updateTag(board.getTag2()); //히트 +1
@@ -80,7 +91,7 @@ public class ApiController {
             boardMapper.insertTag(board.getTag2()); //테그 삽입
         }
 
-        if (boardMapper.existTag(board.getTag3()) == board.getTag3()) //테그가 있다면
+        if (Objects.equals(boardMapper.existTag(board.getTag3()), board.getTag3())) //테그가 있다면
         {
             System.out.println(board.getTag3() + "is exist");
             boardMapper.updateTag(board.getTag3()); //히트 +1
