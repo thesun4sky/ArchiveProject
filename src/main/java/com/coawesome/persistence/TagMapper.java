@@ -41,7 +41,7 @@ public interface TagMapper {
           "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
-          "          WHERE (board.user_id != #{user_id}  AND ((friend.user_id = #{user_id} AND friend.status >= 1 AND board.public_level <= 1) OR board.public_level = 0) ) AND ( board.tag1 = #{tag} OR board.tag2 = #{tag} OR board.tag3 = #{tag})  ORDER BY board.board_id DESC")
+          "          WHERE (((friend.user_id = #{user_id} AND friend.status >= 1 AND board.public_level <= 1) OR board.public_level = 0) ) AND ( board.tag1 = #{tag} OR board.tag2 = #{tag} OR board.tag3 = #{tag})  ORDER BY board.board_id DESC")
   ArrayList<HashMap> openTagFolder(TagElement tagElement);
 
   //테그 레이더 값 얻어오기
