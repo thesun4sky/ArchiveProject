@@ -63,7 +63,7 @@
                 <div class="row" style="margin-bottom:10px; padding-left: 10px">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left">
                         <img src="storedimg/{{x.user_img}}" class="img-circle" alt="user" width=30px; height=30px;>
-                        <p style="display: inline-block">{{x.name}}</p>
+                        <p style="display: inline-block"  ng-click="toOthers(x)">{{x.name}}</p>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
                         <p><strong>{{x.tag1}} / {{x.tag2}} / {{x.tag3}}</strong></p>
