@@ -105,9 +105,13 @@ public interface UserMapper {
           "  SELECT likes.id, myboard.board_id, user.user_id, user.name, user.user_img, likes.created from (SELECT board.board_id, board.user_id FROM board where board.user_id = #{user_id}) myboard inner join likes on myboard.board_id = likes.board_id left outer join user on likes.user_id = user.user_id where #{checkedTime} < likes.created")
   ArrayList<HashMap> notification(HashMap map);
 
+  //채팅 저장하기
+  @Insert("INSERT INTO chat(chatName, user_name, message, date) VALUES(#{chatName}, #{user_name}, #{message}, #{date})")
+  void sendChatMassage(ChatVO chatData);
 
-
-
+  //알림
+  @Select("SELECT * FROM chat WHERE chatName = #{chatName}")
+  ArrayList<ChatVO> getChatMassage(ChatVO chatData);
 
 
 }

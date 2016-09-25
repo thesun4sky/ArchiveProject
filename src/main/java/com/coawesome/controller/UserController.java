@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -241,6 +242,21 @@ public class UserController {
         }
         System.out.println("recomand friend : " + RecomandedFriend);
         return RecomandedFriend;
+    }
+
+    //채팅 내용 저장
+    @RequestMapping(method = RequestMethod.POST, value = "/user/sendChat")
+    public Result sendChatMessage(@RequestBody ChatVO chatData) {
+        chatData.setDate(new Date());
+        System.out.println(chatData);
+        userMapper.sendChatMassage(chatData);
+        return new Result(0,"success");
+    }
+    //채팅 내용 불러오기
+    @RequestMapping(method = RequestMethod.POST, value = "/user/getChat")
+    public ArrayList<ChatVO> getChatMessage(@RequestBody ChatVO chatData) {
+        System.out.println(chatData);
+        return userMapper.getChatMassage(chatData);
     }
 
 }

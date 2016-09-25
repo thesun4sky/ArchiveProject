@@ -60,14 +60,17 @@
 
     <div ng-show="chatIsOpen" style="border:solid #080808 2px; position: fixed; bottom: 100px; right: 100px; z-index: 10">
         <div style="background-color: white; height: 30px; width:300px ;border: solid #080808 1px;">
-            {{chatfriendName}} <a ng-click="closeChatting()">대화 종료</a>
+            {{chatfriendName}} <a ng-click="closeChatting()" style="float: right">대화 종료</a>
         </div>
-        <div id="message"
-             style="background-color:#F5F5F5; width:300px; height:200px; OVERFLOW-Y:auto; word-wrap: break-word">
+        <div id="message" style="background-color:#F5F5F5; width:300px; height:200px; OVERFLOW-Y:auto; word-wrap: break-word">
+            <div  ng-repeat="chat in chatContents">
+                <div ng-if="chat.user_name==chatfriendName" style="background-color: darkseagreen; float: left; border: 2px solid darkseagreen; border-radius: 12px;"><p>&nbsp;{{chat.message}}&nbsp;</p></div><br/>
+                <div ng-if="chat.user_name!=chatfriendName" style="background-color: skyblue; float: right; border: 2px solid skyblue; border-radius: 12px;"><p>&nbsp;{{chat.message}}&nbsp;</p></div><br/>
+            </div>
         </div>
         <div style="background-color: white; height: 30px; width:300px ;border: solid #080808 1px;">
             <div id="chatInput">
-                <input type='text' id='txtChat' name="txtChat">
+                <input type='text' id='txtChat' name="txtChat" width="300px">
             </div>
         </div>
     </div>
