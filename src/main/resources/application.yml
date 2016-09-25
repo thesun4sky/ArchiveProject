@@ -11,3 +11,13 @@ datasource:
   validationQuery: "SELECT 1"
   validationInterval: 36000
   testOnBorrow: "true"
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    protocol: smtp
+    default-encoding: UTF-8
+    username: leemsmail1@gmail.com
+    password: Anstjd123
+    smtp:
+      start-tls-enable: true
+      auth: true
