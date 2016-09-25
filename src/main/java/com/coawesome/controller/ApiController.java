@@ -437,5 +437,14 @@ public Result testTag(@RequestBody BoardVO board) throws Exception{
         return new Result(0, "success");
     }
 
+    //채팅방 API
+    @RequestMapping(method = RequestMethod.POST, value ="/api/chatting")
+    public ArrayList<HashMap> OpenChatting (@RequestBody HashMap Ids) {
+        System.out.println("채팅방 열렸습니다.");
+        int myName = (int)Ids.get("myId");
+        int friendName = (int)Ids.get("friendId");
+        return new ArrayList<>();
+    }
+
 
 }
