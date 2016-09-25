@@ -3,7 +3,8 @@
  */
 
 var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, $rootScope, $filter) {
-    var socket = io.connect('ws://52.79.170.80:7777');
+    // var socket = io.connect('ws://52.79.170.80:7777');
+    var socket = io.connect('ws://localhost:3000');
     var userObject = store.get('obj');
     $scope.logoWidth = window.innerWidth/6;
     $scope.chatIsOpen = false;
@@ -11,7 +12,6 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
     var div;
     var txt;
     $scope.chatContents = [];
-
 
     $scope.closeChatting = function () {
         socket.emit('leaveroom', {room: chatName, user_name: userObject.login_id});
@@ -44,29 +44,16 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
                 socket.emit('joinroom', {room: chatName, user_name: userObject.login_id});
         });
 
-
-
         //DOM 참조
         div = document.getElementById('message');
         txt = document.getElementById('txtChat');
+
         //텍스트 박스에 포커스 주기
         txt.focus();
 
+
         //텍스트 박스에 이벤트 바인딩
         txt.onkeydown = sendMessage.bind(this);
-        function sendMessage(event){
-            if(event.keyCode == 13){
-                //메세지 입력 여부 체크
-                var message = event.target.value;
-                if(message){
-                    //소켓서버 함수 호출
-                    socket.emit('serverReceiver', {chatName: chatName,user_id: userObject.user_id, user_name: userObject.login_id , message: message});
-                    //텍스트박스 초기화
-                    txt.value = '';
-                }
-            }
-        }
-
 
         //메시지 전송
         function sendMessage(event){
@@ -74,6 +61,8 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
                 //메세지 입력 여부 체크
                 var message = event.target.value;
                 if(message){
+                    $scope.chatContents.push({chatName: chatName,user_id: userObject.user_id, user_name: userObject.login_id , message: message});
+
                     //소켓서버 함수 호출
                     $http({
                         method: 'POST', //방식
@@ -88,9 +77,12 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
                     //TODO 서버에 메시지 저장
                     //텍스트박스 초기화
                     txt.value = '';
+                    document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
+
                 }
             }
         }
+
 
         //클라이언트 receive 이벤트 함수(서버에서 호출할 이벤트)
         socket.on('clientReceiver', function(data){
@@ -98,7 +90,8 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
             var message = '['+ data.user_name + '님의 말' + '] ' + data.message;
             //채팅창 스크롤바 내리기
             $scope.chatContents.push(data);
-            div.scrollTop = div.scrollHeight;
+            document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
+            // div.scrollTop = div.scrollHeight;
             }
         );
     };

@@ -8,7 +8,7 @@ app.get("/", function(req, res){
 });
 //http 서버 생성
 var server = require('http').createServer(app);
-server.listen(7777);
+server.listen(3000);
 //서버 소켓 생성
 var io = require('socket.io').listen(server);
 //소켓 Connection 이벤트 함수
@@ -66,7 +66,7 @@ io.sockets.on('connection', function(client){
     //서버 receive 이벤트 함수(클라이언트에서 호출 할 이벤트)
     client.on('serverReceiver', function(value){
         //클라이언트 이베트 호출
-        io.sockets.in(value.chatName).emit('clientReceiver', {chatName: value.chatName, user_name: value.user_name,
+        client.broadcast.to(value.chatName).emit('clientReceiver', {chatName: value.chatName, user_name: value.user_name,
             message: value.message});
     });
 
