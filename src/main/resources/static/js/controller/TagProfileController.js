@@ -12,7 +12,7 @@ var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $sta
     $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.png';
 
 
-    // var socket = io.connect('ws://52.79.170.80:7777');
+    var socket = io.connect('ws://52.79.170.80:7777');
     // var socket = io.connect('ws://localhost:3000');
     $scope.quantity = 4;
     $scope.logoWidth = window.innerWidth/6;
