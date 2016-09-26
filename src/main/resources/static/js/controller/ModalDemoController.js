@@ -32,7 +32,7 @@ var __ModalDemoCtrl = function (store, $http,$state, $rootScope, $scope, $uibMod
 
 
 
-    $scope.favoriteBoard = function (board_id) {
+    $scope.favoriteBoard_modal = function (board_id) {
         $http({
             method: 'POST', //방식
             url: "/api/favoriteBoard", /* 통신할 URL */
@@ -53,7 +53,7 @@ var __ModalDemoCtrl = function (store, $http,$state, $rootScope, $scope, $uibMod
     };
 
 
-    $scope.UnfavoriteBoard = function (board_id) {
+    $scope.UnfavoriteBoard_modal = function (board_id) {
         var UnfavoriteBoardObject =
         {
             user_id: userObject.user_id, //임시로 1번사용자 지정

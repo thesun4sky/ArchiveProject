@@ -1,21 +1,20 @@
-<div ng-controller="ModalDemoCtrl">
-    <script type="text/ng-template" id="modal.html">
+  <script type="text/ng-template" id="modal.html">
 
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="modal-body" style="padding: 0px;" >
             <div class="thumbnail" style="background-color: white;">
                 <div class="row" style=" position: relative;">
-                <div class="carousel-caption-favorite" ng-init="favorite=modalboard.favorite" >
-                    <div ng-switch on="favorite">
-                        <div ng-switch-when="0">
-                            <button ng-click="favoriteBoard(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star-empty"></span></button>
-                        </div>
-                        <div ng-switch-default>
-                            <button ng-click="UnfavoriteBoard(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star"></span></button>
-                        </div>
-                    </div>
-                </div>
+                <!--<div class="carousel-caption-favorite" ng-init="favorite=modalboard.favorite" >-->
+                    <!--<div ng-switch on="favorite">-->
+                        <!--<div ng-switch-when="0">-->
+                            <!--<button ng-click="favoriteBoard_modal(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star-empty"></span></button>-->
+                        <!--</div>-->
+                        <!--<div ng-switch-default>-->
+                            <!--<button ng-click="UnfavoriteBoard_modal(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star"></span></button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
 
 
@@ -65,16 +64,16 @@
                     <div id='action'>
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
-                                <div ng-init="like=modalboard.likes" >
-                                    <div ng-switch on="like">
-                                        <div ng-switch-when="0">
-                                            <a ng-click="likeBoard(modalboard.board_id); like = 1" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span>공감 {{modalboard.likes_num}}</a>
-                                        </div>
-                                        <div ng-switch-default>
-                                            <a ng-click="dislikeBoard(modalboard.board_id); like = 0" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span>공감취소 {{modalboard.likes_num}}</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--<div ng-init="like=modalboard.likes" >-->
+                                    <!--<div ng-switch on="like">-->
+                                        <!--<div ng-switch-when="0">-->
+                                            <!--<a ng-click="likeBoard(modalboard.board_id); like = 1" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span>공감 {{modalboard.likes_num}}</a>-->
+                                        <!--</div>-->
+                                        <!--<div ng-switch-default>-->
+                                            <!--<a ng-click="dislikeBoard(modalboard.board_id); like = 0" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span>공감취소 {{modalboard.likes_num}}</a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
                             </div>
 
 
@@ -105,9 +104,12 @@
                             </div>
 
                             <div ng-repeat="r in reply">
-                                <img src="storedimg/{{r.user_img}}" width=50px; height=50px;/><a ng-click="toOthers(r)" ng-model="r.user_id">&nbsp{{r.name}}</a> &nbsp&nbsp  {{r.reply}}
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin-top:15px">
+                                <img src="storedimg/{{r.user_img}}" width=50px; height=50px;/></div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin-top:30px;padding-right: 0px"><a ng-click="toOthers(r)" ng-model="r.user_id"><p style="font-size: smaller;">&nbsp{{r.name}}</p> </a> </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">&nbsp&nbsp <p style="font-size: smaller;">{{r.reply}}</p></div>
 
-                                <div class="pull-right">{{r.created | date : 'yyyy-MM-dd HH:mm:ss'}}</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "><div class="pull-right">{{r.created | date : 'yyyy-MM-dd HH:mm:ss'}}</div></div>
                             </div>
                         </div>
                     </div>
@@ -116,5 +118,3 @@
         </div>
 </div>
     </script>
-
-</div>
