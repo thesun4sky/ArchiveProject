@@ -22,7 +22,6 @@
 <!--업로드 되는 프레임 구성 화면-->
 <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
     <div class="row" ng-init="start=0;" >
-        {{quantity}}
         <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12 text-center"  ng-repeat="x in boards | filter : filters | limitTo : quantity ">
             <div class="thumbnail" style="background-color: white;">
                <div class="carousel-caption-public_level"style="padding-right: 10px">
