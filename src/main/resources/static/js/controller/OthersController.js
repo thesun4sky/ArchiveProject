@@ -8,7 +8,7 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
     var othersObject = {
         user_id : $rootScope.others_id
     };
-    $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.PNG';
+    $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.png';
 
     var userObject = store.get('obj')
 

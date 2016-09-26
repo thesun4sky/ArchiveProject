@@ -6,7 +6,7 @@
 
 var __UserProfileCtrl = function ($scope,$http,Upload,store, $rootScope, $uibModal,$timeout,$state,$filter,$rootScope) {
     var userObject = store.get('obj');
-    $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.PNG';
+    $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.png';
     $scope.quantity = 4;
 
     $scope.getProfileData=function () {

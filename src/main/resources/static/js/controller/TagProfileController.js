@@ -9,7 +9,7 @@ var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $sta
     $scope.quantity =4 ;
     var userObject = store.get('obj');
     $scope.tag_name = $rootScope.tag_name;
-    $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.PNG';
+    $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.png';
 
     var tagObject = {
         user_id : userObject.user_id,
