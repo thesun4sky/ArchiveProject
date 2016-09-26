@@ -88,7 +88,7 @@
             <hr>
             <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
                 <div class="row">
-                    <div class="col-lg-6 text-center" ng-repeat="x in my_tagBoards">
+                    <div class="col-lg-6 text-center" ng-repeat="x in my_tagBoards | limitTo : quantity" >
 
                         <div class="thumbnail" style="background-color: white;">
                             <div class="carousel-caption-public_level" style="padding-right: 10px">

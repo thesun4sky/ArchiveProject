@@ -6,6 +6,7 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
     var socket = io.connect('ws://52.79.170.80:7777');
     // var socket = io.connect('ws://localhost:3000');
     var userObject = store.get('obj');
+    $scope.quantity = 4;
     $scope.logoWidth = window.innerWidth/6;
     $scope.chatIsOpen = false;
     var chatName;
@@ -98,6 +99,7 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
 
 
 
+
     $scope.boardList = function () {
         $http({
             method: 'POST', //방식
@@ -107,9 +109,11 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
         })
             .then(function (response) {
                 $scope.boards = response.data;
+                for(var i =0;i<$scope.boards.length();i++){
+                    $scope.boards.push($scope.boards[i]);
+                }
             })
     };
-
 
 
 
@@ -259,6 +263,21 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
             });
     };
 
+
+    $scope.viewCatagory= function(catagory){
+
+        $http({
+            method: 'POST', //방식
+            url: "/api/boardlist", /* 통신할 URL */
+            data: userObject, /* 파라메터로 보낼 데이터 */
+            headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
+        })
+            .then(function(response) {
+                $scope.filters.catagory=catagory;
+                $scope.boards = response.data;
+            });
+    };
+    
     $scope.favoriteBoard = function (board_id) {
         $http({
             method: 'POST', //방식

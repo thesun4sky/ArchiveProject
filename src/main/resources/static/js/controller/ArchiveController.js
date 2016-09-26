@@ -8,6 +8,7 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
     //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
     var userObject = store.get('obj');
+    $scope.quantity = 4;
     $scope.name = userObject.login_id;
     $scope.labels = ['만족', '반전', '박진감', '웃음', '통쾌', '후회', '식상', '지루', '혐오', '실망'];
 

@@ -4,13 +4,13 @@
 
 <ul class="nav nav-pills" resize style="margin-top:20px">
     <li class="active">
-        <a data-toggle="tab" ng-click="viewAll()">
+        <a data-toggle="tab" ng-click="viewAll();quantity = 4;">
             <span class="glyphicon glyphicon-th-large"  style="display: block;" ng-style="{'font-size' : windowWidth/40}"></span>
             <!--<p>전체보기</p>-->
         </a>
     </li>
     <li ng-repeat="menu in menuList" >
-        <a data-toggle="tab" ng-model="menu.catagory" ng-click="filters.catagory=menu.catagory">
+        <a data-toggle="tab" ng-model="menu.catagory" ng-click="viewCatagory(menu.catagory);">
             <span class="{{menu.icon1}} {{menu.icon2}}"  style="display: block;" ng-style="{'font-size' : windowWidth/40}"></span>
             <!--<p>{{menu.title}}</p>-->
         </a>
@@ -21,8 +21,9 @@
 
 <!--업로드 되는 프레임 구성 화면-->
 <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12 text-center" ng-repeat="x in boards | filter : filters">
+    <div class="row" ng-init="start=0;" >
+        {{quantity}}
+        <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12 text-center"  ng-repeat="x in boards | filter : filters | limitTo : quantity ">
             <div class="thumbnail" style="background-color: white;">
                <div class="carousel-caption-public_level"style="padding-right: 10px">
                     <div ng-switch on="x.public_level">

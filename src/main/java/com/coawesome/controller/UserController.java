@@ -83,13 +83,11 @@ public class UserController {
         }
     }
 
-
     //비밀번호 보내기
     @RequestMapping(method = RequestMethod.POST, value = "/user/sendEmail")
     public Result sendEmail(@RequestBody User user) throws MessagingException {
         String Email = user.getEmail();
         String found_pass = user.getPassword();
-
 
             SendSimpleMail mail = new SendSimpleMail();
             mail.sendmail(found_pass, Email);

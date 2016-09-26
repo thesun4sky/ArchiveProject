@@ -65,6 +65,7 @@ var __LoginCtrl = function ($scope, $http, store, $state, $filter, $interval, $r
                     }
                     else {
                         console.log('login_fail');
+                        alert("아이디 혹은 패스워드를 다시 확인하세요.")
                         /* 틀림 */
                     }
                 }

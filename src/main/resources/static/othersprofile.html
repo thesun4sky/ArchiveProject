@@ -10,7 +10,7 @@
 <div ng-include="'subHeader.html'"></div>
 
 <!--화면 분할 시작-->
-<div class="container-fluid" style="margin-bottom: 50px; background-color: #E9EBEE">
+<div class="container-fluid" style="margin-bottom: 50px; background-color: #E9EBEE" >
     <div class="row content">
         <div ng-style="{'background-image': 'url(' + back_num + ')'}">
             <div class="container-fulid text-center">
@@ -70,7 +70,7 @@
             <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;">
                 <div class="row">
 
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12 text-center" ng-repeat="x in my_boards">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-sm-12 text-center"  ng-repeat="x in my_boards | limitTo : quantity ">
                         <div class="thumbnail" style="background-color: white;">
                             <div class="carousel-caption-public_level" style="padding-right: 10px">
                                 <div ng-switch on="x.public_level">

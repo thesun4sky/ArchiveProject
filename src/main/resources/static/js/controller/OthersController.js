@@ -4,6 +4,7 @@
 
 
 var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $uibModal) {
+    $scope.quantity = 4;
     var othersObject = {
         user_id : $rootScope.others_id
     };

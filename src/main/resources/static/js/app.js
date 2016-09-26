@@ -80,6 +80,32 @@ angular.module("homeApp",[
             return output;
         };
     })
+    
+    //게시물을 end 숫자 까지 잘라서 보여줌
+    .filter('slice',function(){
+        return function(arr,start,end){
+            return arr.slice(start,end);
+        };
+    })
+        
+//스크롤 이벤트가 필요한 부분만 추가한다.
+.directive("scroll", function ($window) {
+    return function (scope, element, attrs) {
+
+        angular.element($window).bind("scroll", function () {
+
+            var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+            var body = document.body, html = document.documentElement;
+            var docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
+            var windowBottom = windowHeight + window.pageYOffset;
+            if (windowBottom >= docHeight) {
+                scope.quantity = scope.quantity+4;
+            }
+            scope.$apply();
+        });
+    };
+})
+
         //윈도우 크기 재구성
     .directive('resize', function ($window) {
         return function (scope, element) {
@@ -242,5 +268,6 @@ angular.module("homeApp",[
 
         $urlRouterProvider.otherwise('/');
     });
+
 
 

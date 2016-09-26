@@ -6,7 +6,7 @@
 
 var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $state) {
     $scope.chart_view = 1;
-
+    $scope.quantity =4 ;
     var userObject = store.get('obj');
     $scope.tag_name = $rootScope.tag_name;
     $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.PNG';
