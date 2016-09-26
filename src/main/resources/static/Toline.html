@@ -1,4 +1,3 @@
-
 <!--메인헤더-->
 <div ng-include="'mainHeader.html'" ng-controller="findCtrl"></div>
 <!--서브헤더-->
@@ -8,63 +7,92 @@
 <div class="container-fluid" style="margin-bottom: 50px;  background-color: #E9EBEE">
     <div class="row ">
         <!--좌측 화면분할-->
-        <div class="col-sm-2 col-md-2 col-lg-2 sidenav hidden-xs" >
+        <div class="col-sm-2 col-md-2 col-lg-2 sidenav hidden-xs">
             <div ng-include="'LeftSideBar.html'"></div>
         </div>
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" >
-        <div class="jumbotron list-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <div class="jumbotron list-content">
 
-            <ul class="list-group">
-                <form class="navbar-form " role="search" style="text-align: right">
-                    <div class="input-group">
-<!--사용자검색박스 -->  <input type="text" ng-model="finduser" class="form-control" placeholder="Search" name="q">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="reset"><span class="glyphicon glyphicon-refresh"></span></button>
-                        </div>
-                    </div>
-                </form>
-                <li href="#" class="list-group-item title">
-                    연결고리
-                </li>
-                <li ng-click="toOthers(f)" ng-repeat="f in tolineList | filter : finduser" class="list-group-item text-left">
-                    <img class="img-thumbnail" src="storedimg/{{f.user_img}}">
-                    <label class="name">
-                        {{f.name}}<br>
-                    </label>
-                    <label class="pull-right">
-                        <div ng-switch on="f.status">
-                            <div ng-switch-when="0">
-                                Friend request
-                                <a  class="btn btn-success btn-xs glyphicon glyphicon-ok" ng-click="acceptFriend(f.user_id)" title="Ok"></a>
-                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(f.user_id)" title="Delete"></a>
-                                <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
-                            </div>
-                            <div ng-switch-when="1">
-                                <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(f.user_id)" title="Delete"></a>
-                                <a  class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="#" title="Send message"></a>
-                            </div>
-                            <div ng-switch-when="2">
-                                <p class="text-center">Me</p>
+                <ul class="list-group">
+                    <form class="navbar-form " role="search" style="text-align: right">
+                        <div class="input-group">
+                            <!--사용자검색박스 --> <input type="text" ng-model="finduser" class="form-control"
+                                                   placeholder="Search" name="q">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="reset"><span
+                                        class="glyphicon glyphicon-refresh"></span></button>
                             </div>
                         </div>
+                    </form>
+                    <li href="#" class="list-group-item title">
+                        연결고리
+                    </li>
+                    <li ng-repeat="f in tolineList | filter : finduser"
+                        class="list-group-item text-left">
+                        <img ng-click="toOthers(f)" class="img-thumbnail" src="storedimg/{{f.user_img}}">
+                        <label class="name">
+                            {{f.name}}<br>
+                        </label>
+                        <label class="pull-right">
+                            <div ng-switch on="f.status">
+                                <div ng-switch-when="0">
+                                    Friend request
+                                    <a class="btn btn-success btn-xs glyphicon glyphicon-ok"
+                                       ng-click="acceptFriend(f.user_id)" title="Ok"></a>
+                                    <a class="btn btn-danger  btn-xs glyphicon glyphicon-trash"
+                                       ng-click="deleteFriend(f.user_id)" title="Delete"></a>
+                                    <a class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="openChatting(f.user_id, f.name)"
+                                       title="Send message"></a>
+                                </div>
+                                <div ng-switch-when="1">
+                                    <a class="btn btn-danger  btn-xs glyphicon glyphicon-trash"
+                                       ng-click="deleteFriend(f.user_id)" title="Delete"></a>
+                                    <a class="btn btn-info  btn-xs glyphicon glyphicon glyphicon-comment" ng-click="openChatting(f.user_id, f.name)"
+                                       title="Send message"></a>
+                                </div>
+                                <div ng-switch-when="2">
+                                    <p class="text-center">Me</p>
+                                </div>
+                            </div>
 
-                    </label>
-                    <div class="break"></div>
-                </li>
-            </ul>
+                        </label>
+                        <div class="break"></div>
+                    </li>
+                </ul>
+            </div>
         </div>
+
+        <div ng-show="chatIsOpen" style="background-color: #771107; position: fixed; bottom: 150px; right: 100px; z-index: 10">
+            <li href="#" class="list-group-item title" style="color: white; font-weight: bold; background-color: #771107">
+                {{chatfriendName}} <a ng-click="closeChatting()" style="float: right; color: white">X&nbsp;</a>
+            </li>
+            <!-- <div style="background-color: white; height: 30px; width:300px ;border: solid #080808 1px;">
+
+             </div>-->
+            <div id="message" style="background-color:#F5F5F5; width:300px; height:300px; OVERFLOW-Y:auto; word-wrap: break-word">
+                <div  ng-repeat="chat in chatContents">
+                    <div ng-if="chat.user_name==chatfriendName" style="background-color: darkseagreen; float: left; border: 2px solid darkseagreen; border-radius: 12px;"><p>&nbsp;{{chat.message}}&nbsp;</p></div><br/>
+                    <div ng-if="chat.user_name!=chatfriendName" style="background-color: skyblue; float: right; border: 2px solid skyblue; border-radius: 12px;"><p>&nbsp;{{chat.message}}&nbsp;</p></div><br/>
+                </div>
+                <br/><br/><br/>
+            </div>
+            <div style="background-color: white; height: 27px; width:300px ;border: solid #080808 1px;">
+                <div id="chatInput">
+                    <input type='text' id='txtChat' name="txtChat" style="width: 100%">
+                </div>
+            </div>
         </div>
 
 
-                <!--우측 화면 분할-->
+        <!--우측 화면 분할-->
 
         <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs">
-                <div ng-include="'RightSideBar.html'"></div>
+            <div ng-include="'RightSideBar.html'"></div>
         </div>
     </div>
 </div>
 
 
-                <!--푸터-->
-                <div ng-include="'mainFooter.html'"></div>
+<!--푸터-->
+<div ng-include="'mainFooter.html'"></div>

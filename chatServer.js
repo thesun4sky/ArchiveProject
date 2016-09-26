@@ -25,16 +25,6 @@ console.log("listening at http://127.0.0.1:7777...");
 
 var rooms = [];
 
-function registerUser(socket,nickname){
-    // socket_id와 nickname 테이블을 셋업
-    socket.get('nickname',function(err,pre_nick){
-        if(pre_nick != undefined ) delete socket_ids[pre_nick];
-        socket_ids[nickname] = socket.id
-        socket.set('nickname',nickname,function(){
-            socket.sockets.emit('userlist',{users:Object.keys(socket_ids)});
-        });
-    });
-}
 
 //클로저를 사용해, private한 유니크 id를 만든다
 var uniqueID = (function(){
@@ -50,16 +40,16 @@ io.sockets.on('connection', function(client){
 
     client.on('joinroom',function (data) {
         console.log("joinroom 불림. data= "+client.id);
-
-        client.join(data.room);
         if (rooms[data.room]==undefined) {
             rooms[data.room] = new Object();
         }
+        client.join(data.room);
     });
 
     client.on('leaveroom',function (data) {
         console.log("leaveroom 불림. data= "+client.id);
         client.leave(data.room);
+        delete rooms[data.room].socket_ids[client.id]
     });
 
 
