@@ -36,6 +36,9 @@ public class DatabaseConfig {
     @Value("${datasource.max-idle}") int maxIdle;
     @Value("${datasource.min-idle}") int minIdle;
     @Value("${datasource.max-wait}") int maxWait;
+    @Value("${datasource.validationQuery") String validationQuery;
+    @Value("${datasource.validationInterval") int validationInterval;
+    @Value("${datasource.testOnBorrow") boolean testOnBorrow;
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
@@ -49,6 +52,9 @@ public class DatabaseConfig {
         dataSource.setMaxIdle(maxIdle);
         dataSource.setMinIdle(minIdle);
         dataSource.setMaxWait(maxWait);
+        dataSource.setValidationQuery(validationQuery);
+        dataSource.setValidationInterval(validationInterval);
+        dataSource.setTestOnBorrow(testOnBorrow);
         return dataSource;
     }
 
