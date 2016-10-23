@@ -109,9 +109,6 @@ var __IndexCtrl = function ($interval, $scope, $http, store, $state, $uibModal, 
         })
             .then(function (response) {
                 $scope.boards = response.data;
-                for(var i =0;i<$scope.boards.length();i++){
-                    $scope.boards.push($scope.boards[i]);
-                }
             })
     };
 
