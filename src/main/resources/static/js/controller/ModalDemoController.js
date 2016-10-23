@@ -15,7 +15,7 @@ var __ModalDemoCtrl = function (store, $http,$state, $rootScope, $scope, $uibMod
             .success(function (data, status, headers, config) {
                 $rootScope.reply=data;
             });
-    }
+    };
 
     $scope.modalrefresh=function (board_id) {
         $http({
