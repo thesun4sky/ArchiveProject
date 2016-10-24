@@ -353,8 +353,8 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
                     alert('게시글 삭제 실패');
                 }
             })
-    }
-    $rootScope.folder = ""
+    };
+    $rootScope.folder = "";
     $scope.openFolder = function (folder_id) {
         $rootScope.folder = folder_id;
         if(folder_id == 100){
