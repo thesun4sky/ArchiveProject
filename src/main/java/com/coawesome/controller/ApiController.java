@@ -80,6 +80,8 @@ public Result testTag(@RequestBody BoardVO board) throws Exception{
         } else {                          //테그가 없다면
             System.out.println(board.getTag1() + "is not exist");
             boardMapper.insertTag(board.getTag1()); //테그 삽입
+            boardMapper.addWordToTag(board.getTag1(),board.getTag2()); //연관태그 삽입
+            boardMapper.addWordToTag(board.getTag1(),board.getTag3());
         }
 
         if (Objects.equals(boardMapper.existTag(board.getTag2()), board.getTag2())) //테그가 있다면
@@ -89,6 +91,8 @@ public Result testTag(@RequestBody BoardVO board) throws Exception{
         } else {                          //테그가 없다면
             System.out.println(board.getTag2() + "is not exist");
             boardMapper.insertTag(board.getTag2()); //테그 삽입
+            boardMapper.addWordToTag(board.getTag1(),board.getTag1()); //연관태그 삽입
+            boardMapper.addWordToTag(board.getTag1(),board.getTag3());
         }
 
         if (Objects.equals(boardMapper.existTag(board.getTag3()), board.getTag3())) //테그가 있다면
@@ -98,6 +102,8 @@ public Result testTag(@RequestBody BoardVO board) throws Exception{
         } else {                          //테그가 없다면
             System.out.println(board.getTag3() + "is not exist");
             boardMapper.insertTag(board.getTag3()); //테그 삽입
+            boardMapper.addWordToTag(board.getTag1(),board.getTag1()); //연관태그 삽입
+            boardMapper.addWordToTag(board.getTag1(),board.getTag2());
         }
 
         //////////////////////Archive Emotion////////////////////////
