@@ -23,9 +23,6 @@ var __UploadCtrl = function ($scope, $log, Upload, $timeout, store, $state) {
     $scope.p_level = $scope.openAccess[0];
     $scope.c_list = $scope.catagory[0];
 
-
-
-
     $scope.leftClass = function () {
         $scope.class_name = "left";
         $scope.multi_message = "좌측 정렬 되었습니다.";

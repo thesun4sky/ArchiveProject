@@ -24,25 +24,25 @@ var __CategoryCtrl = function ($scope,$http, store, $state, $rootScope) {
                 $scope.checkPush($scope.catagory_boards.tag2);
                 $scope.checkPush($scope.catagory_boards.tag3);
             }
-            $scope.checkPush = function (data) {
-                for(var j=0; j<$scope.tagArray.length; j++){
-                    if(tagArray[j].tag == data)
-                    {
-                        $scope.tagIsIn = true;
-                    }
-                    else{
-                        $scope.tagIsIn = false;
-                    }
-                }
-                if($scope.tagIsIn){
-                    $scope.tagArray.push($scope.catagory_boards.tag1);
-                }
-                else{
-                    alert('엘스 떴다.');
-                }
-            }
-
         });
+
+    $scope.checkPush = function (data) {
+        for(var j=0; j<$scope.tagArray.length; j++){
+            if(tagArray[j].tag == data)
+            {
+                $scope.tagIsIn = true;
+            }
+            else{
+                $scope.tagIsIn = false;
+            }
+        }
+        if($scope.tagIsIn){
+            $scope.tagArray.push($scope.catagory_boards.tag1);
+        }
+        else{
+            // alert('엘스 떴다.');
+        }
+    };
 
     $scope.view_allCatagory = function(){
         $http({
