@@ -23,7 +23,6 @@ var __UserProfileCtrl = function ($scope, $http, Upload, store, $rootScope, $uib
 
     $scope.getProfileData();
 
-
     $scope.userCloud = function () {
         $http({
             method: 'POST', //방식

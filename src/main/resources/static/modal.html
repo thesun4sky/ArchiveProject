@@ -1,57 +1,74 @@
-  <script type="text/ng-template" id="modal.html">
+<script type="text/ng-template" id="modal.html">
 
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="modal-body" style="padding: 0px;" >
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="modal-body" style="padding: 0px;">
             <div class="thumbnail" style="background-color: white;">
                 <div class="row" style=" position: relative;">
-                <!--<div class="carousel-caption-favorite" ng-init="favorite=modalboard.favorite" >-->
+                    <!--<div class="carousel-caption-favorite" ng-init="favorite=modalboard.favorite" >-->
                     <!--<div ng-switch on="favorite">-->
-                        <!--<div ng-switch-when="0">-->
-                            <!--<button ng-click="favoriteBoard_modal(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star-empty"></span></button>-->
-                        <!--</div>-->
-                        <!--<div ng-switch-default>-->
-                            <!--<button ng-click="UnfavoriteBoard_modal(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star"></span></button>-->
-                        <!--</div>-->
+                    <!--<div ng-switch-when="0">-->
+                    <!--<button ng-click="favoriteBoard_modal(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star-empty"></span></button>-->
                     <!--</div>-->
-                <!--</div>-->
+                    <!--<div ng-switch-default>-->
+                    <!--<button ng-click="UnfavoriteBoard_modal(modalboard.board_id)" class="btn btn-sm btn-danger-onimage" style="border-radius: 50%;"><span class="glyphicon glyphicon-star"></span></button>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
 
 
-
-                <div class="carousel-caption-public_level">
-                    <div ng-switch on="modalboard.public_level">
-                        <div ng-switch-when="1">
-                            <p class="text-center">전체공개</p>
+                    <div class="carousel-caption-public_level">
+                        <div ng-switch on="modalboard.public_level">
+                            <div ng-switch-when="1">
+                                <p class="text-center">전체공개</p>
+                            </div>
+                            <div ng-switch-when="2">
+                                <p class="text-center">ToLine</p>
+                            </div>
+                            <div ng-switch-when="3">
+                                <p class="text-center">나만보기</p>
+                            </div>
                         </div>
-                        <div ng-switch-when="2">
-                            <p class="text-center">ToLine</p>
-                        </div>
-                        <div ng-switch-when="3">
-                            <p class="text-center">나만보기</p>
+                        <div>
+                            <a ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></a>
                         </div>
                     </div>
-                </div>
 
 
-
-                <img src="storedimg/{{modalboard.stored_file_name}}" alt="images" style="width:100%; height:60%;">
-                <div class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div>
-                        <p>&nbsp<span class="pull-right">{{modalboard.created | date:'medium'}}</span></p>
-                        <h1 class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{bottom: ((modalboard.line1_y) * 11 +4) +'%', left :-{{modalboard.line1.length+4}}+'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">"</h1>
+                    <img src="storedimg/{{modalboard.stored_file_name}}" alt="images" style="width:100%; height:60%;">
+                    <div class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div>
+                            <p>&nbsp<span class="pull-right">{{modalboard.created | date:'medium'}}</span></p>
+                            <h1 class="example"
+                                ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]"
+                                ng-style="{bottom: ((modalboard.line1_y) * 11 +4) +'%', left :-{{modalboard.line1.length+4}}+'%'}"
+                                xpos="position.divleft1" ypos="position.divtop1"
+                                style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">
+                                "</h1>
+                        </div>
+                        <div>
+                            <center><p class="example"
+                                       ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]"
+                                       ng-style="{'bottom' : (modalboard.line1_y) * 11 +'%'}" xpos="position.divleft1"
+                                       ypos="position.divtop1"
+                                       style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">
+                                {{modalboard.line1}}</p></center>
+                        </div>
+                        <div>
+                            <center><p class="example"
+                                       ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]"
+                                       ng-style="{'bottom' : (modalboard.line2_y) * 11 +'%'}" xpos="position.divleft2"
+                                       ypos="position.divtop2"
+                                       style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">
+                                {{modalboard.line2}}</p></center>
+                        </div>
                     </div>
-                    <div>
-                        <center><p class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{'bottom' : (modalboard.line1_y) * 11 +'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{modalboard.line1}}</p></center>
-                    </div>
-                    <div>
-                        <center><p class="example" ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{'bottom' : (modalboard.line2_y) * 11 +'%'}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;">{{modalboard.line2}}</p></center>
-                    </div>
-                </div>
                 </div>
                 <div class="row" style="margin-bottom:10px;">
                     <div class="row" style="margin-bottom:10px;">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left">
-                            &nbsp&nbsp<img ng-click="toOthers(modalboard)" src="storedimg/{{modalboard.user_img}}" class="img-circle" alt="user" width=50; height=50;>
+                            &nbsp&nbsp<img ng-click="toOthers(modalboard)" src="storedimg/{{modalboard.user_img}}"
+                                           class="img-circle" alt="user" width=50; height=50;>
                             <p ng-click="toOthers(modalboard)" style="display: inline-block">{{modalboard.name}}</p>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
@@ -65,14 +82,14 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                                 <!--<div ng-init="like=modalboard.likes" >-->
-                                    <!--<div ng-switch on="like">-->
-                                        <!--<div ng-switch-when="0">-->
-                                            <!--<a ng-click="likeBoard(modalboard.board_id); like = 1" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span>공감 {{modalboard.likes_num}}</a>-->
-                                        <!--</div>-->
-                                        <!--<div ng-switch-default>-->
-                                            <!--<a ng-click="dislikeBoard(modalboard.board_id); like = 0" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span>공감취소 {{modalboard.likes_num}}</a>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
+                                <!--<div ng-switch on="like">-->
+                                <!--<div ng-switch-when="0">-->
+                                <!--<a ng-click="likeBoard(modalboard.board_id); like = 1" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart-empty"></span>공감 {{modalboard.likes_num}}</a>-->
+                                <!--</div>-->
+                                <!--<div ng-switch-default>-->
+                                <!--<a ng-click="dislikeBoard(modalboard.board_id); like = 0" style="border-radius: 50%;"><span class="glyphicon glyphicon-heart"></span>공감취소 {{modalboard.likes_num}}</a>-->
+                                <!--</div>-->
+                                <!--</div>-->
                                 <!--</div>-->
                             </div>
 
@@ -82,12 +99,16 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                                 <div class="btn-group" uib-dropdown is-open="status.isopen">
-                                    <a id="single-button" type="button" class="btn" uib-dropdown-toggle ng-disabled="disabled">
+                                    <a id="single-button" type="button" class="btn" uib-dropdown-toggle
+                                       ng-disabled="disabled">
                                         <span class="glyphicon glyphicon-bell"></span>폴더저장
                                     </a>
-                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu"
+                                        aria-labelledby="single-button">
                                         <div ng-repeat="y in folders">
-                                            <li role="menuitem"><a style="color: white" ng-click="putInFolder(modalboard.board_id,y.folder_id)">{{y.folder_name}}</a></li>
+                                            <li role="menuitem"><a style="color: white"
+                                                                   ng-click="putInFolder(modalboard.board_id,y.folder_id)">{{y.folder_name}}</a>
+                                            </li>
                                         </div>
                                     </ul>
                                 </div>
@@ -97,24 +118,34 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div ng-switch on="!!modalboard.replier">
                             <div ng-switch-when="true">
-                                <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;> <p style="display: inline-block">{{modalboard.replier}} : {{board.reply}} (공감: {{modalboard.likes_num}} )</p>
+                                <img src="img/someone.png" class="img-circle" alt="user" width=4%; height=4%;>
+                                <p style="display: inline-block">{{modalboard.replier}} : {{board.reply}} (공감:
+                                    {{modalboard.likes_num}} )</p>
                             </div>
                             <div ng-switch-default>
-                                <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px" ng-enter="commitReply(reply.content)" type="text" placeholder="댓글을 입력해주세요." ng-model="reply.content">
+                                <input class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 35px"
+                                       ng-enter="commitReply(reply.content)" type="text" placeholder="댓글을 입력해주세요."
+                                       ng-model="reply.content">
                             </div>
 
                             <div ng-repeat="r in reply">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin-top:15px">
-                                <img src="storedimg/{{r.user_img}}" width=50px; height=50px;/></div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin-top:30px;padding-right: 0px"><a ng-click="toOthers(r)" ng-model="r.user_id"><p style="font-size: smaller;">&nbsp{{r.name}}</p> </a> </div>
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">&nbsp&nbsp <p style="font-size: smaller;">{{r.reply}}</p></div>
+                                    <img src="storedimg/{{r.user_img}}" width=50px; height=50px;/></div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"
+                                     style="margin-top:30px;padding-right: 0px"><a ng-click="toOthers(r)"
+                                                                                   ng-model="r.user_id"><p
+                                        style="font-size: smaller;">&nbsp{{r.name}}</p></a></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">&nbsp&nbsp <p
+                                        style="font-size: smaller;">{{r.reply}}</p></div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "><div class="pull-right">{{r.created | date : 'yyyy-MM-dd HH:mm:ss'}}</div></div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                    <div class="pull-right">{{r.created | date : 'yyyy-MM-dd HH:mm:ss'}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-</div>
-    </script>
+    </div>
+</script>

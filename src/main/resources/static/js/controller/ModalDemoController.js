@@ -2,8 +2,15 @@
  * Created by LeeMoonSeong on 2016-09-12.
  */
 
-var __ModalDemoCtrl = function (store, $http, $state, $rootScope, $scope, $uibModal, $log) {
+var __ModalDemoCtrl = function (store, $http, $state, $rootScope, $scope, $uibModal, $log, $uibModalInstance) {
     var userObject = store.get('obj');
+
+    //모달창에서 뒤로가기시 현재 기억 후 해당 페이지로, 모달 종료 호출
+    history.pushState(null, null, location.href);
+    window.onpopstate = function (event) {
+        history.go(1);
+        $scope.cancel();
+    };
 
     $scope.replylist = function (board) {
         $http({
@@ -27,7 +34,11 @@ var __ModalDemoCtrl = function (store, $http, $state, $rootScope, $scope, $uibMo
             .then(function (response) {
                 $rootScope.modalboard = response.data;
             })
-    }
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 
 
     $scope.favoriteBoard_modal = function (board_id) {
