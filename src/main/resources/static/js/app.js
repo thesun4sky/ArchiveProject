@@ -91,7 +91,6 @@ angular.module("homeApp",[
 //스크롤 이벤트가 필요한 부분만 추가한다.
 .directive("scroll", function ($window) {
     return function (scope, element, attrs) {
-
         angular.element($window).bind("scroll", function () {
 
             var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;

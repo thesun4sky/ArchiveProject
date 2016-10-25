@@ -6922,11 +6922,16 @@ button.close {
   #mobilewidth .thumbnail{
     width:100%;
   }
+
 }
 
 @media (min-width: 768px)
 {
   #mobilewidth .thumbnail{
     width:50%;
+  }
+  .v-center {
+    position: relative;
+    transform: translateY(50%);
   }
 }
