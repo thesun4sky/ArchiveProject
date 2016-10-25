@@ -3,14 +3,14 @@
  */
 
 
-var __FindPassCtrl = function ($scope, $http,$state) {
-    $scope.findPASS=[{
-        login_id :"", email :""
+var __FindPassCtrl = function ($scope, $http, $state) {
+    $scope.findPASS = [{
+        login_id: "", email: ""
     }];
-    $scope.findPASSPost = function(){
+    $scope.findPASSPost = function () {
         var findPASSObject = {
-            login_id : $scope.findPASS.login_id,
-            email : $scope.findPASS.email
+            login_id: $scope.findPASS.login_id,
+            email: $scope.findPASS.email
         };
         $http({
             method: 'POST', //방식
@@ -19,12 +19,12 @@ var __FindPassCtrl = function ($scope, $http,$state) {
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .success(function (data, status, headers, config) {
-                if(data.msg == 'false') {
+                if (data.msg == 'false') {
                     alert('해당하는 비밀번호가 없습니다.')
-                }else{
+                } else {
                     var sendPassobject = {
-                        password : data.msg,
-                        email : $scope.findPASS.email
+                        password: data.msg,
+                        email: $scope.findPASS.email
                     };
                     alert('메일로 비밀번호가 전송되었습니다.')
                     $state.go("login1");
@@ -34,7 +34,7 @@ var __FindPassCtrl = function ($scope, $http,$state) {
                         data: sendPassobject, /* 파라메터로 보낼 데이터 */
                         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
                     })
-                        
+
                 }
             })
             .error(function (data, status, headers, config) {

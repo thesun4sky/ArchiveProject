@@ -3,18 +3,18 @@
  */
 
 
-var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $uibModal) {
+var __OthersCtrl = function ($rootScope, $scope, $http, store, $state, $filter, $uibModal) {
     $scope.quantity = 4;
     var othersObject = {
-        user_id : $rootScope.others_id
+        user_id: $rootScope.others_id
     };
-    $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.png';
-    
+    $scope.back_num = 'img/back' + Math.floor((Math.random() * 1000) % 5 + 1) + '.png';
+
     var userObject = store.get('obj');
-    
-    
+
+
     $scope.open = function (size, board) {
-        $rootScope.modalboard=board;
+        $rootScope.modalboard = board;
         var modalInstance = $uibModal.open({
             templateUrl: 'modal.html',
             controller: 'ModalDemoCtrl',
@@ -24,8 +24,8 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
 
         }, function () {
             // $log.info('Modal dismissed at: ' + new Date());
-            $rootScope.modalboard={};
-            $rootScope.reply={};
+            $rootScope.modalboard = {};
+            $rootScope.reply = {};
             $scope.getOthersData();
         });
     };
@@ -138,8 +138,7 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
         $scope.colors = ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#5CD1E5", "#FFA7A7"];
 
 
-
-        $scope.update = function() {
+        $scope.update = function () {
             $scope.Cwords.splice(-5);
         };
     };
@@ -168,12 +167,12 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
     };
 
 
-    var checkObject={
-        user_id : userObject.user_id,
-        friend_id :$scope.others_id
+    var checkObject = {
+        user_id: userObject.user_id,
+        friend_id: $scope.others_id
     };
 
-    $scope.getOthersData=function () {
+    $scope.getOthersData = function () {
 
         $http({
             method: 'POST', //방식
@@ -205,18 +204,17 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
         })
             .then(function (response) {
                 $scope.my_boards = response.data;
-                if(response.data == "")
+                if (response.data == "")
                     $scope.fail_message = true;
             });
     }
 
 
-
     $scope.getOthersData();
 
 
-    var timeObject ={};
-    $scope.updateTime = function() {
+    var timeObject = {};
+    $scope.updateTime = function () {
         $scope.theTime = new Date().toLocaleTimeString();
         timeObject = {
             updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
@@ -234,12 +232,12 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
     };
     $scope.updateTime();
 
-    $scope.toOthers = function(others){
+    $scope.toOthers = function (others) {
         $rootScope.others_id = others.user_id;
-        if ($rootScope.othersStatus){
+        if ($rootScope.othersStatus) {
             $state.go("others1");
             $rootScope.othersStatus = false;
-        }else{
+        } else {
             $state.go("others2");
             $rootScope.othersStatus = true;
         }
@@ -283,10 +281,10 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
 
     $scope.showFriendList()
 
-    $scope.applyFriend = function(){
-        var applyObject ={
-            user_id : store.get('obj').user_id,
-            friend_id : $scope.others_id
+    $scope.applyFriend = function () {
+        var applyObject = {
+            user_id: store.get('obj').user_id,
+            friend_id: $scope.others_id
         };
         $http({
             method: 'POST', //방식
@@ -294,8 +292,8 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
             data: applyObject, /* 파라메터로 보낼 데이터 */
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
-            .success(function(data, status, headers, config) {
-                if( data ) {
+            .success(function (data, status, headers, config) {
+                if (data) {
                     $http({
                         method: 'POST', //방식
                         url: "/user/checkfriends", /* 통신할 URL */
@@ -329,8 +327,8 @@ var __OthersCtrl = function ($rootScope,$scope,$http, store, $state,$filter, $ui
 
     $scope.putInFolder = function (board_id, folder_id) {
         var folderObject = {
-            board_id : board_id,
-            folder_id : folder_id
+            board_id: board_id,
+            folder_id: folder_id
         };
         $http({
             method: 'POST', //방식

@@ -2,10 +2,10 @@
  * Created by LeeMoonSeong on 2016-09-12.
  */
 
-var __ModalDemoCtrl = function (store, $http,$state, $rootScope, $scope, $uibModal, $log) {
+var __ModalDemoCtrl = function (store, $http, $state, $rootScope, $scope, $uibModal, $log) {
     var userObject = store.get('obj');
 
-    $scope.replylist = function(board) {
+    $scope.replylist = function (board) {
         $http({
             method: 'POST', //방식
             url: "/api/showreply", /* 통신할 URL */
@@ -13,23 +13,21 @@ var __ModalDemoCtrl = function (store, $http,$state, $rootScope, $scope, $uibMod
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .success(function (data, status, headers, config) {
-                $rootScope.reply=data;
+                $rootScope.reply = data;
             });
     };
 
-    $scope.modalrefresh=function (board_id) {
+    $scope.modalrefresh = function (board_id) {
         $http({
             method: 'POST', //방식
             url: "/api/boardOne", /* 통신할 URL */
-            data: {board_id: board_id, user_id : userObject.user_id}, /* 파라메터로 보낼 데이터 */
+            data: {board_id: board_id, user_id: userObject.user_id}, /* 파라메터로 보낼 데이터 */
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .then(function (response) {
                 $rootScope.modalboard = response.data;
             })
     }
-
-
 
 
     $scope.favoriteBoard_modal = function (board_id) {
@@ -127,12 +125,12 @@ var __ModalDemoCtrl = function (store, $http,$state, $rootScope, $scope, $uibMod
     };
 
 
-    $scope.toOthers = function(others){
+    $scope.toOthers = function (others) {
         $rootScope.others_id = others.user_id;
-        if ($rootScope.othersStatus){
+        if ($rootScope.othersStatus) {
             $state.go("others1");
             $rootScope.othersStatus = false;
-        }else{
+        } else {
             $state.go("others2");
             $rootScope.othersStatus = true;
         }
@@ -155,8 +153,8 @@ var __ModalDemoCtrl = function (store, $http,$state, $rootScope, $scope, $uibMod
 
     $scope.putInFolder = function (board_id, folder_id) {
         var folderObject = {
-            board_id : board_id,
-            folder_id : folder_id
+            board_id: board_id,
+            folder_id: folder_id
         };
         $http({
             method: 'POST', //방식

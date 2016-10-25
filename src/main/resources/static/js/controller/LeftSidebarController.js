@@ -14,12 +14,12 @@ var __LeftSidebarCtrl = function ($interval, $scope, $http, store, $state, $uibM
         data: userObject, /* 파라메터로 보낼 데이터 */
         headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
     })
-        .then(function(response) {
+        .then(function (response) {
             $scope.friend_Object = response.data;
-            $scope.friend_category = $scope.category_labels[$scope.friend_Object.catagory-1];
+            $scope.friend_category = $scope.category_labels[$scope.friend_Object.catagory - 1];
             //alert($scope.friend_Object.catagory);
             var Recommand_category = {
-                catagory : $scope.friend_Object.catagory
+                catagory: $scope.friend_Object.catagory
             };
             $http({  //추천 테그정보 가져오기(사진 등..)
                 method: 'POST', //방식
@@ -33,7 +33,7 @@ var __LeftSidebarCtrl = function ($interval, $scope, $http, store, $state, $uibM
         });
 
 
-    $scope.toTag = function(tags){
+    $scope.toTag = function (tags) {
         $rootScope.tag_name = tags.tag;
         $state.go("tag");
     };

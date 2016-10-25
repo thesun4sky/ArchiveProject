@@ -2,15 +2,15 @@
  * Created by TeasunKim on 2016-09-12.
  */
 
-var __FindIdCtrl = function ($scope, $http,$state) {
-    $scope.findID=[{
-        name :"", born1 :"", born2 :"", born3 :""
+var __FindIdCtrl = function ($scope, $http, $state) {
+    $scope.findID = [{
+        name: "", born1: "", born2: "", born3: ""
     }];
 
-    $scope.findIDPost = function(){
+    $scope.findIDPost = function () {
         var findIDObject = {
-            name : $scope.findID.name,
-            born : $scope.findID.born1 + $scope.findID.born2  + $scope.findID.born3
+            name: $scope.findID.name,
+            born: $scope.findID.born1 + $scope.findID.born2 + $scope.findID.born3
         };
         $http({
             method: 'POST', //방식
@@ -19,10 +19,10 @@ var __FindIdCtrl = function ($scope, $http,$state) {
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .success(function (data, status, headers, config) {
-                if(data.msg == 'false') {
+                if (data.msg == 'false') {
                     alert('해당하는 아이디가 없습니다.')
-                }else{
-                    alert('아이디는 '+ data.msg + '입니다.');
+                } else {
+                    alert('아이디는 ' + data.msg + '입니다.');
                     $state.go('login1');
                 }
             })

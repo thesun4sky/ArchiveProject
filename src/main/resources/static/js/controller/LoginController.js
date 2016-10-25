@@ -4,15 +4,15 @@
 
 
 var __LoginCtrl = function ($scope, $http, store, $state, $filter, $interval, $rootScope) {
-    $scope.login=[{
-        login_id :"" ,password :""
+    $scope.login = [{
+        login_id: "", password: ""
     }];
 
 
     $scope.AllBoard = function () {
         $http({
             method: 'GET', //방식
-            url :"/api/Allboardlist",
+            url: "/api/Allboardlist",
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .then(function (response) {
@@ -20,7 +20,7 @@ var __LoginCtrl = function ($scope, $http, store, $state, $filter, $interval, $r
             })
     };
     $scope.AllBoard();
-    $scope.logout = function(){
+    $scope.logout = function () {
 
         $http({
             method: 'POST', //방식
@@ -29,7 +29,7 @@ var __LoginCtrl = function ($scope, $http, store, $state, $filter, $interval, $r
         })
             .success(function (data, status, headers, config) {
                 alert("logout success");
-                store.set('obj',null);
+                store.set('obj', null);
                 $state.go('login');
             })
             .error(function () {
@@ -37,10 +37,10 @@ var __LoginCtrl = function ($scope, $http, store, $state, $filter, $interval, $r
             });
     };
 
-    $scope.loginPost = function(){
+    $scope.loginPost = function () {
         var loginObject = {
-            login_id : $scope.login.login_id,
-            password : $scope.login.password
+            login_id: $scope.login.login_id,
+            password: $scope.login.password
         };
         $http({
             method: 'POST', //방식
@@ -49,16 +49,16 @@ var __LoginCtrl = function ($scope, $http, store, $state, $filter, $interval, $r
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .success(function (data, status, headers, config) {
-                if(data){
+                if (data) {
                     if (data.msg != 'fales') {
                         var myInfo = {
                             login_id: data.msg,
                             user_id: data.result,
                             login_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
-                            updated_time : data.updated_time
+                            updated_time: data.updated_time
                         };
 
-                        store.set('obj',myInfo);
+                        store.set('obj', myInfo);
                         $rootScope.checkedTime = $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss');
                         $state.go('main');
                         /* 맞음 */

@@ -3,7 +3,7 @@
  */
 
 
-var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScope,$filter) {
+var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScope, $filter) {
 
     //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
@@ -24,17 +24,16 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
             })
     };
 
-    $scope.toOthers = function(others){
+    $scope.toOthers = function (others) {
         $rootScope.others_id = others.user_id;
-        if ($rootScope.othersStatus){
+        if ($rootScope.othersStatus) {
             $state.go("others1");
             $rootScope.othersStatus = false;
-        }else{
+        } else {
             $state.go("others2");
             $rootScope.othersStatus = true;
         }
     };
-
 
 
     $scope.showFriendList = function () {
@@ -52,8 +51,8 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
 
     $scope.showFriendList()
 
-    var timeObject ={};
-    $scope.updateTime = function() {
+    var timeObject = {};
+    $scope.updateTime = function () {
         $scope.theTime = new Date().toLocaleTimeString();
         timeObject = {
             updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
@@ -70,7 +69,6 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
             })
     };
     $scope.updateTime();
-
 
 
     //좋아요
@@ -169,7 +167,7 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
     };
 
     $scope.open = function (size, board) {
-        $rootScope.modalboard=board;
+        $rootScope.modalboard = board;
         var modalInstance = $uibModal.open({
             templateUrl: 'modal.html',
             controller: 'ModalDemoCtrl',
@@ -179,8 +177,8 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
 
         }, function () {
             // $log.info('Modal dismissed at: ' + new Date());
-            $rootScope.modalboard={};
-            $rootScope.reply={};
+            $rootScope.modalboard = {};
+            $rootScope.reply = {};
             $scope.openFolder($rootScope.folder);
         });
     };
@@ -239,9 +237,9 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
             })
     }
 
-    $scope.folders = { };
+    $scope.folders = {};
 
-    $scope.deleteBoard = function(board){
+    $scope.deleteBoard = function (board) {
         alert('삭제됩니다?!');
         $http({
             method: 'POST', //방식
@@ -250,10 +248,10 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
             headers: {'Content-Type': 'application/json; charset=utf-8'}
         })
             .success(function (data, status, headers, config) {
-                if(data.msg == 'success') {
+                if (data.msg == 'success') {
                     alert('게시글 삭제 성공');
                     $scope.archiveList();
-                }else{
+                } else {
                     alert('게시글 삭제 실패');
                 }
             })
@@ -261,7 +259,7 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
     $rootScope.folder = "";
     $scope.openFolder = function (folder_id) {
         $rootScope.folder = folder_id;
-        if(folder_id == 100){
+        if (folder_id == 100) {
             var openLineFolderObject = {
                 user_id: userObject.user_id
             };
@@ -276,7 +274,7 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
                     $scope.myId = false;
                 });
         }
-        else if(folder_id == 200){
+        else if (folder_id == 200) {
             var openFavoriteFolderObject = {
                 user_id: userObject.user_id
             };
@@ -291,7 +289,7 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
                     $scope.myId = false;
                 });
         }
-        else if(folder_id == 300){
+        else if (folder_id == 300) {
             var openMyFolderObject = {
                 user_id: userObject.user_id
             };
@@ -306,7 +304,7 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
                     $scope.myId = true; //userObject.user_id;
                 });
         }
-        else{
+        else {
             var openFolderObject =
             {
                 folder_id: folder_id
@@ -340,8 +338,8 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
 
     $scope.putInFolder = function (board_id, folder_id) {
         var folderObject = {
-            board_id : board_id,
-            folder_id : folder_id
+            board_id: board_id,
+            folder_id: folder_id
         };
         $http({
             method: 'POST', //방식

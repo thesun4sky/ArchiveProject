@@ -4,31 +4,31 @@
 
 //테그 프로필페이지 컨트롤러
 
-var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $state) {
+var __TagProfileCtrl = function ($rootScope, $scope, $http, store, $uibModal, $state) {
     $scope.chart_view = 1;
-    $scope.quantity =4 ;
+    $scope.quantity = 4;
     var userObject = store.get('obj');
     $scope.tag_name = $rootScope.tag_name;
-    $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.png';
-    
+    $scope.back_num = 'img/back' + Math.floor((Math.random() * 1000) % 5 + 1) + '.png';
+
     var tagObject = {
-        user_id : userObject.user_id,
-        tag : $scope.tag_name
+        user_id: userObject.user_id,
+        tag: $scope.tag_name
     };
 
-    $scope.toOthers = function(others){
+    $scope.toOthers = function (others) {
         $rootScope.others_id = others.user_id;
-        if ($rootScope.othersStatus){
+        if ($rootScope.othersStatus) {
             $state.go("others1");
             $rootScope.othersStatus = false;
-        }else{
+        } else {
             $state.go("others2");
             $rootScope.othersStatus = true;
         }
     };
 
     $scope.open = function (size, board) {
-        $rootScope.modalboard=board;
+        $rootScope.modalboard = board;
         var modalInstance = $uibModal.open({
             templateUrl: 'modal.html',
             controller: 'ModalDemoCtrl',
@@ -38,12 +38,11 @@ var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $sta
 
         }, function () {
             // $log.info('Modal dismissed at: ' + new Date());
-            $rootScope.modalboard={};
-            $rootScope.reply={};
+            $rootScope.modalboard = {};
+            $rootScope.reply = {};
             $scope.tagBoardList();
         });
     };
-
 
 
     $scope.showFriendList = function () {
@@ -62,7 +61,7 @@ var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $sta
     $scope.showFriendList();
 
 
-    $scope.getTagData=function () {
+    $scope.getTagData = function () {
 
     }
 
@@ -85,7 +84,7 @@ var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $sta
         })
             .then(function (response) {
                 $scope.my_tagBoards = response.data;
-                if(response.data == "")
+                if (response.data == "")
                     $scope.fail_message = true;
 
             });
@@ -106,8 +105,7 @@ var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $sta
         $scope.colors = ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#5CD1E5", "#FFA7A7"];
 
 
-
-        $scope.update = function() {
+        $scope.update = function () {
             $scope.Cwords.splice(-5);
         };
     };
@@ -140,7 +138,7 @@ var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $sta
 
     $scope.getTagValue();
     $scope.getLineValue();
-    $rootScope.tag_name={};
+    $rootScope.tag_name = {};
 
 
     $scope.folderList = function () {
@@ -158,8 +156,8 @@ var __TagProfileCtrl = function ($rootScope,$scope,$http, store, $uibModal, $sta
 
     $scope.putInFolder = function (board_id, folder_id) {
         var folderObject = {
-            board_id : board_id,
-            folder_id : folder_id
+            board_id: board_id,
+            folder_id: folder_id
         };
         $http({
             method: 'POST', //방식

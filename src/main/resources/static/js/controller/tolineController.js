@@ -4,11 +4,11 @@
 
 
 
-var __TolineCtrl = function ($scope,  $rootScope, $http, store, $state,$filter) {
+var __TolineCtrl = function ($scope, $rootScope, $http, store, $state, $filter) {
     //TODO: 로그인 정보를 토큰에서 받는것으로 변경하기
 
     var userObject = store.get('obj');
-        
+
     $scope.toline_init = function () {
         $http({
             method: 'POST', //방식
@@ -16,7 +16,7 @@ var __TolineCtrl = function ($scope,  $rootScope, $http, store, $state,$filter) 
             data: userObject, /* 파라메터로 보낼 데이터 */
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
-            .then(function(response) {
+            .then(function (response) {
                 $scope.tolineList = response.data;
             });
     };
@@ -37,19 +37,19 @@ var __TolineCtrl = function ($scope,  $rootScope, $http, store, $state,$filter) 
 
     $scope.toline_init();
 
-    $scope.toOthers = function(others){
+    $scope.toOthers = function (others) {
         $rootScope.others_id = others.user_id;
-        if ($rootScope.othersStatus){
+        if ($rootScope.othersStatus) {
             $state.go("others1");
             $rootScope.othersStatus = false;
-        }else{
+        } else {
             $state.go("others2");
             $rootScope.othersStatus = true;
         }
     };
 
-    var timeObject ={};
-    $scope.updateTime = function() {
+    var timeObject = {};
+    $scope.updateTime = function () {
         $scope.theTime = new Date().toLocaleTimeString();
         timeObject = {
             updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
@@ -67,7 +67,7 @@ var __TolineCtrl = function ($scope,  $rootScope, $http, store, $state,$filter) 
     };
     $scope.updateTime();
 
-    $scope.acceptFriend = function (friend_id){
+    $scope.acceptFriend = function (friend_id) {
         var acceptFriendObject =
         {
             user_id: friend_id, //임시로 1번사용자 지정
@@ -80,9 +80,9 @@ var __TolineCtrl = function ($scope,  $rootScope, $http, store, $state,$filter) 
             headers: {'enctype': 'multipart/form-data; charset=utf-8'} //헤더
         })
             .success(function (data, status, headers, config) {
-                if(data.msg == 'false') {
+                if (data.msg == 'false') {
                     alert('친구승낙 실패')
-                }else{
+                } else {
                     $scope.toline_init();
                 }
             })
@@ -92,7 +92,7 @@ var __TolineCtrl = function ($scope,  $rootScope, $http, store, $state,$filter) 
             });
     };
 
-    $scope.deleteFriend = function (friend_id){
+    $scope.deleteFriend = function (friend_id) {
         var deleteFriendObject =
         {
             user_id: store.get('obj').user_id, //임시로 1번사용자 지정

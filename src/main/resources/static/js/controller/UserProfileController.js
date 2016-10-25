@@ -4,12 +4,12 @@
 
 //프로필 페이지 컨트롤러
 
-var __UserProfileCtrl = function ($scope,$http,Upload,store, $rootScope, $uibModal,$timeout,$state,$filter,$rootScope) {
+var __UserProfileCtrl = function ($scope, $http, Upload, store, $rootScope, $uibModal, $timeout, $state, $filter, $rootScope) {
     var userObject = store.get('obj');
-    $scope.back_num = 'img/back'+Math.floor((Math.random()*1000)%5 +1)+'.png';
+    $scope.back_num = 'img/back' + Math.floor((Math.random() * 1000) % 5 + 1) + '.png';
     $scope.quantity = 4;
-    
-    $scope.getProfileData=function () {
+
+    $scope.getProfileData = function () {
         $http({
             method: 'POST',
             url: "/user/loadProfile",
@@ -19,7 +19,7 @@ var __UserProfileCtrl = function ($scope,$http,Upload,store, $rootScope, $uibMod
             .then(function (response) {
                 $scope.Profile = response.data;
             });
-    }
+    };
 
     $scope.getProfileData();
 
@@ -35,7 +35,7 @@ var __UserProfileCtrl = function ($scope,$http,Upload,store, $rootScope, $uibMod
                 $scope.Cwords = response.data;
             });
         $scope.colors = ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#5CD1E5", "#FFA7A7"];
-        $scope.update = function() {
+        $scope.update = function () {
             $scope.Cwords.splice(-5);
         };
     };
@@ -76,7 +76,7 @@ var __UserProfileCtrl = function ($scope,$http,Upload,store, $rootScope, $uibMod
     };
 
     $scope.open = function (size, board) {
-        $rootScope.modalboard=board;
+        $rootScope.modalboard = board;
         var modalInstance = $uibModal.open({
             templateUrl: 'modal.html',
             controller: 'ModalDemoCtrl',
@@ -86,16 +86,16 @@ var __UserProfileCtrl = function ($scope,$http,Upload,store, $rootScope, $uibMod
 
         }, function () {
             // $log.info('Modal dismissed at: ' + new Date());
-            $rootScope.modalboard={};
-            $rootScope.reply={};
+            $rootScope.modalboard = {};
+            $rootScope.reply = {};
             $scope.openMyFolder();
         });
     };
 
 
     $scope.openMyFolder();
-    var timeObject ={};
-    $scope.updateTime = function() {
+    var timeObject = {};
+    $scope.updateTime = function () {
         $scope.theTime = new Date().toLocaleTimeString();
         timeObject = {
             updated_time: $filter('date')(new Date(), 'yyyy-MM-dd HH-mm-ss'),
@@ -113,40 +113,41 @@ var __UserProfileCtrl = function ($scope,$http,Upload,store, $rootScope, $uibMod
     };
     $scope.updateTime();
 
-    $scope.uploadProfile = function(file)  {
+    $scope.uploadProfile = function (file) {
 
         file.upload = Upload.upload({
             url: '/user/insertUserImage',
             data: {
-                file:file,
-                user_id:userObject.user_id
-            }});
+                file: file,
+                user_id: userObject.user_id
+            }
+        });
         file.upload.then(function (response) {
             $timeout(function () {
                 file.result = response.data;
                 $state.go('profile');
             });
         }, function (response) {
-            if (response.status > 0){
+            if (response.status > 0) {
                 $scope.errorMsg = response.status + ': ' + response.data;
-                alert("response.status > 0");}
+                alert("response.status > 0");
+            }
         }, function (evt) {
             // Math.min is to fix IE which reports 200% sometimes
             file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
     };
 
-    $scope.toOthers = function(others){
+    $scope.toOthers = function (others) {
         $rootScope.others_id = others.user_id;
-        if ($rootScope.othersStatus){
+        if ($rootScope.othersStatus) {
             $state.go("others1");
             $rootScope.othersStatus = false;
-        }else{
+        } else {
             $state.go("others2");
             $rootScope.othersStatus = true;
         }
     };
-
 
 
     $scope.showFriendList = function () {
@@ -180,8 +181,8 @@ var __UserProfileCtrl = function ($scope,$http,Upload,store, $rootScope, $uibMod
 
     $scope.putInFolder = function (board_id, folder_id) {
         var folderObject = {
-            board_id : board_id,
-            folder_id : folder_id
+            board_id: board_id,
+            folder_id: folder_id
         };
         $http({
             method: 'POST', //방식
