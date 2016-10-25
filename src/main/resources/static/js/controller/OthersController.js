@@ -263,7 +263,6 @@ var __OthersCtrl = function ($rootScope, $scope, $http, store, $state, $filter, 
             .then(function (response) {
                 $scope.my_boards = response.data;
             });
-
     };
 
     $scope.showFriendList = function () {

@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
@@ -414,7 +413,6 @@ public Result testTag(@RequestBody BoardVO board) throws Exception{
     @RequestMapping(method = RequestMethod.POST, value = "/api/dislikeBoard")
     public Result dislikeBoard(@RequestBody Like like) {
         System.out.println(like);
-
         boardMapper.deleteFromLike(like);
         boardMapper.dislikeToBoard(like.getBoard_id());
 

@@ -206,5 +206,6 @@ var __ModalDemoCtrl = function (store, $http, $state, $rootScope, $scope, $uibMo
                 console.log(status);
             });
     };
+
 };
 
