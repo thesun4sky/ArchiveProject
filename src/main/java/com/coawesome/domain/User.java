@@ -12,6 +12,7 @@ package com.coawesome.domain;
 @Data
 public class User {
     private int user_id;
+    private int friend_id;
     private String login_id;
     private String password;
     private String name;

@@ -307,6 +307,7 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
         else {
             var openFolderObject =
             {
+                user_id: userObject.user_id,
                 folder_id: folder_id
             };
 

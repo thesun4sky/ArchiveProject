@@ -191,7 +191,8 @@ public class FolderController {
     @RequestMapping(method = RequestMethod.POST, value = "/folder/openFriendProfileBoards")
     public List<BoardResult> openFriendProfileBoards(@RequestBody User user) {
         int user_id =  user.getUser_id();
-        System.out.println("open my folder of : " + user_id);
+        int friend_id =  user.getFriend_id();
+        System.out.println("user " + user_id + " open my folder of : " + friend_id);
         ArrayList<BoardResult> boardList = folderMapper.openFriendProfileBoards(user);
 
         System.out.println("insert values" + boardList);

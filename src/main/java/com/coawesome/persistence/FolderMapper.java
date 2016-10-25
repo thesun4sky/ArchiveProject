@@ -42,7 +42,7 @@ public interface FolderMapper {
           "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
-          "WHERE friend.user_id = #{user_id}  OR board.public_level = 1 ORDER BY board.board_id DESC")
+          "WHERE (friend.user_id = #{user_id} AND friend.status = 2 AND board.public_level = 2)  OR board.public_level = 1 ORDER BY board.board_id DESC")
   ArrayList<BoardResult> openLineFolder(User user);
 
   //페이버릿폴더 열기
@@ -90,7 +90,7 @@ public interface FolderMapper {
           "          LEFT OUTER JOIN (SELECT * FROM favorite WHERE user_id = #{user_id}) as favorite ON board.board_id = favorite.board_id \n" +
           "          LEFT OUTER JOIN (SELECT * FROM likes WHERE user_id = #{user_id}) as likes ON board.board_id = likes.board_id \n" +
           "          LEFT OUTER JOIN (SELECT board_id, COUNT(*) as cnt FROM reply group by board_id) as replycnt ON replycnt.board_id = board.board_id \n" +
-          "          WHERE board.user_id = #{user_id} ORDER BY board.board_id DESC")
+          "          WHERE ((friend.user_id = #{user_id} AND friend.status = 2 AND board.public_level = 2) OR board.public_level = 1) AND board.user_id = #{friend_id} ORDER BY board.board_id DESC")
   ArrayList<BoardResult> openFriendProfileBoards(User user);
 
 

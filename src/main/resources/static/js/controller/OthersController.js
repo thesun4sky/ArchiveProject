@@ -199,7 +199,7 @@ var __OthersCtrl = function ($rootScope, $scope, $http, store, $state, $filter, 
         $http({
             method: 'POST', //방식
             url: "/folder/openFriendProfileBoards", /* 통신할 URL */
-            data: othersObject, /* 파라메터로 보낼 데이터 */
+            data: checkObject, /* 파라메터로 보낼 데이터 */
             headers: {'Content-Type': 'application/json; charset=utf-8'} //헤더
         })
             .then(function (response) {

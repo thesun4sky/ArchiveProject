@@ -84,7 +84,7 @@ public class FriendController {
     @RequestMapping(method = RequestMethod.POST, value ="/user/checkfriends")
     public Result FrinedsCheck(@RequestBody Friend friend) {
         String check = friendMapper.FriendsCheck(friend);
-
+        System.out.println(friend.getUser_id() + "<user   friend> " + friend.getFriend_id());
         return new Result(0, check);
     }
 }
