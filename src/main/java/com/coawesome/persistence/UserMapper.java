@@ -17,7 +17,7 @@ public interface UserMapper {
   void addUser(User user);
   @Select("select user_id from user where login_id = #{login_id} LIMIT 1")
   int getUserid(User user);
-  @Insert("INSERT INTO friend(user_id, friend_id, status) VALUES(#{user_id}, #{user_id}, 2)")
+  @Insert("INSERT INTO friend(user_id, friend_id, status) VALUES(#{user_id}, #{user_id}, 3)") //status 변수문제(1씩 빼지는)로 원래 2인데 3으로 넣어줌
   void initFriend(User user);
 
   //아이디 찾기
