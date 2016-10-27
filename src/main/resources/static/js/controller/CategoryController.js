@@ -39,7 +39,6 @@ var __CategoryCtrl = function ($scope, $http, store, $state, $rootScope) {
             $scope.tagArray.push($scope.catagory_boards.tag1);
         }
         else {
-            // alert('엘스 떴다.');
         }
     };
 

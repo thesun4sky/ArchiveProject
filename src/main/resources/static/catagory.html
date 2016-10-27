@@ -32,12 +32,11 @@
         <div class="container-fluid" style="margin-left: -20px;margin-right: -20px;text-align: center ; background: url('img/catagory_background.jpg') 100% /35em fixed">
 
                 <div ng-repeat="x in catagory_boards | filter : filters_catagory" style="display: inline-block;">
-                    <a ng-click="toTag(x.tag1)" ><p ng-style="{'font-size': x.hit1*13+8, 'color': colorCode1, 'font-weight' : 'bold'}">{{x.tag1}} </p></a>
-                    <a ng-click="toTag(x.tag2)" ><p ng-style="{ 'font-size': x.hit2*13+8, 'color': colorCode2, 'font-weight' : 'bold'}">{{x.tag2}} </p></a>
-                    <a ng-click="toTag(x.tag3)" ><p ng-style="{ 'font-size': x.hit3*13+8, 'color': colorCode3, 'font-weight' : 'bold'}">{{x.tag3}} </p></a>
+                    <a ng-click="toTag(x.tag1)" ><p ng-style="{'font-size': (x.hit3*13)%30+8, 'color': colorCode1, 'font-weight' : 'bold'}">{{x.tag1}} </p></a>
+                    <a ng-click="toTag(x.tag2)" ><p ng-style="{ 'font-size': (x.hit3*13)%30+8, 'color': colorCode2, 'font-weight' : 'bold'}">{{x.tag2}} </p></a>
+                    <a ng-click="toTag(x.tag3)" ><p ng-style="{ 'font-size': (x.hit3*13)%30+8, 'color': colorCode3, 'font-weight' : 'bold'}">{{x.tag3}} </p></a>
                 </div>
         </div>
-
 </div>
         <!--우측 화면 분할-->
         <div class="col-sm-2 col-md-2 col-lg-2 hidden-xs">
