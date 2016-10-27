@@ -19,6 +19,16 @@ public interface TagMapper {
           "left outer join board_image on board.board_id = board_image.board_id where tag=#{tag} LIMIT 1")
   TagElement loadTagProfile(TagElement tagElement);
 
+  //태그 한줄평 데이터
+  @Select("SELECT COUNT(*) as cnt FROM board " +
+          "INNER JOIN board_value as v ON board.board_id = v.board_id " +
+          "WHERE (board.tag1=#{tag} OR board.tag2=#{tag} OR board.tag3=#{tag}) AND (v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) > (v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) " +
+          "UNION ALL " +
+          "SELECT COUNT(*) as cnt FROM board " +
+          "INNER JOIN board_value as v ON board.board_id = v.board_id " +
+          "WHERE (board.tag1=#{tag} OR board.tag2=#{tag} OR board.tag3=#{tag}) ")
+  ArrayList<Double> loadTagLine(TagElement tagElement);
+
   //테그 검색
   @Select("select * from tag where tag Like  CONCAT('%', #{tag}, '%')")
   ArrayList<TagElement> findTag(@Param("tag") String tag);

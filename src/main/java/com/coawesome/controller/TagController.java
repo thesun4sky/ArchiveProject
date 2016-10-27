@@ -27,6 +27,9 @@ public class TagController {
     public TagElement loadTagProfile(@RequestBody TagElement tagElement) {
 
         TagElement tagProfile = tagMapper.loadTagProfile(tagElement);
+        ArrayList<Double> lines = tagMapper.loadTagLine(tagElement);
+        int result = (int)((lines.get(0) / lines.get(1)) * 100.0);
+        tagProfile.setMessage(result+"%의 사용자가 좋아하는 태그 입니다.");
         System.out.println("Load TagProfile : " + tagProfile);
         return tagProfile;
     }

@@ -24,4 +24,5 @@ public class TagElement {
     private String background_img;
     private int positive;
     private int negative;
+    private String message;
 }
