@@ -28,7 +28,7 @@
                             </div>
 
                             <div class="row">
-                            <div class="col-lg-4 col-sm-4 col-xs-4 text-center" ng-repeat="f in folders">
+                            <div class="col-lg-4 col-sm-4 col-xs-6 text-center" ng-repeat="f in folders">
                                 <div class="thumbnail">
                                     <button ng-click="openFolder(f.folder_id); folders.id=f.folder_id" ng-model="f.folder_id">
                                         <img src="storedimg/{{f.stored_file_name}}" alt="폴더가 비어있습니다." style="width:100%; height:200px;">
@@ -49,10 +49,8 @@
                                     </div>
                                 </div>
                             </div>
-                            </div>
 
-                            <div class="row">
-                            <div class="col-lg-4 col-sm-4 col-xs-4 text-center" >
+                            <div class="col-lg-4 col-sm-4 col-xs-6 text-center" >
                                 <!--<form ng-submit="addNewFolder()" name="newFolder">-->
                                 <form ng-submit="addNewFolder(new_folder_name)">
                                     <div class="form-group">
