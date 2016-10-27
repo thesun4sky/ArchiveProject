@@ -157,6 +157,44 @@ public class UserController {
     public UserResult loadProfile(@RequestBody User user) {
 
         UserResult userProfile = userMapper.loadProfile(user);
+        if(userMapper.boardEmpty(user)==0)   userProfile.setPosNeg(-1);
+        else userProfile.setPosNeg(userMapper.userPosNeg(user));
+
+        String message ="";
+
+        if(userProfile.getPosNeg()==-1) message = "문화생활 새내기 입니다.";
+        else {
+            switch (userProfile.getCatagory()) {
+                case 1:
+                    message += "영화를 ";
+                    break;
+                case 2:
+                    message += "연극을 ";
+                    break;
+                case 3:
+                    message += "콘서트를 ";
+                    break;
+                case 4:
+                    message += "드라마를 ";
+                    break;
+                case 5:
+                    message += "전시회를 ";
+                    break;
+                case 6:
+                    message += "음식을 ";
+                    break;
+                case 7:
+                    message += "여행을 ";
+                    break;
+                case 8:
+                    message += "음악을 ";
+                    break;
+            }
+            message += "가장 좋아하는 ";
+            if (userProfile.getPosNeg() == 0) message += "날카로운 비평가 입니다.";
+            else message += "해피바이러스 전도사 입니다.";
+        }
+        userProfile.setMessage(message);
         System.out.println("Load Profile : " + userProfile);
         return userProfile;
     }

@@ -21,7 +21,7 @@
                             <img src="storedimg/{{Profile.user_img}}"  class="img-circle" alt="나" style="border: 3px solid white" alt="Profile" width="200" height="200">
                         </label>
                         <h3>{{Profile.name}}</h3>
-                        <p>영화를 좋아하는 날카로운 비평가 입니다.</p>
+                        <p>{{Profile.message}}</p>
                         <input disabled type="file" id="file-input" ngf-select ng-model="picFile"  name="file" accept="image/*" ngf-max-size="2MB" required
                                ngf-model-invalid="errorFile">
 

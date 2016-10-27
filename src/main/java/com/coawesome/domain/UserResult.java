@@ -26,4 +26,6 @@ public class UserResult {
     private int status;
     private String updated_time;
     private int catagory;
+    private int PosNeg;
+    private String message;
 }

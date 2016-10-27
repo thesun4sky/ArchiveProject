@@ -45,10 +45,22 @@ public interface UserMapper {
   void insertUserImage(ImageVO image);
 
 
-  //프로필 사진 불러오기
-
-  @Select("Select * from user where user_id=#{user_id}")
+  //프로필 불러오기
+  @Select("Select user.*, board.catagory, COUNT(*) as cnt from user LEFT OUTER JOIN board ON board.user_id = user.user_id " +
+          "WHERE user.user_id=#{user_id} GROUP BY catagory ORDER BY cnt DESC LIMIT 1")
   UserResult loadProfile(User user);
+
+  //게시글 존재여부
+  @Select("SELECT COUNT(*) as cnt from board WHERE user_id = #{user_id}")
+  int boardEmpty(User user);
+
+
+  //유저 긍정, 부정값 받아오기
+  @Select("SELECT if(avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) >= avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5),1,0)  FROM board\n" +
+          "          INNER JOIN board_value as v ON board.board_id = v.board_id \n" +
+          "          INNER JOIN user as u ON u.user_id = board.user_id\n" +
+          "          WHERE u.user_id = #{user_id}")
+  int userPosNeg(User user);
 
   //유저 클라우드 단어 가져오기
   @Select("SELECT tag as text, count(*)*8 as weight FROM (SELECT tag1 as tag FROM board WHERE user_id = #{user_id} UNION\n" +
