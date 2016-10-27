@@ -17,6 +17,7 @@ var __LeftSidebarCtrl = function ($interval, $scope, $http, store, $state, $uibM
         .then(function (response) {
             $scope.friend_Object = response.data;
             $scope.friend_category = $scope.category_labels[$scope.friend_Object.catagory - 1];
+            $scope.category = $scope.friend_Object.catagory;
             //alert($scope.friend_Object.catagory);
             var Recommand_category = {
                 catagory: $scope.friend_Object.catagory
