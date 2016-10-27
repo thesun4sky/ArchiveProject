@@ -61,33 +61,33 @@ public interface TagMapper {
   wordVO getTagValue(@Param("tag")String tag);
 
   //테그 꺽은선그래프 값 얻어오기
-  @Select("SELECT 0 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative FROM board\n" +
+  @Select("SELECT 0 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative , IFNULL(COUNT(*),0) as no FROM board\n" +
           "          INNER JOIN board_value as v ON board.board_id = v.board_id \n" +
           "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag}) AND  (to_days(now())-to_days(board.created) < 7)\n" +
-          "UNION\n" +
-          "SELECT 1 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative FROM board\n" +
+          "UNION ALL \n" +
+          "SELECT 1 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative , IFNULL(COUNT(*),0) as no FROM board\n" +
           "          INNER JOIN board_value as v ON board.board_id = v.board_id \n" +
-          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag})  AND  (to_days(now())-to_days(board.created) < 14)\n" +
-          "UNION\n" +
-          "SELECT 2 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative FROM board\n" +
+          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag}) AND  (to_days(now())-to_days(board.created) > 6) AND  (to_days(now())-to_days(board.created) < 14)\n" +
+          "UNION ALL \n" +
+          "SELECT 2 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative , IFNULL(COUNT(*),0) as no FROM board\n" +
           "          INNER JOIN board_value as v ON board.board_id = v.board_id \n" +
-          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag})  AND  (to_days(now())-to_days(board.created) < 21)\n" +
-          "UNION\n" +
-          "SELECT 3 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative FROM board\n" +
+          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag}) AND  (to_days(now())-to_days(board.created) > 13) AND  (to_days(now())-to_days(board.created) < 21)\n" +
+          "UNION ALL \n" +
+          "SELECT 3 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative , IFNULL(COUNT(*),0) as no FROM board\n" +
           "          INNER JOIN board_value as v ON board.board_id = v.board_id \n" +
-          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag})  AND  (to_days(now())-to_days(board.created) < 30)\n" +
-          "UNION\n" +
-          "SELECT 4 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative FROM board\n" +
+          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag}) AND  (to_days(now())-to_days(board.created) > 20)  AND  (to_days(now())-to_days(board.created) < 30)\n" +
+          "UNION ALL \n" +
+          "SELECT 4 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative , IFNULL(COUNT(*),0) as no FROM board\n" +
           "          INNER JOIN board_value as v ON board.board_id = v.board_id \n" +
-          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag})  AND  (to_days(now())-to_days(board.created) < 60)\n" +
-          "UNION\n" +
-          "SELECT 5 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative FROM board\n" +
+          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag}) AND  (to_days(now())-to_days(board.created) > 29) AND  (to_days(now())-to_days(board.created) < 60)\n" +
+          "UNION ALL \n" +
+          "SELECT 5 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative , IFNULL(COUNT(*),0) as no FROM board\n" +
           "          INNER JOIN board_value as v ON board.board_id = v.board_id \n" +
-          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag})  AND  (to_days(now())-to_days(board.created) < 90)\n" +
-          "UNION\n" +
-          "SELECT 6 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative FROM board\n" +
+          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag}) AND  (to_days(now())-to_days(board.created) > 59)  AND  (to_days(now())-to_days(board.created) < 90)\n" +
+          "UNION ALL \n" +
+          "SELECT 6 as period, avg(v.pos1+v.pos2+v.pos3+v.pos4+v.pos5) as positive, avg(v.neg1+v.neg2+v.neg3+v.neg4+v.neg5) as negative , IFNULL(COUNT(*),0) as no FROM board\n" +
           "          INNER JOIN board_value as v ON board.board_id = v.board_id \n" +
-          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag})  AND  (to_days(now())-to_days(board.created) < 120)")
+          "          WHERE (board.tag1= #{tag} OR board.tag2= #{tag} OR board.tag3= #{tag}) AND  (to_days(now())-to_days(board.created) > 89)  AND  (to_days(now())-to_days(board.created) < 120)")
   ArrayList<LineValue> getLineValue(@Param("tag")String tag);
 
 

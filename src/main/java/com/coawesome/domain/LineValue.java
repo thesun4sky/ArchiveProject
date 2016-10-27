@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LineValue {
     private int period;
-    private int positive;
-    private int negative;
+    private int positive = 0;
+    private int negative = 0;
+    private int no;
 }

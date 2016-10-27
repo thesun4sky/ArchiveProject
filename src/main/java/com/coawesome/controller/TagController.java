@@ -90,16 +90,16 @@ public class TagController {
         System.out.println("get line value of tag : " + tag);
         ArrayList<LineValue> lineValue = tagMapper.getLineValue(tag);
         int[][] numbers = new int[2][7];
-
+        System.out.println(lineValue);
         for(int i=0; i<7; i++){
-            if(lineValue.get(i).getPositive() == 0) {
-                numbers[0][6-i] = lineValue.get(i+1).getPositive();  //이번주를 마지막에 넣기위해 6에서 빼줌
-                numbers[1][6-i] = lineValue.get(i+1).getNegative();
-            }
-            else{
+//            if(lineValue.get(i).getPositive() == 0) {
+//                numbers[0][6-i] = lineValue.get(i+1).getPositive();  //이번주를 마지막에 넣기위해 6에서 빼줌
+//                numbers[1][6-i] = lineValue.get(i+1).getNegative();
+//            }
+//            else{
                 numbers[0][6-i] = lineValue.get(i).getPositive();
                 numbers[1][6-i] = lineValue.get(i).getNegative();
-            }
+//            }
         }
 
         System.out.println("tag line value : " + numbers);
