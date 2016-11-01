@@ -1,41 +1,21 @@
-<script>
-    var value = 0;
-    $("#rot1").rotate({
-        bind:
-        {
-            click: function(){
-                value +=180;
-                $(this).rotate({ animateTo:value})
-            }
-        }
-    });
-    $("#rot2").rotate({
-        bind:
-        {
-            click: function(){
-                value +=90;
-                $(this).rotate({ animateTo:value})
-            }
-        }
-    });
-</script>
+
 
 <!--푸터 네비게이션 바-->
 <nav class="navbar navbar-default navbar-fixed-bottom" style="background-color: rgba(255,255,255,0); border:none">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" id="rot2" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"style="border:none;">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="btn btn-sm btn-danger" href="uploadpg.html" style="padding-top: 10px;margin-top: 8px;">게시글작성</a>
+            <!--<button type="button" id="rot2" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"style="border:none;">-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+            <a class="btn btn-sm btn-danger" ui-sref="upload" style="padding-top: 10px;margin-top: 8px;">게시글작성</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">설정</a></li>
-                <li><a href="#">INFO</a></li>
-            </ul>
-        </div>
+        <!--<div id="navbar" class="navbar-collapse collapse">-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li><a href="#">설정</a></li>-->
+                <!--<li><a href="#">INFO</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
     </div>
 </nav>

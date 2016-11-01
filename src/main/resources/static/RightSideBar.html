@@ -1,0 +1,81 @@
+<div class="container-fluid">
+
+    <br/><br/>
+
+
+    <div>
+        <script type="text/ng-template" id="alert.html">
+            <div class="alert" style="background-color:#fa39c3;color:white" role="alert">
+                <div ng-transclude></div>
+            </div>
+        </script>
+        <!--<p>알람이 뜨는 공간!</p>-->
+        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}
+        </uib-alert>
+    </div>
+
+
+    <br/><br/>
+
+    <div class=" list-content">
+
+        <ul class="list-group">
+            <form class="navbar-form " role="search" style="text-align: right">
+                <div class="input-group">
+                    <input type="text" ng-model="finduser" class="form-control" placeholder="Search" name="q"
+                           style="z-index: 0">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="reset"><span class="glyphicon glyphicon-refresh"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <li href="#" class="list-group-item title">
+                My Friends
+            </li>
+            <li ng-click="openChatting(x.user_id, x.name)" ng-repeat="x in friends | filter : finduser"
+                class="list-group-item text-left">
+                <img class="img-thumbnail" ng-click="toOthers(x)" src="storedimg/{{x.user_img}}"
+                     style="width: 30px; height: 30px">
+                <label class="name" ng-click="toOthers(x)">
+                    {{x.name}}<br> </label>
+
+                <label class="pull-right">
+                    <div ng-if="x.updated_time==null">
+                        <label style="color: darkred; align: right">●</label>
+                    </div>
+                    <div ng-if="x.updated_time!=null && x.status==1">
+                        <label style="color: mediumseagreen; align: right">●</label>
+                    </div>
+                </label>
+                <label class="pull-right">
+                    <div ng-if="x.status==2">
+                        <label>Me</label>
+                    </div>
+                </label>
+                <div class="break"></div>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-show="chatIsOpen" style="background-color: #771107; position: fixed; bottom: 150px; right: 100px; z-index: 10">
+        <li href="#" class="list-group-item title" style="color: white; font-weight: bold; background-color: #771107">
+            {{chatfriendName}} <a ng-click="closeChatting()" style="float: right; color: white">X&nbsp;</a>
+        </li>
+       <!-- <div style="background-color: white; height: 30px; width:300px ;border: solid #080808 1px;">
+
+        </div>-->
+        <div id="message" style="background-color:#F5F5F5; width:300px; height:300px; OVERFLOW-Y:auto; word-wrap: break-word">
+            <div  ng-repeat="chat in chatContents">
+                <div ng-if="chat.user_name==chatfriendName" style="background-color: darkseagreen; float: left; border: 2px solid darkseagreen; border-radius: 12px;"><p>&nbsp;{{chat.message}}&nbsp;</p></div><br/>
+                <div ng-if="chat.user_name!=chatfriendName" style="background-color: skyblue; float: right; border: 2px solid skyblue; border-radius: 12px;"><p>&nbsp;{{chat.message}}&nbsp;</p></div><br/>
+            </div>
+            <br/><br/><br/>
+        </div>
+        <div style="background-color: white; height: 27px; width:300px ;border: solid #080808 1px;">
+            <div id="chatInput">
+                <input type='text' id='txtChat' name="txtChat" style="width: 100%">
+            </div>
+        </div>
+    </div>
+</div>

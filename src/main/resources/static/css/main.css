@@ -95,6 +95,15 @@ textarea {
 
 
 
+.thumb {
+    width:150px;
+}
+
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
 
 
 

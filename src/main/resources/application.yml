@@ -1,10 +1,23 @@
 datasource:
   driver-class-name: "com.mysql.jdbc.Driver"
-  url: "jdbc:mysql://52.79.170.80:3306/testdb?useUnicode=true&charaterEncoding=utf-8"
+  url: "jdbc:mysql://52.79.170.80:3306/archive_db?useUnicode=true&charaterEncoding=utf-8"
   user-name: "archives"
   password: "coawesome"
   initial-size: 10
-  max-active: 10
+  max-active: 100
   max-idle: 10
   min-idle: 10
   max-wait: 3000
+  validationQuery: "SELECT 1"
+  validationInterval: 36000
+  testOnBorrow: "true"
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    protocol: smtp
+    default-encoding: UTF-8
+    username: leemsmail1@gmail.com
+    password: Anstjd123
+    smtp:
+      start-tls-enable: true
+      auth: true

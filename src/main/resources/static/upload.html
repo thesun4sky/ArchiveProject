@@ -1,89 +1,277 @@
-<style>
-    .btn span.glyphicon {
-        opacity: 0;
-    }
-    .btn.active span.glyphicon {
-        opacity: 1;
-    }
 
-</style>
-<div class="jumbotron text-center" style="margin-top: 20px">
-    <div flow-init="{target: '/upload'}"
-         flow-files-submitted="$flow.upload()"
-         flow-file-success="$file.msg = $message">
+<!--메인헤더-->
+<div ng-include="'mainHeader.html'" ng-controller="findCtrl"></div>
+<!--서브헤더-->
+<div ng-include="'subHeader.html'"></div>
 
-        <input type="file" flow-btn/>
-        <span class="btn" flow-btn>Upload File</span>
-        <table>
-            <tr ng-repeat="file in $flow.files">
-                <td>{{$index+1}}</td>
-                <td>{{file.name}}</td>
-                <td>{{file.msg}}</td>
-            </tr>
-        </table>
-    </div>
-    <h3 style="margin-bottom: 60px;">사진을 선택하시고 두줄 평을 입력하세요 <small>게시물당 사진은 <mark>1장만</mark> 업로드 가능합니다.</small></h3>
+<div class="container-fluid" style=" background-color: #E9EBEE">
+
     <div class="row">
-        <div class="col-lg-6">
-            <div class="thumbnail">
-                <div class="carousel-caption pull-left">
-                    <div ng-repeat="position in positions">
-                        <p  class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{left: position.divleft, top: position.divtop}" xpos="position.divleft" ypos="position.divtop" style="background-color : rgba(255,255,255,0.55);border: none; color :black;font-weight: bolder;font-size:18px">&nbsp&nbsp{{firstLine}}&nbsp&nbsp</p>
-                    </div>
-                    <div ng-repeat="position in positions2">
-                        <p  class="example"  ng-class="{left2:'text-left', center2:'text-center', right2:'text-right' }[class_name2]" ng-style="{left: position.divleft, top: position.divtop}" xpos="position.divleft" ypos="position.divtop" style="background-color : rgba(255,255,255,0.55);border: none; color :black;font-weight: bolder;font-size:18px">&nbsp&nbsp{{secondLine}}&nbsp&nbsp</p>
-                    </div>
-                </div>
-                <img flow-img="$flow.files[0]" width="100%" height="100%">
-                <span class="gl glyphicon-camera"></span>
+        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs" >
+        <div ng-controller="scroll">
+            <div id="side">
+                <ul class="nav nav-pills pull-right" >
+                    <li class="text-right"><a du-smooth-scroll="section-1" du-scrollspy>사진+두줄평</a></li>
+                    <li class="text-right"><a du-smooth-scroll="section-2" du-scrollspy>카테고리+공개범위</a></li>
+                    <li class="text-right"><a du-smooth-scroll="section-3" du-scrollspy>태그</a></li>
+                </ul>
             </div>
         </div>
-        <div class="col-lg-6">
-            <div class="container-fluid">
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-success active">전체공개
-                        <input type="radio" name="options" id="option2" autocomplete="off" >
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </label>
-
-                    <label class="btn btn-warning">Toline
-                        <input type="radio" name="options" id="option2" autocomplete="off">
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </label>
-
-                    <label class="btn btn-danger">나만보기
-                        <input type="radio" name="options" id="option2" autocomplete="off">
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </label>
-
-                </div>
-            </div>
-
-                 <div class="container">
-                    <div class="form-group" style="margin-top:8%">
-                        <input type="text" class="form-control" ng-model="firstLine" style="margin:20px 0" placeholder="첫번째 줄 입력...">
-                        <button type="button" class="btn btn-info" ng-click="leftClass()"><span class="fa fa-align-left"></span></button>
-                        <button type="button" class="btn btn-primary" ng-click="centerClass()"><span class="fa fa-align-center"></span></button>
-                        <button type="button" class="btn btn-danger" ng-click="rightClass()"><span class="fa fa-align-right"></span></button>
-                        <br>{{multi_message}}
-
-                        <input type="text" class="form-control" ng-model="secondLine" style="margin:20px 0" placeholder="두번째 줄 입력...">
-                        <button type="button" class="btn btn-info" ng-click="leftClass2()"><span class="fa fa-align-left"></span></button>
-                        <button type="button" class="btn btn-primary" ng-click="centerClass2()"><span class="fa fa-align-center"></span></button>
-                        <button type="button" class="btn btn-danger" ng-click="rightClass2()"><span class="fa fa-align-right"></span></button>
-                        <br>{{multi_message2}}
-                    </div>
-                     <div ng-repeat="position in positions">
-                         <input type="number" ng-model="position.divleft"/>
-                         <input type="number" ng-model="position.divtop"/>
-                     </div>
-                     <div ng-repeat="position in positions2">
-                         <input type="number" ng-model="position.divleft"/>
-                         <input type="number" ng-model="position.divtop"/>
-                     </div>
-
-
-                 </div>
         </div>
+        <form name="myForm">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-center" >
+            <div class="hidden-sm hidden-md hidden-lg" style="margin-bottom: 60px;" >
+            <div ng-controller="scroll">
+                    <ul class="nav nav-pills pull-right" style="position: fixed"; >
+                        <li class="text-right"><a du-smooth-scroll="section-1" du-scrollspy>사진+두줄평</a></li>
+                        <li class="text-right"><a du-smooth-scroll="section-2" du-scrollspy>카테고리+공개범위</a></li>
+                        <li class="text-right"><a du-smooth-scroll="section-3" du-scrollspy>태그</a></li>
+                    </ul>
+            </div>
+            </div>
+            <section id="section-1">
+                <h3 style="margin-bottom: 60px;">사진을 선택하시고 두줄 평을 입력하세요 <small>게시물당 사진은 <mark>1장만</mark> 업로드 가능합니다.</small></h3>
+                <div onload="myFunction()">
+
+                <div class="form-group" >
+                    <div id="mobilewidth">
+                <div class="thumbnail" style="float: none;
+                     display: inline-block; text-align: center;" >
+                <label class="col-sm-2 control-label" ng-show="!myForm.file.$valid">사진 </label>
+                <div class="col-sm-10" ng-show="!myForm.file.$valid">
+                <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required
+                ngf-model-invalid="errorFile">
+                <i ng-show="myForm.file.$error.required">*required</i><br>
+                <i ng-show="myForm.file.$error.maxSize">File too large
+                {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+                </div>
+                <img ng-show="myForm.file.$valid"  ngf-thumbnail="picFile" width="100%"style="height:300px;">
+
+                <div class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div>
+                     <h1 ng-show="myForm.file.$valid" class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{bottom: ((positions.divtop1) * 11 +4) +'%', left :-(lines.firstLine.length+8)+'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">"</h1>
+                </div>
+                <div>
+                     <input placeholder="첫번째 줄을 입력하세요!" type="text" ng-keydown="myFunction()" ng-show="myForm.file.$valid" class="example" ng-model="lines.firstLine" ng-style="{'bottom' : (positions.divtop1) * 11 +'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">
+                </div>
+                <div>
+                    <input placeholder="자!!이제 두번째 줄 차례" type="text" ng-keydown="myFunction()" ng-show="myForm.file.$valid" class="example" ng-model="lines.secondLine" ng-style="{'bottom' : (positions2.divtop2) * 11+'%'}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">
+                </div>
+                    <button class="btn btn-sm btn-warning" ng-click="picFile = null" ng-show="picFile">Remove</button>
+                </div>
+                </div>
+              </div></div>
+                </div>
+                <div class="container" style="width : 50%">
+                    <div class="form-group" style="margin-top:20px;">
+                        <label><span class="glyphicon glyphicon-console">첫번째 줄 위치</span></label>
+                        <input type="range" min="17" max="92" ng-init="positions.divtop1=20" ng-model="positions.divtop1"/>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="glyphicon glyphicon-console">두번째 줄 위치</span></label>
+                        <input type="range" min="9" max="84" ng-init="positions2.divtop2=10" ng-model="positions2.divtop2"/>
+                    </div>
+                </div>
+                <p style="font-size: large">
+                    <span class="glyphicon glyphicon-text-color" aria-hidden="true"></span>
+                    단어 테이블
+                </p>
+                <div ng-repeat="x in words" class="col-lg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <input type="text" style="width:80px; text-align:left" value="{{x}}">
+                </div>
+                <br/>
+            </section>
+
+            <section id="section-2" style="margin-top:1000px;">
+                <div style="height: 305px"></div>
+                <h2>카테고리와 열람권한을 선택하세요.</h2>
+                <div class="container-fluid" style="margin-top: 3%">
+                   <div class="row">
+
+                    <div class="form-group" >
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top:30px;">
+                             <p><span class="glyphicon glyphicon-globe">공개대상</span></p>
+                             <center><select class="form-control" ng-model="p_level" ng-options="x.title for x in openAccess"  style="width: 60%;"></center>
+                            </select>
+                        </div>
+                    </div>
+                   </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                 <p><span class="glyphicon-bookmark">카테고리</span></p></label>
+                                <center><select class="form-control" ng-model="c_list" ng-options="x.title for x in catagory" style="width: 60%;"></center>
+                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                   </div>
+                </section>
+
+            <section id="section-3" style="margin-top:1000px;margin-bottom: 500px;">
+                <h2>게시물에 연관된 태그를 3개 입력하세요</h2>
+
+                <div class="form-group" style="margin:20px 0">
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left: -5px;margin-right: 5px" >
+                        <input type="text" class="form-control form-inline" placeholder="첫번째 태그" ng-model="lines.tag1">
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left: -5px;margin-right: 5px">
+                        <input type="text" class="form-control form-inline" placeholder="두번째 태그" ng-model="lines.tag2">
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left: -5px;margin-right: 5px">
+                        <input type="text" class="form-control form-inline" placeholder="세번째 태그" ng-model="lines.tag3">
+                    </div>
+                </div>
+
+
+                <p style="font-size: large;margin-top: 100px">
+                    <span class="glyphicon glyphicon-text-color" aria-hidden="true"></span>
+                    단어 테이블
+                </p>
+                <div ng-repeat="x in words" class="col-lg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <input type="text" style="width:80px; text-align:left" value="{{x}}">
+                </div>
+                <br/>
+
+                <div class="form-group" style="margin-top: 100px;margin-bottom: 100px;">
+
+                <div class="col-sm-12">
+                <button class="btn btn-success" ng-disabled="!myForm.$valid" ng-click="uploadPic(picFile,p_level,c_list)">Submit</button>
+                <span class="progress" ng-show="picFile.progress >= 0">
+                <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div></span>
+                <span ng-show="picFile.result">Upload Successful</span>
+                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                </div>
+                </div>
+
+                 </section>
+
+        </div>
+    </form>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="jumbotron text-center" style="margin-top: 20px">-->
+        <!--<h3 style="margin-bottom: 60px;">사진을 선택하시고 두줄 평을 입력하세요 <small>게시물당 사진은 <mark>1장만</mark> 업로드 가능합니다.</small></h3>-->
+        <!--<div class="row" onload="myFunction()">-->
+            <!--<form name="myForm">-->
+                <!--<div class="col-lg-4">-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="thumbnail" width="100%">-->
+                            <!--<label class="col-sm-2 control-label" ng-show="!myForm.file.$valid">사진 </label>-->
+                            <!--<div class="col-sm-10" ng-show="!myForm.file.$valid">-->
+                                <!--<input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required-->
+                                       <!--ngf-model-invalid="errorFile">-->
+                                <!--<i ng-show="myForm.file.$error.required">*required</i><br>-->
+                                <!--<i ng-show="myForm.file.$error.maxSize">File too large-->
+                                    <!--{{errorFile.size / 1000000|number:1}}MB: max 2M</i>-->
+                            <!--</div>-->
+                            <!--<img ng-show="myForm.file.$valid"  ngf-thumbnail="picFile" width="100%"style="height:300px;">-->
+
+                            <!--<div class="col-lg-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">-->
+                                <!--<div>-->
+                                    <!--<h1 ng-show="myForm.file.$valid" class="example" ng-class="{left:'text-left', center:'text-center', right:'text-right' }[class_name]" ng-style="{bottom: ((positions.divtop1) * 11 +4) +'%', left :-(lines.firstLine.length+8)+'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0);border: none; color :white;font-weight: bolder;font-size:50px;width:100%;z-index: 12;">"</h1>-->
+                                <!--</div>-->
+                                <!--<div>-->
+                                    <!--<input placeholder="첫번째 줄을 입력하세요!" type="text" ng-keydown="myFunction()" ng-show="myForm.file.$valid" class="example" ng-model="lines.firstLine" ng-style="{'bottom' : (positions.divtop1) * 11 +'%'}" xpos="position.divleft1" ypos="position.divtop1" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">-->
+                                <!--</div>-->
+                                <!--<div>-->
+                                    <!--<input placeholder="자!!이제 두번째 줄 차례" type="text" ng-keydown="myFunction()" ng-show="myForm.file.$valid" class="example" ng-model="lines.secondLine" ng-style="{'bottom' : (positions2.divtop2) * 11+'%'}" xpos="position.divleft2" ypos="position.divtop2" style="background-color : rgba(0,0,0,0.55);border: none; color :white;font-weight: bolder;font-size:18px;width:100%;left:0;text-align:center;">-->
+                                <!--</div>-->
+                                <!--<button class="btn btn-sm btn-warning" ng-click="picFile = null" ng-show="picFile">Remove</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--<div class="col-lg-8">-->
+                    <!--<div class="container-fluid" style="margin-top: 3%">-->
+                        <!--<div class="form-inline">-->
+
+                            <!--<div class="form-group" >-->
+                                <!--<div class="col-lg-3 col-md-3 col-sm-3">-->
+                                    <!--<label><span class="glyphicon glyphicon-globe">공개대상</span></label>-->
+                                    <!--<select class="form-control" ng-model="p_level" ng-options="x.title for x in openAccess">-->
+                                    <!--</select></div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<div class="col-lg-3 col-md-3 col-sm-3">-->
+                                    <!--<label><span class="glyphicon-bookmark">카테고리</span></label>-->
+                                    <!--<select class="form-control" ng-model="c_list" ng-options="x.title for x in catagory">-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<br/>-->
+                            <!--<br/>-->
+                            <!--<br/>-->
+                            <!--<div class="form-group" style="margin:20px 0">-->
+                                <!--<div class="col-lg-2 col-md-2 col-sm-2" style="margin-left: -5px;margin-right: 5px" >-->
+                                    <!--<input type="text" class="form-control form-inline" placeholder="첫번째 태그" ng-model="lines.tag1">-->
+                                <!--</div>-->
+                                <!--<div class="col-lg-2 col-md-2 col-sm-2" style="margin-left: -5px;margin-right: 5px">-->
+                                    <!--<input type="text" class="form-control form-inline" placeholder="두번째 태그" ng-model="lines.tag2">-->
+                                <!--</div>-->
+                                <!--<div class="col-lg-2 col-md-2 col-sm-2" style="margin-left: -5px;margin-right: 5px">-->
+                                    <!--<input type="text" class="form-control form-inline" placeholder="세번째 태그" ng-model="lines.tag3">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<p style="font-size: large">-->
+                                <!--<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span>-->
+                                <!--단어 테이블-->
+                            <!--</p>-->
+                            <!--<div ng-repeat="x in words" class="col-lg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2">-->
+                                <!--<input type="text" style="width:80px; text-align:left" value="{{x}}">-->
+                            <!--</div>-->
+                            <!--<br/>-->
+
+
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="container">-->
+
+
+                        <!--<div class="form-group" style="margin-top:20px;">-->
+                            <!--<label><span class="glyphicon glyphicon-console">첫번째 줄 위치</span></label>-->
+                            <!--<input type="number" ng-init="positions.divtop1=20" ng-model="positions.divtop1"/>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label><span class="glyphicon glyphicon-console">두번째 줄 위치</span></label>-->
+                            <!--<input type="number" ng-init="positions2.divtop2=10" ng-model="positions2.divtop2"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="form-group">-->
+                        <!--<label class="col-sm-2 control-label" ></label>-->
+                        <!--<div class="col-sm-10">-->
+                            <!--<button class="btn btn-success" ng-disabled="!myForm.$valid" ng-click="uploadPic(picFile,p_level,c_list)">Submit</button>-->
+                    <!--<span class="progress" ng-show="picFile.progress >= 0">-->
+                    <!--<div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div></span>-->
+                            <!--<span ng-show="picFile.result">Upload Successful</span>-->
+                            <!--<span class="err" ng-show="errorMsg">{{errorMsg}}</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</form>-->
+
+        <!--</div>-->
+    <!--</div>-->
+
+
+<!--푸터-->
+<div ng-include="'mainFooter.html'"></div>
