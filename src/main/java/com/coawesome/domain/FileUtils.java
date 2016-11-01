@@ -14,7 +14,6 @@ import java.util.*;
 @Component("fileUtils")
 public class FileUtils {
     private static final String filePath = "/home/centos/ArchiveProject/build/resources/main/static/storedimg/";
-    //TODO 상단 디렉토리명 바꾸기
 
     public static String getRandomString(){
         return UUID.randomUUID().toString().replaceAll("-", "");
@@ -26,23 +25,14 @@ public class FileUtils {
     }
 
     public ImageVO parseInsertFileInfo(MultipartFile multipartFile,BoardVO board) throws Exception{
-
         String originalFileName = null;
         String originalFileExtension = null;
         String storedFileName = null;
-
-
 
         File file = new File(filePath);
         if(file.exists() == false){
             file.mkdirs();
         }
-
-
-
-
-
-
         ImageVO image = new ImageVO();
         if(multipartFile.isEmpty() == false){
             originalFileName = multipartFile.getOriginalFilename();
@@ -70,8 +60,6 @@ public class FileUtils {
         String originalFileExtension = null;
         String storedFileName = null;
 
-
-
         File file = new File(filePath);
         if(file.exists() == false){
             file.mkdirs();
@@ -86,16 +74,8 @@ public class FileUtils {
             file = new File(filePath + storedFileName);
             multipartFile.transferTo(file);
 
-//
-//            image.setOriginal_file_name(originalFileName);
-//            image.setStored_file_name(storedFileName);
-
             image.setUser_img(storedFileName);  //저장된 이미지 이름
             image.setUser_id(user.getUser_id());
-//
-//            image.setFile_size(multipartFile.getSize());
-//            image.setBoard_id(user.getUser_id());
-//            image.setCreator_id(user.getUser_id());
             System.out.println(image);
         }
         return image;

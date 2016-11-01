@@ -2,53 +2,53 @@
  * Created by 이호세아 on 2016-05-17.
  */
 
-angular.module("homeApp",[
-        'chart.js',
-        'ngAnimate',
-        'ui.router',
-        'ngFileUpload',
-        'angular-storage',
-        'ui.bootstrap',
-        'angular-jqcloud',
-        'ui.bootstrap.alert',
-        'angular-confirm',
-        'duScroll'
-    ])
+angular.module("homeApp", [
+    'chart.js',
+    'ngAnimate',
+    'ui.router',
+    'ngFileUpload',
+    'angular-storage',
+    'ui.bootstrap',
+    'angular-jqcloud',
+    'ui.bootstrap.alert',
+    'angular-confirm',
+    'duScroll'
+])
 
-    .config(function(storeProvider){
+    .config(function (storeProvider) {
         storeProvider.setStore('sessionStorage');
     })
-     .controller("alertCtrl" , __AlertCtrl)
-     .controller("ArchiveCtrl" , __ArchiveCtrl)
-     .controller("CarouselDemoCtrl" , __CarouselDemoCtrl)
-     .controller("catagoryCtrl" , __CategoryCtrl)
-     .controller("findIDCtrl" , __FindIdCtrl)
-     .controller("findPASSCtrl" , __FindPassCtrl)
-     .controller("findCtrl" , __FindCtrl)
-     .controller("indexCtrl" , __IndexCtrl)
-     .controller("joinCtrl" , __JoinCtrl)
-     .controller("leftSideBarCtrl" , __LeftSidebarCtrl)
-     .controller("loginCtrl" , __LoginCtrl)
-     .controller("ModalDemoCtrl" , __ModalDemoCtrl)
-     .controller("othersCtrl" , __OthersCtrl)
-     .controller("RadarCtrl" , __RadarCtrl)
-     .controller("ChartCtrl" , __ChartCtrl)
-     // .controller("ScrollCtrl" , __ScrollCtrl)
-     .controller("subHeaderCtrl" , __SubHeaderCtrl)
-     .controller("tagCtrl" , __TagProfileCtrl)
-     .controller("tolineCtrl" , __TolineCtrl)
-     .controller("uploadCtrl" , __UploadCtrl)
-     .controller("profileCtrl" , __UserProfileCtrl)
+    .controller("alertCtrl", __AlertCtrl)
+    .controller("ArchiveCtrl", __ArchiveCtrl)
+    .controller("CarouselDemoCtrl", __CarouselDemoCtrl)
+    .controller("catagoryCtrl", __CategoryCtrl)
+    .controller("findIDCtrl", __FindIdCtrl)
+    .controller("findPASSCtrl", __FindPassCtrl)
+    .controller("findCtrl", __FindCtrl)
+    .controller("indexCtrl", __IndexCtrl)
+    .controller("joinCtrl", __JoinCtrl)
+    .controller("leftSideBarCtrl", __LeftSidebarCtrl)
+    .controller("loginCtrl", __LoginCtrl)
+    .controller("ModalDemoCtrl", __ModalDemoCtrl)
+    .controller("othersCtrl", __OthersCtrl)
+    .controller("RadarCtrl", __RadarCtrl)
+    .controller("ChartCtrl", __ChartCtrl)
+    // .controller("ScrollCtrl" , __ScrollCtrl)
+    .controller("subHeaderCtrl", __SubHeaderCtrl)
+    .controller("tagCtrl", __TagProfileCtrl)
+    .controller("tolineCtrl", __TolineCtrl)
+    .controller("uploadCtrl", __UploadCtrl)
+    .controller("profileCtrl", __UserProfileCtrl)
 
 
-    .controller('scroll', function($scope, $document){
-            $scope.toTheTop = function() {
-                $document.scrollTopAnimated(0, 5000).then(function() {
+    .controller('scroll', function ($scope, $document) {
+            $scope.toTheTop = function () {
+                $document.scrollTopAnimated(0, 5000).then(function () {
                     console && console.log('You just scrolled to the top!');
                 });
             }
             var section3 = angular.element(document.getElementById('section-3'));
-            $scope.toSection3 = function() {
+            $scope.toSection3 = function () {
                 $document.scrollToElementAnimated(section3);
             }
         }
@@ -64,14 +64,14 @@ angular.module("homeApp",[
         });
     })
 
-    .filter('unique', function() {
-        return function(collection, keyname) {
+    .filter('unique', function () {
+        return function (collection, keyname) {
             var output = [],
                 keys = [];
 
-            angular.forEach(collection, function(item) {
+            angular.forEach(collection, function (item) {
                 var key = item[keyname];
-                if(keys.indexOf(key) === -1) {
+                if (keys.indexOf(key) === -1) {
                     keys.push(key);
                     output.push(item);
                 }
@@ -80,32 +80,32 @@ angular.module("homeApp",[
             return output;
         };
     })
-    
+
     //게시물을 end 숫자 까지 잘라서 보여줌
-    .filter('slice',function(){
-        return function(arr,start,end){
-            return arr.slice(start,end);
+    .filter('slice', function () {
+        return function (arr, start, end) {
+            return arr.slice(start, end);
         };
     })
-        
-//스크롤 이벤트가 필요한 부분만 추가한다.
-.directive("scroll", function ($window) {
-    return function (scope, element, attrs) {
-        angular.element($window).bind("scroll", function () {
 
-            var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-            var body = document.body, html = document.documentElement;
-            var docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
-            var windowBottom = windowHeight + window.pageYOffset;
-            if (windowBottom >= docHeight) {
-                scope.quantity = scope.quantity+4;
-            }
-            scope.$apply();
-        });
-    };
-})
+    //스크롤 이벤트가 필요한 부분만 추가한다.
+    .directive("scroll", function ($window) {
+        return function (scope, element, attrs) {
+            angular.element($window).bind("scroll", function () {
 
-        //윈도우 크기 재구성
+                var windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+                var body = document.body, html = document.documentElement;
+                var docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                var windowBottom = windowHeight + window.pageYOffset;
+                if (windowBottom >= docHeight) {
+                    scope.quantity = scope.quantity + 4;
+                }
+                scope.$apply();
+            });
+        };
+    })
+
+    //윈도우 크기 재구성
     .directive('resize', function ($window) {
         return function (scope, element) {
             var w = angular.element($window);
@@ -140,8 +140,8 @@ angular.module("homeApp",[
     .directive('ngEnter', function () {
         return function (scope, element, attrs) {
             element.bind("keydown keypress", function (event) {
-                if(event.which === 13) {
-                    scope.$apply(function (){
+                if (event.which === 13) {
+                    scope.$apply(function () {
                         scope.$eval(attrs.ngEnter);
                     });
                     event.preventDefault();
@@ -212,7 +212,6 @@ angular.module("homeApp",[
                     requireLogin: true
                 }
             })
-
 
 
             .state('profile', {

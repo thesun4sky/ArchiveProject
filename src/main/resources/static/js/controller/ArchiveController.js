@@ -49,7 +49,7 @@ var __ArchiveCtrl = function ($scope, $http, store, $state, $uibModal, $rootScop
     };
 
 
-    $scope.showFriendList()
+    $scope.showFriendList();
 
     var timeObject = {};
     $scope.updateTime = function () {
